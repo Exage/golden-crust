@@ -14,19 +14,19 @@ export const Menu = ({ menuRef }) => {
     const { categories } = useContext(StoreContext)
 
     return (
-        <div className="menu" ref={menuRef}>
+        <div className="home__menu" ref={menuRef}>
 
             <div className="container">
-                <div className="menu__header">
-                    <h1 className="menu__header-title">
-                        <ReactSVG src={decorationLeft} className="menu__header-title__decoration menu__header-title__decoration-left" />
+                <div className="home__menu-header">
+                    <h1 className="home__menu-header__title">
+                        <ReactSVG src={decorationLeft} className="decoration" />
                         Menu
-                        <ReactSVG src={decorationRight} className="menu__header-title__decoration menu__header-title__decoration-right" />
+                        <ReactSVG src={decorationRight} className="decoration" />
                     </h1>
                 </div>
             </div>
 
-            <div className="menu__categories">
+            <div className="home__menu-categories">
                 {categories.map(category => (
                     <MenuCategory
                         key={category._id}

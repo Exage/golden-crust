@@ -18,18 +18,18 @@ export const MenuCategory = ({ title, name, subtitle, primaryColor = '#616161', 
     const currentProducts = products.filter(product => product.category === name)
 
     return (
-        <div className="menu__category" style={{ backgroundColor: secondaryColor }}>
+        <div className="home__menu-category" style={{ backgroundColor: secondaryColor }}>
             <div className="container">
-                <div className="menu__category-header">
-                    <div className="menu__category-header__title-wrapper">
+                <div className="home__menu-category__header">
+                    <div className="home__menu-category__header-title__wrapper">
                         <ReactSVG
                             src={decorationLeft}
-                            className="menu__category-header__title-decoration menu__category-header__title-decoration__left"
+                            className="decoration decoration__left"
                             style={{ fill: primaryColor }}
                         />
 
                         <h1
-                            className="menu__category-header__title"
+                            className="home__menu-category__header-title"
                             style={{ backgroundColor: primaryColor, borderColor: secondaryColor }}
                         >
                             {title}
@@ -37,13 +37,13 @@ export const MenuCategory = ({ title, name, subtitle, primaryColor = '#616161', 
 
                         <ReactSVG
                             src={decorationRight}
-                            className="menu__category-header__title-decoration menu__category-header__title-decoration__right"
+                            className="decoration decoration__right"
                             style={{ fill: primaryColor }}
                         />
                     </div>
-                    <p className="menu__category-header__subtitle">{subtitle}</p>
+                    <p className="home__menu-category__header-subtitle">{subtitle}</p>
                 </div>
-                <div className="menu__category-body">
+                <div className="home__menu-category__body">
                     <Swiper
                         slidesPerView={1}
                         spaceBetween={30}

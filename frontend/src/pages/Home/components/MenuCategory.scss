@@ -4,16 +4,16 @@
 $primary: #616161;
 $secondary: #d3d3d3;
 
-.menu__category {
+.home__menu-category {
 
     background-color: $secondary;
     padding: 2.5rem 0;
 
-    &-header {
+    &__header {
 
         text-align: center;
 
-        &__title {
+        &-title {
             display: inline-block;
             color: var(--secondary-color);
 
@@ -28,7 +28,7 @@ $secondary: #d3d3d3;
             border: 3px solid $secondary;
             border-radius: 0.8rem;
 
-            &-wrapper {
+            &__wrapper {
                 display: inline-block;
                 padding-left: 3.7rem;
                 padding-right: 3.7rem;
@@ -37,32 +37,33 @@ $secondary: #d3d3d3;
                 position: relative;
 
                 z-index: $zIndexHomeCategoryTitle;
-            }
 
-            &-decoration {
-                position: absolute;
-                bottom: 0;
 
-                fill: $primary;
+                & .decoration {
+                    position: absolute;
+                    bottom: 0;
 
-                z-index: -1;
+                    fill: $primary;
 
-                &__left {
-                    left: 0;
-                }
+                    z-index: -1;
 
-                &__right {
-                    right: 0;
+                    &__left {
+                        left: 0;
+                    }
+
+                    &__right {
+                        right: 0;
+                    }
                 }
             }
         }
 
-        &__subtitle {
+        &-subtitle {
             margin-top: 3rem;
         }
     }
 
-    &-body {
+    &__body {
         display: flex;
         justify-content: center;
         margin-top: 2rem;
