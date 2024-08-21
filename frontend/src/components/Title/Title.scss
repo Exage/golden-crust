@@ -1,0 +1,54 @@
+@import '../../mixins';
+@import '../../vars';
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1.5rem;
+
+    @include defaultHeadingFont;
+    font-size: 3.6rem;
+
+    &__white &__text {
+        color: var(--secondary-color);
+    }
+
+    &__white &__text-stroke {
+        -webkit-text-stroke-color: var(--secondary-color);
+    }
+
+    &__white &__decoration {
+        fill: var(--secondary-color);
+    }
+
+    &__text {
+        position: relative;
+        color: var(--primary-color);
+
+        text-wrap: nowrap;
+
+        z-index: 1;
+
+        &-stroke {
+            position: absolute;
+            top: 1px;
+            left: -1px;
+            
+            color: transparent;
+            opacity: 0.8;
+
+            pointer-events: none;
+            user-select: none;
+
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: var(--primary-color);
+
+            z-index: -1;
+        }
+    }
+
+    &__decoration {
+        fill: var(--primary-color);
+    }
+}

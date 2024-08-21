@@ -1,0 +1,111 @@
+@import '../../mixins';
+@import '../../vars';
+
+.footer {
+    padding-top: 3rem;
+    padding-bottom: 1.5rem;
+    margin-top: auto;
+
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+
+    border-top: 2px solid var(--border-color);
+
+    &__inner {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid var(--primary-alt-color);
+
+        @include bp($bpFooter1) {
+            flex-direction: column;
+            padding-bottom: 3rem;
+        }
+
+        &-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            
+            @include bp($bpFooter1) {
+                order: -1;
+                row-gap: 3rem;
+                align-items: center;
+            }
+        }
+
+        &-logo {
+            width: 10rem;
+        }
+
+        &-social {
+            display: flex;
+            column-gap: 1.5rem;
+            margin-top: auto;
+
+            &__link {
+                display: flex;
+                align-items: center;
+                height: 3.2rem;
+            }
+        }
+
+        &-columns {
+            display: flex;
+            column-gap: 10rem;
+            
+            @include bp($bpFooter1) {
+                justify-content: center;
+                column-gap: 0;
+                margin-top: 5rem;
+            }
+
+            @include bp($bpFooter2) {
+                flex-direction: column;
+                margin-top: 3rem;
+                row-gap: 2rem;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        &-column {
+            display: flex;
+            flex-direction: column;
+            
+            @include bp($bpFooter1) {
+                max-width: 20rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            &__title {
+                font-size: 2.4rem;
+                margin-bottom: 2rem;
+                @include defaultHeadingFont;
+            }
+
+            &__link {
+                margin-bottom: 1rem;
+                opacity: 0.6;
+                font-size: 1.4rem;
+
+                transition: opacity .2s linear;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            &>&__link:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__bottom {
+        text-align: center;
+        color: var(--primary-alt-color);
+    }
+}

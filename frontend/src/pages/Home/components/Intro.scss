@@ -1,0 +1,83 @@
+@import '../../../vars';
+@import '../../../mixins';
+
+.intro {
+    display: flex;
+    width: 100%;
+    min-height: auto;
+    max-height: none;
+    height: 1080px;
+
+    padding-top: 12rem;
+
+    background-image: url(../../../assets/home/intro.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    @include bp($bpHomeIntroMax) {
+        min-height: 100vh;
+        max-height: 108rem;
+        height: auto;
+    }
+
+    .container {
+        display: flex;
+        // align-items: center;
+        justify-content: center;
+    }
+
+    &__wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        color: var(--secondary-color);
+
+        max-width: 64.5rem;
+        width: 100%;
+
+        margin: 0 auto;
+        padding-top: 3rem;
+        padding-bottom: 10rem;
+
+        text-align: center;
+        
+        @include bp($bpHomeIntro1) {
+            padding-bottom: 5rem;
+        }
+
+        &-logo {
+            max-width: 27.2rem;
+            width: 100%;
+        }
+
+        &-title {
+            @include defaultHeadingFont;
+
+            font-size: 3.2rem;
+
+            margin-top: 8rem;
+
+            @include bp($bpHomeIntro1) {
+                font-size: 2.6rem;
+                margin-top: 4rem;
+            }
+        }
+
+        &-text {
+            margin-top: 2rem;
+            line-height: normal;
+
+            @include bp($bpHomeIntro1) {
+                font-size: 1.4rem;
+            }
+        }
+
+        &-btn {
+            margin-top: 3rem;
+            border-color: var(--primary-color);
+        }
+    }
+}

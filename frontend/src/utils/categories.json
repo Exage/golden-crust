@@ -1,0 +1,34 @@
+[
+    {
+        "_id": 1,
+        "title": "Cookies",
+        "name": "cookies",
+        "description": "Perfectly baked with a touch of sweetness in every bite",
+        "primaryColor": "#D4BDAC",
+        "secondaryColor": "#FFEDDF"
+    },
+    {
+        "_id": 2,
+        "title": "Donuts",
+        "name": "donuts",
+        "description": "Soft, sweet, and perfectly glazed for a treat that's simply irresistible",
+        "primaryColor": "#E2B6BF",
+        "secondaryColor": "#FBE6EA"
+    },
+    {
+        "_id": 3,
+        "title": "Pizza",
+        "name": "pizza",
+        "description": "Freshly baked with premium ingredients, made to satisfy every craving",
+        "primaryColor": "#FFA973",
+        "secondaryColor": "#F9EBE3"
+    },
+    {
+        "_id": 4,
+        "title": "Cakes",
+        "name": "cakes",
+        "description": "Elegantly crafted, layered with flavor, and perfect for any celebration",
+        "primaryColor": "#9C84E5",
+        "secondaryColor": "#EBE8F4"
+    }
+]

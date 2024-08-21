@@ -1,0 +1,96 @@
+@import '../../../vars';
+@import '../../../mixins';
+
+$primary: #616161;
+$secondary: #d3d3d3;
+
+.menu__category {
+
+    background-color: $secondary;
+    padding: 2.5rem 0;
+
+    &-header {
+
+        text-align: center;
+
+        &__title {
+            display: inline-block;
+            color: var(--secondary-color);
+
+            @include defaultHeadingFont;
+
+            font-size: 2.4rem;
+
+            padding: 0.4rem 1.4rem;
+
+            background-color: $primary;
+
+            border: 3px solid $secondary;
+            border-radius: 0.8rem;
+
+            &-wrapper {
+                display: inline-block;
+                padding-left: 3.7rem;
+                padding-right: 3.7rem;
+                padding-bottom: 0.7rem;
+
+                position: relative;
+
+                z-index: $zIndexHomeCategoryTitle;
+            }
+
+            &-decoration {
+                position: absolute;
+                bottom: 0;
+
+                fill: $primary;
+
+                z-index: -1;
+
+                &__left {
+                    left: 0;
+                }
+
+                &__right {
+                    right: 0;
+                }
+            }
+        }
+
+        &__subtitle {
+            margin-top: 3rem;
+        }
+    }
+
+    &-body {
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+        column-gap: 3rem;
+
+        @include bp($bpHomeMenuCategory1) {
+            max-width: 96rem;
+            width: 100%;
+
+            margin-left: auto;
+            margin-right: auto;
+
+            .swiper {
+                border-radius: 3rem;
+            }
+        }
+
+        @include bp($bpHomeMenuCategory2) {
+            max-width: 63rem;
+        }
+
+        @include bp($bpHomeMenuCategory3) {
+            max-width: 100%;
+        }
+    }
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,13 @@
+@import '../../../mixins';
+@import '../../../vars';
+
+.category__products {
+    margin-top: 10rem;
+
+    &-body {
+        display: grid;
+        grid-template-columns: repeat(4, 30rem);
+        column-gap: 3rem;
+        row-gap: 3.5rem;
+    }
+}

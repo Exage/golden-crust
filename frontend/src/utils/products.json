@@ -1,0 +1,386 @@
+[
+    {
+        "_id": 1,
+        "name": "BAEsic CCC",
+        "description": "Chocolate chip cookies with milk, dark & white chips, fleur de sel",
+        "price": 5,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cookies"
+    },
+    {
+        "_id": 2,
+        "name": "Double Trouble",
+        "description": "Double chocolate chunk cookies with sea salt",
+        "price": 6,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cookies"
+    },
+    {
+        "_id": 3,
+        "name": "Oatmeal Raisin Delight",
+        "description": "Oatmeal cookies with juicy raisins and a hint of cinnamon",
+        "price": 5,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cookies"
+    },
+    {
+        "_id": 4,
+        "name": "Peanut Butter Bliss",
+        "description": "Rich peanut butter cookies with a sprinkle of sea salt",
+        "price": 5,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cookies"
+    },
+    {
+        "_id": 5,
+        "name": "White Choco Macadamia",
+        "description": "White chocolate macadamia nut cookies with a chewy center",
+        "price": 6,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cookies"
+    },
+    {
+        "_id": 6,
+        "name": "Sugar Dream",
+        "description": "Classic sugar cookies with a soft center and crispy edges",
+        "price": 4,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cookies"
+    },
+    {
+        "_id": 7,
+        "name": "Snickerdoodle Twist",
+        "description": "Cinnamon sugar cookies with a hint of vanilla",
+        "price": 5,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cookies"
+    },
+    {
+        "_id": 8,
+        "name": "Chocolate Crinkles",
+        "description": "Rich chocolate crinkle cookies with a powdered sugar coating",
+        "price": 5,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cookies"
+    },
+    {
+        "_id": 9,
+        "name": "Ginger Molasses",
+        "description": "Spiced ginger molasses cookies with a chewy texture",
+        "price": 5,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cookies"
+    },
+    {
+        "_id": 10,
+        "name": "Almond Joy",
+        "description": "Almond cookies with a hint of coconut and chocolate drizzle",
+        "price": 6,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cookies"
+    },
+    {
+        "_id": 11,
+        "name": "Caramel Pecan",
+        "description": "Soft cookies with caramel chunks and toasted pecans",
+        "price": 6,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cookies"
+    },
+    {
+        "_id": 12,
+        "name": "Mint Choco Chip",
+        "description": "Refreshing mint cookies with dark chocolate chips",
+        "price": 5,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cookies"
+    },
+    {
+        "_id": 13,
+        "name": "Glazed Delight",
+        "description": "Classic glazed donut with a hint of vanilla",
+        "price": 3,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "donuts"
+    },
+    {
+        "_id": 14,
+        "name": "Chocolate Glaze",
+        "description": "Rich chocolate glazed donut with sprinkles",
+        "price": 4,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "donuts"
+    },
+    {
+        "_id": 15,
+        "name": "Maple Bacon Bliss",
+        "description": "Maple glazed donut topped with crispy bacon",
+        "price": 5,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "donuts"
+    },
+    {
+        "_id": 16,
+        "name": "Cinnamon Twist",
+        "description": "Cinnamon-sugar coated twisted donut",
+        "price": 4,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "donuts"
+    },
+    {
+        "_id": 17,
+        "name": "Boston Cream",
+        "description": "Custard-filled donut with a chocolate glaze",
+        "price": 5,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "donuts"
+    },
+    {
+        "_id": 18,
+        "name": "Powdered Sugar Puff",
+        "description": "Fluffy donut covered in powdered sugar",
+        "price": 3,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "donuts"
+    },
+    {
+        "_id": 19,
+        "name": "Strawberry Frosted",
+        "description": "Donut with strawberry frosting and rainbow sprinkles",
+        "price": 4,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "donuts"
+    },
+    {
+        "_id": 20,
+        "name": "Apple Fritter",
+        "description": "Crispy apple fritter with a cinnamon glaze",
+        "price": 5,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "donuts"
+    },
+    {
+        "_id": 21,
+        "name": "Jelly Filled",
+        "description": "Donut filled with raspberry jelly and dusted with sugar",
+        "price": 4,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "donuts"
+    },
+    {
+        "_id": 22,
+        "name": "Coconut Crunch",
+        "description": "Donut with coconut glaze and toasted coconut flakes",
+        "price": 5,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "donuts"
+    },
+    {
+        "_id": 23,
+        "name": "Pumpkin Spice",
+        "description": "Seasonal pumpkin spice donut with cream cheese glaze",
+        "price": 5,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "donuts"
+    },
+    {
+        "_id": 24,
+        "name": "Blueberry Burst",
+        "description": "Blueberry donut with a light glaze",
+        "price": 4,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "donuts"
+    },
+    {
+        "_id": 25,
+        "name": "Pepperoni Feast",
+        "description": "Classic pepperoni pizza with a crispy crust",
+        "price": 12,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "pizza"
+    },
+    {
+        "_id": 26,
+        "name": "Margherita Magic",
+        "description": "Tomato, fresh mozzarella, and basil on a thin crust",
+        "price": 10,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "pizza"
+    },
+    {
+        "_id": 27,
+        "name": "BBQ Chicken",
+        "description": "Barbecue sauce, grilled chicken, and red onions",
+        "price": 14,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "pizza"
+    },
+    {
+        "_id": 28,
+        "name": "Veggie Delight",
+        "description": "Bell peppers, onions, olives, and mushrooms",
+        "price": 11,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "pizza"
+    },
+    {
+        "_id": 29,
+        "name": "Hawaiian Dream",
+        "description": "Pineapple, ham, and mozzarella on a crispy crust",
+        "price": 13,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "pizza"
+    },
+    {
+        "_id": 30,
+        "name": "Meat Lovers",
+        "description": "Pepperoni, sausage, ham, and bacon",
+        "price": 15,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "pizza"
+    },
+    {
+        "_id": 31,
+        "name": "White Garlic",
+        "description": "Creamy white sauce, garlic, and mozzarella",
+        "price": 12,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "pizza"
+    },
+    {
+        "_id": 32,
+        "name": "Buffalo Chicken",
+        "description": "Spicy buffalo sauce, chicken, and blue cheese",
+        "price": 14,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "pizza"
+    },
+    {
+        "_id": 33,
+        "name": "Supreme",
+        "description": "Pepperoni, sausage, bell peppers, and olives",
+        "price": 15,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "pizza"
+    },
+    {
+        "_id": 34,
+        "name": "Pesto Veggie",
+        "description": "Pesto sauce, spinach, artichokes, and sun-dried tomatoes",
+        "price": 13,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "pizza"
+    },
+    {
+        "_id": 35,
+        "name": "Four Cheese",
+        "description": "Mozzarella, cheddar, parmesan, and gouda",
+        "price": 14,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "pizza"
+    },
+    {
+        "_id": 36,
+        "name": "Truffle Mushroom",
+        "description": "Truffle oil, mushrooms, and mozzarella",
+        "price": 16,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "pizza"
+    },
+    {
+        "_id": 37,
+        "name": "Velvet Dream",
+        "description": "Red velvet cake with cream cheese frosting",
+        "price": 8,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cakes"
+    },
+    {
+        "_id": 38,
+        "name": "Chocolate Indulgence",
+        "description": "Rich chocolate cake with a molten center",
+        "price": 9,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cakes"
+    },
+    {
+        "_id": 39,
+        "name": "Lemon Zest",
+        "description": "Light lemon cake with a zesty lemon glaze",
+        "price": 7,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cakes"
+    },
+    {
+        "_id": 40,
+        "name": "Carrot Spice",
+        "description": "Carrot cake with walnuts and cream cheese frosting",
+        "price": 8,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cakes"
+    },
+    {
+        "_id": 41,
+        "name": "Vanilla Bean",
+        "description": "Vanilla cake with a smooth buttercream frosting",
+        "price": 7,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cakes"
+    },
+    {
+        "_id": 42,
+        "name": "Strawberry Shortcake",
+        "description": "Layered cake with fresh strawberries and whipped cream",
+        "price": 9,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cakes"
+    },
+    {
+        "_id": 43,
+        "name": "Black Forest",
+        "description": "Chocolate cake with cherries and whipped cream",
+        "price": 9,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cakes"
+    },
+    {
+        "_id": 44,
+        "name": "Tiramisu Temptation",
+        "description": "Classic tiramisu with a hint of coffee liqueur",
+        "price": 10,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cakes"
+    },
+    {
+        "_id": 45,
+        "name": "Funfetti Surprise",
+        "description": "Vanilla cake with colorful sprinkles ins_ide and out",
+        "price": 8,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cakes"
+    },
+    {
+        "_id": 46,
+        "name": "Mocha Espresso",
+        "description": "Coffee-flavored cake with a rich mocha frosting",
+        "price": 9,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cakes"
+    },
+    {
+        "_id": 47,
+        "name": "Coconut Cream",
+        "description": "Coconut cake with a creamy coconut filling",
+        "price": 8,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cakes"
+    },
+    {
+        "_id": 48,
+        "name": "Banana Walnut",
+        "description": "Banana cake with toasted walnuts and caramel drizzle",
+        "price": 8,
+        "photo": "/src/assets/home/cookie.png",
+        "category": "cakes"
+    }
+]
