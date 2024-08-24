@@ -1,0 +1,7 @@
+@import '../mixins';
+@import '../vars';
+
+.success {
+    color: var(--success-color);
+    text-align: center;
+}

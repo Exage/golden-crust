@@ -35,7 +35,7 @@ productSchema.statics.addProduct = async function({name, description, price, ima
     return newProduct 
 }
 
-productSchema.statics.patchProduct = async function(id, body)  {
+productSchema.statics.updateProduct = async function(id, body)  {
     const patchedProduct = await this.findOneAndUpdate({_id: id}, {...body})
     
     if (!patchedProduct) {

@@ -1,0 +1,49 @@
+
+
+button {
+    padding: 0;
+    margin: 0;
+    background: none;
+    color: inherit;
+    border: inherit;
+    font-size: inherit;
+    font-family: inherit;
+
+    cursor: pointer;
+
+}
+
+.btn {
+    outline: none;
+    background: none;
+
+    border: 3px solid var(--primary-color);
+    padding: 1rem 3rem;
+
+    @include defaultHeadingFont;
+
+    color: inherit;
+
+    border-radius: 3rem;
+
+    transition-property: color, background;
+    transition-duration: 200ms;
+    transition-timing-function: linear;
+
+    &:hover {
+        color: var(--secondary-color);
+        background-color: var(--primary-color);
+    }
+
+    &__white {
+        color: var(--secondary-color);
+        border-color: var(--secondary-color);
+
+        mix-blend-mode: screen;
+
+        &:hover {
+            color: #000;
+            background-color: var(--secondary-color);
+        }
+    }
+}

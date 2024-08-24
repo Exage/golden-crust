@@ -1,0 +1,35 @@
+@mixin defaultHeadingFont {
+    font-family: "Lora", sans-serif;
+    font-weight: 600;
+}
+
+@mixin defaultBoxShadow {
+    box-shadow: 0 4px 20px var(--box-shadow-color);
+}
+
+@mixin defaultBlock($paddingX: 0, $paddingY: 0) {
+    border: 1px solid var(--border-color);
+    border-radius: 2rem;
+
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+
+    @include defaultBoxShadow();
+
+    @if $paddingX != 0 {
+        padding-left: $paddingX;
+        padding-right: $paddingX;
+    }
+
+    @if $paddingY != 0 {
+        padding-top: $paddingY;
+        padding-bottom: $paddingY;
+    }
+
+}
+
+@mixin bp($bp) {
+    @media (max-width: $bp) {
+        @content
+    }
+}

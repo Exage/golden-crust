@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 const productsRoutes = require('./routes/products')
+const personRoutes = require('./routes/category')
 
 const app = express()
 app.use(cors())
@@ -17,6 +18,7 @@ app.use((req, res, next) => {
 
 app.use('/images', express.static('uploads'))
 app.use('/api/products', productsRoutes)
+app.use('/api/category', personRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {

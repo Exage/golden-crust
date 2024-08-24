@@ -1,0 +1,42 @@
+input {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    color: inherit;
+}
+
+.input {
+    padding: 1.2rem 3rem;
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--primary-alt-color);
+    border-radius: 3rem;
+
+    transition-property: border;
+    transition-duration: 200ms;
+    transition-timing-function: linear;
+
+    &:focus {
+        border-color: var(--primary-color);
+    }
+
+    &::placeholder {
+        color: var(--primary-color);
+    }
+
+    &__white {
+        color: var(--secondary-color);
+
+        &:focus {
+            border-color: var(--secondary-color);
+        }
+
+        &::placeholder {
+            color: var(--primary-alt-color);
+        }
+    }
+}

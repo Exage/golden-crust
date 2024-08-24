@@ -10,7 +10,7 @@ const addProduct = async (req, res) => {
 
     try {
         const product = await ProductModel.addProduct({ name, description, price, category, image })
-        res.status(200).json({ success: true, message: 'Product Added' })
+        res.status(200).json({ success: true, message: 'Product Added', data: product })
     } catch (error) {
         res.status(400).json({ success: false, message: error.message })
     }
@@ -25,7 +25,7 @@ const listProducts = async (req, res) => {
     }
 }
 
-const patchProduct = async (req, res) => {
+const updateProduct = async (req, res) => {
     const { id } = req.params
     const body = req.body
 
@@ -34,8 +34,8 @@ const patchProduct = async (req, res) => {
     }
 
     try {
-        const product = await ProductModel.patchProduct(id, body)
-        res.status(200).json({ success: true, message: `Product "${product.name} (${product._id})" successfully updated` })
+        const product = await ProductModel.updateProduct(id, body)
+        res.status(200).json({ success: true, data: product, message: `Product "${product.name} (${product._id})" successfully updated` })
     } catch (error) {
         res.status(400).json({ success: false, message: error.message })
     }
@@ -56,12 +56,12 @@ const deleteProduct = async (req, res) => {
 
     fs.unlink(`uploads/${product.image}`, () => { })
 
-    res.status(200).json({ success: true, message: `Product "${product.name} (${product._id})" successfully deleted` })
+    res.status(200).json({ success: true, message: `Product "${product.name} (${product._id})" successfully deleted`, data: product })
 }
 
 module.exports = {
     addProduct,
     listProducts,
-    patchProduct,
+    updateProduct,
     deleteProduct
 }

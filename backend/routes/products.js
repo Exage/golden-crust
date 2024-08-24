@@ -3,7 +3,7 @@ const multer = require('multer')
 const { 
     addProduct, 
     listProducts, 
-    patchProduct,
+    updateProduct,
     deleteProduct 
 } = require('../controllers/productController')
 
@@ -18,11 +18,13 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({ storage })
+const maxSize = 2 * 1024 * 1024
+
+const upload = multer({ storage, limits: { fileSize: maxSize } })
 
 router.post('/add', upload.single('image'), addProduct)
 router.get('/list', listProducts)
-router.patch('/patch/:id', patchProduct)
+router.put('/:id', upload.single('image'), updateProduct)
 router.delete('/delete/:id', deleteProduct)
 
 module.exports = router

@@ -1,0 +1,72 @@
+
+
+.auth {
+    &__form {
+        margin-top: 4rem;
+
+        &-row {
+            display: flex;
+            column-gap: 2rem;
+
+            @include bp($bpModal1) {
+                column-gap: 1rem;
+            }
+
+            @include bp($bpModal2) {
+                flex-direction: column;
+                row-gap: 2rem;
+            }
+        }
+
+        &-input {
+            width: 100%;
+        }
+
+        &-inputs {
+            display: flex;
+            flex-direction: column;
+            row-gap: 2rem;
+        }
+
+        &-hr {
+            width: 100%;
+            border: none;
+            height: 1px;
+            margin: 3.5rem 0 0 0;
+
+            background-color: var(--primary-alt-color);
+        }
+
+        &-btns {
+            margin-top: 3.5rem;
+            display: flex;
+            flex-direction: column;
+            row-gap: 2rem;
+        }
+
+        &-btn {
+            width: 100%;
+
+            position: relative;
+
+            &:hover &__icon {
+                fill: var(--primary-color);
+            }
+
+            &__icon {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                fill: var(--secondary-color);
+
+                transition-property: fill;
+                transition-duration: 200ms;
+                transition-timing-function: linear;
+
+                @include bp($bpModal2) {
+                    display: none;
+                }
+            }
+        }
+    }
+}

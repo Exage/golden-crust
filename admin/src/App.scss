@@ -1,0 +1,15 @@
+@import './mixins';
+@import './vars';
+
+.App {
+    // padding-top: $pagePaddingTop;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--secondary-color);
+
+    @include bp($bpHeader2) {
+        $pagePaddingTop: 17.8rem;
+        // padding-top: $pagePaddingTop;
+    }
+}
