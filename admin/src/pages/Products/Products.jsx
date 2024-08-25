@@ -1,50 +1,36 @@
-import React, { useState, useEffect } from 'react'
-
+import React, { useEffect } from 'react'
+import { useFetchCategories } from '../../hooks/useFetchCategories'
+import { useFetchProducts } from '../../hooks/useFetchProducts'
+import { useCategoriesContext } from '../../hooks/useCategoriesContext'
 import { useProductsContext } from '../../hooks/useProductsContext'
 
-import { Sidebar } from './components/Sidebar'
-import { Items } from './components/Items'
+import { Outlet } from 'react-router-dom'
 
 export const Products = () => {
 
-    const [isLoading, setLoading] = useState(true)
-    const [error, setError] = useState('')
+    const { categories } = useCategoriesContext()
+    const { products } = useProductsContext()
 
-    const { dispatch, products } = useProductsContext()
+    const { getCategories } = useFetchCategories()
+    const { getProducts } = useFetchProducts()
 
     useEffect(() => {
+        
+        const getData = async () => {
+            if (!categories) {
+                await getCategories()
+            }
 
-        const fetchProducts = async () => {
-            try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/products/list`)
-
-                if (!response.ok) {
-                    setError('Failed to fetch products')
-                }
-
-                const json = await response.json()
-                dispatch({ type: 'SET_PRODUCTS', payload: json.data })
-                setError('')
-
-            } catch (error) {
-                setError(error.message)
-                console.error(error.message)
-            } finally {
-                setLoading(false)
+            if (!products) {
+                await getProducts()
             }
         }
 
-        fetchProducts()
+        getData()
 
     }, [])
 
     return (
-        <div className="page products">
-            <Sidebar />
-            <div className="page__content">
-                {error && <div className="error">{error}</div>}
-                {isLoading ? 'loading' : <Items />}
-            </div>
-        </div>
+        <Outlet />
     )
 }

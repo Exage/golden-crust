@@ -131,6 +131,10 @@
                 transform: translateX(0) translateY(1rem);
             }
 
+            &__wrapper {
+                position: relative;
+            }
+
             &__btn {
                 font-size: 1.4rem;
                 padding: 0.7rem 1rem;

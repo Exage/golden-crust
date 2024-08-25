@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useCategoriesContext } from '../../../hooks/useCategoriesContext'
 import { useAddProduct } from '../../../hooks/useAddProduct'
 
 import { Title } from '../../../components/Title/Title'
@@ -10,11 +11,10 @@ export const Sidebar = () => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
-    const [category, setCategory] = useState('')
-
-    const categories = JSON.parse(localStorage.getItem('golden-crust-admin-categories'))
+    const [category, setCategory] = useState('') 
 
     const { addProduct, error, success, isLoading } = useAddProduct()
+    const { categories } = useCategoriesContext()
 
     const handleSubmitForm = async (Event) => {
         Event.preventDefault()

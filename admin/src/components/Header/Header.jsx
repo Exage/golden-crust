@@ -25,29 +25,29 @@ export const Header = () => {
 
                         <div className="header__user">
                             <h1 className="header__user-label">User 111</h1>
-                            <button className="header__user-icon">
-                                <ReactSVG src={logout} onClick={() => setShowConfirmation(!showConfirmation)} />
-
+                            <div className="header__user-confirmation__wrapper">
+                                <button className="header__user-icon">
+                                    <ReactSVG src={logout} onClick={() => setShowConfirmation(!showConfirmation)} />
+                                </button>
                                 {showConfirmation && (
                                     <div className="header__user-confirmation">
                                         <button className='btn btn__white header__user-confirmation__btn'>
-                                            Yes
+                                            Log Out
                                         </button>
                                         <button className='btn btn__white header__user-confirmation__btn' onClick={() => setShowConfirmation(false)}>
-                                            No
+                                            Cancel
                                         </button>
                                     </div>
                                 )}
-
-                            </button>
+                            </div>
                         </div>
                     </div>
                     <div className="header__nav">
                         <div className="header__nav-links">
                             <NavLink to='/' className='header__nav-link'>users</NavLink>
                             <NavLink to='/orders' className='header__nav-link'>orders</NavLink>
-                            <NavLink to='/categories' className='header__nav-link'>categories</NavLink>
-                            <NavLink to='/products' className='header__nav-link'>products</NavLink>
+                            <NavLink to='/products/categories' className='header__nav-link'>categories</NavLink>
+                            <NavLink to='/products/list' className='header__nav-link'>products</NavLink>
                         </div>
                     </div>
                 </div>

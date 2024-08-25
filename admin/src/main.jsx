@@ -12,11 +12,11 @@ import { CategoriesContextProvider } from './context/CategoriesContext.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<ProductsContextProvider>
-				<CategoriesContextProvider>
+			<CategoriesContextProvider>
+				<ProductsContextProvider>
 					<App />
-				</CategoriesContextProvider>
-			</ProductsContextProvider>
+				</ProductsContextProvider>
+			</CategoriesContextProvider>
 		</BrowserRouter>
 	</React.StrictMode>
 )

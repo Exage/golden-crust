@@ -17,6 +17,12 @@ export const Sidebar = () => {
     const handleSubmitForm = async (Event) => {
         Event.preventDefault()
         await addCategory(name, title, description, primaryColor, secondaryColor)
+
+        setTitle('')
+        setName('')
+        setDescription('')
+        setPrimaryColor('')
+        setSecondaryColor('')
     }
 
     return (

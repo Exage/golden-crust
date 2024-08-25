@@ -1,15 +1,15 @@
 import { useState } from 'react'
-import { useProductsContext } from './useProductsContext'
+import { useCategoriesContext } from './useCategoriesContext'
 
-export const useFetchProducts = () => {
+export const usePatchCategory = () => {
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
 
-    const { dispatch } = useProductsContext()
+    const { dispatch } = useCategoriesContext()
     // const { user } = useAuthContext()
 
-    const getProducts = async () => {
+    const patchCategory = async (data) => {
         setIsLoading(true)
         setError(null)
         setSuccess(null)
@@ -19,17 +19,24 @@ export const useFetchProducts = () => {
         //     return
         // }
 
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/products/list`, {
-            method: 'GET',
+        const { _id } = data
+
+        console.log(data)
+
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/category/${_id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Authorization': `Bearer ${user.token}`
+            }
         })
         const json = await response.json()
 
         if (response.ok) {
-            dispatch({ type: 'SET_PRODUCTS', payload: json.data })
+            dispatch({ type: 'UPDATE_CATEGORY', payload: json })
             setIsLoading(false)
-
             setSuccess(json.message)
-
             return json
         }
 
@@ -39,5 +46,5 @@ export const useFetchProducts = () => {
         }
     }
 
-    return { isLoading, getProducts, error, success }
+    return { isLoading, patchCategory, error, success }
 }

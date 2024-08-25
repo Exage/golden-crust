@@ -21,8 +21,6 @@ export const usePatchProduct = () => {
 
         const { _id, image, name, description, price, category } = data
 
-        console.log(data)
-
         const formData = new FormData()
         formData.append('image', image)
         formData.append('name', name)

@@ -21,8 +21,6 @@ export const useAddCategory = () => {
         
         const category = { name, title, description, primaryColor, secondaryColor }
 
-        console.log(category)
-
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/category/`, {
             method: 'POST',
             body: JSON.stringify(category),
