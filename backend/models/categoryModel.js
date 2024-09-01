@@ -47,4 +47,4 @@ categorySchema.statics.patchCategory = async function (id, body) {
     return patchedCategory
 }
 
-module.exports = mongoose.model('Category', categorySchema)
+module.exports = mongoose.models.categorySchema || mongoose.model('Category', categorySchema)

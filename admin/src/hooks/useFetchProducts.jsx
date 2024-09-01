@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useAuthContext } from './useAuthContext'
 import { useProductsContext } from './useProductsContext'
 
 export const useFetchProducts = () => {
@@ -7,17 +8,17 @@ export const useFetchProducts = () => {
     const [isLoading, setIsLoading] = useState(null)
 
     const { dispatch } = useProductsContext()
-    // const { user } = useAuthContext()
+    const { user } = useAuthContext()
 
     const getProducts = async () => {
         setIsLoading(true)
         setError(null)
         setSuccess(null)
 
-        // if (!user) {
-        //     setError('You must be logged in!')
-        //     return
-        // }
+        if (!user) {
+            setError('You must be logged in!')
+            return
+        }
 
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/products/list`, {
             method: 'GET',
@@ -25,7 +26,7 @@ export const useFetchProducts = () => {
         const json = await response.json()
 
         if (response.ok) {
-            dispatch({ type: 'SET_PRODUCTS', payload: json.data })
+            dispatch({ type: 'SET_PRODUCTS', payload: json.data.reverse() })
             setIsLoading(false)
 
             setSuccess(json.message)

@@ -2,5 +2,7 @@
 @import '../../vars';
 
 .category {
-    margin-bottom: 10rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }

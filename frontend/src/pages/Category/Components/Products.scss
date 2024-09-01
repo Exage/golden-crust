@@ -3,11 +3,52 @@
 
 .category__products {
     margin-top: 10rem;
+    margin-bottom: 10rem;
+
+    @include bp($bp-header-1) {
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
 
     &-body {
         display: grid;
-        grid-template-columns: repeat(4, 30rem);
+        grid-template-columns: repeat(4, 1fr);
         column-gap: 3rem;
         row-gap: 3.5rem;
+
+        margin: 0 auto;
+
+        @include bp($bpCategory1) {
+            max-width: 96rem;
+            width: 100%;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @include bp($bpCategory2) {
+            max-width: 63rem;
+            width: 100%;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include bp($bpCategory3) {
+            max-width: 35rem;
+            width: 100%;
+            grid-template-columns: repeat(1, 1fr);
+
+            .product {
+                max-width: 35rem;
+            }
+        }
+    }
+
+    &-loader {
+
+        &__wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 20rem;
+            flex: 1;
+        }
     }
 }

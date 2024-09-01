@@ -1,0 +1,32 @@
+@import '../../mixins';
+@import '../../vars';
+
+.notfound {
+
+    margin-top: 10rem;
+    flex: 1;
+
+    &__text {
+        max-width: 50rem;
+        width: 100%;
+        margin: 0 auto;
+
+        text-align: center;
+
+        &-title {
+            font-size: 4.2rem;
+            @include defaultHeadingFont;
+        }
+
+        &-paragraph {
+            margin-top: 2.5rem;
+        }
+
+        &-btns {
+            display: flex;
+            margin-top: 1rem;
+
+            justify-content: center;
+        }
+    }
+}

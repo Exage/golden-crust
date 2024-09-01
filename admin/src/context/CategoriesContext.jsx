@@ -1,4 +1,5 @@
-import { createContext, useEffect, useReducer } from "react"
+import { createContext, useReducer, useState, useEffect } from "react"
+import { useAuthContext } from '../hooks/useAuthContext'
 
 export const CategoriesContext = createContext()
 
@@ -10,7 +11,7 @@ export const categoriesReducer = (state, action) => {
             }
         case "ADD_CATEGORY":
             return {
-                categories: [...state.categories, action.payload]
+                categories: [action.payload, ...state.categories]
             }
         case 'UPDATE_CATEGORY':
             return {
@@ -30,8 +31,48 @@ export const CategoriesContextProvider = ({ children }) => {
         categories: null
     })
 
+    const { user } = useAuthContext()
+
+    const [loading, setLoading] = useState(null)
+    const [error, setError] = useState(null)
+
+    const fetchCategories = async () => {
+
+        setLoading(true)
+        setError('')
+
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/category`, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch products')
+            }
+
+            const json = await response.json()
+
+            dispatch({ type: 'SET_CATEGORIES', payload: json.reverse() })
+            setError('')
+
+        } catch (error) {
+            setError(json.message)
+            console.error(json.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        if (user) {
+            fetchCategories()
+        }
+    }, [user])
+
     return (
-        <CategoriesContext.Provider value={{ ...state, dispatch }}>
+        <CategoriesContext.Provider value={{ ...state, loading, error, dispatch }}>
             {children}
         </CategoriesContext.Provider>
     )

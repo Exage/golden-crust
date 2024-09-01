@@ -1,8 +1,13 @@
-
-
 .auth {
     &__form {
         margin-top: 4rem;
+
+        &-error {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 3.5rem;
+        }
 
         &-row {
             display: flex;
@@ -32,7 +37,8 @@
             width: 100%;
             border: none;
             height: 1px;
-            margin: 3.5rem 0 0 0;
+            // margin: 3rem 0 0 0;
+            margin: 0;
 
             background-color: var(--primary-alt-color);
         }
@@ -66,6 +72,10 @@
                 @include bp($bpModal2) {
                     display: none;
                 }
+            }
+
+            &:disabled:hover &__icon {
+                fill: var(--secondary-color)
             }
         }
     }

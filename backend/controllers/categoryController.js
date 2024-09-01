@@ -4,8 +4,6 @@ const CategorySchema = require('../models/categoryModel')
 const createCategory = async (req, res) => {
     const body = req.body
 
-    console.log(body)
-
     try {
         const category = await CategorySchema.createCategory(body)
         res.status(200).json({ message: 'Category successfully added', data: category })
@@ -26,8 +24,6 @@ const getCategories = async (req, res) => {
 const patchCategory = async (req, res) => {
     const { id } = req.params
     const body = req.body
-
-    console.log(body)
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ message: 'Not valid category id' })

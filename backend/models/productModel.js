@@ -24,20 +24,24 @@ const productSchema = new Schema({
     }
 })
 
-productSchema.statics.addProduct = async function({name, description, price, image, category})  {
+productSchema.statics.addProduct = async function ({ name, description, price, image, category }) {
 
     if (!name || !description || !price || !image || !category) {
         throw new Error('All fields must be filled in!')
     }
 
-    const newProduct = await this.create({name, description, price, image, category})
+    const newProduct = await this.create({ name, description, price, image, category })
 
-    return newProduct 
+    return newProduct
 }
 
-productSchema.statics.updateProduct = async function(id, body)  {
-    const patchedProduct = await this.findOneAndUpdate({_id: id}, {...body})
-    
+productSchema.statics.updateProduct = async function (id, body) {
+    const patchedProduct = await this.findOneAndUpdate(
+        { _id: id },
+        { ...body },
+        { new: true }
+    )
+
     if (!patchedProduct) {
         throw new Error('No such product')
     }

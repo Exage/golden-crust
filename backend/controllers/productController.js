@@ -27,15 +27,29 @@ const listProducts = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     const { id } = req.params
-    const body = req.body
+    let body = req.body
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ success: false, message: 'Not valid product id' })
     }
 
     try {
-        const product = await ProductModel.updateProduct(id, body)
-        res.status(200).json({ success: true, data: product, message: `Product "${product.name} (${product._id})" successfully updated` })
+        const existingProduct = await ProductModel.findById(id)
+        if (!existingProduct) {
+            return res.status(404).json({ success: false, message: 'No such product' })
+        }
+
+        if (req.file) {
+            fs.unlink(`uploads/${existingProduct.image}`, () => { })
+            body = { ...body, image: req.file.filename }
+        }
+
+        const updatedProduct = await ProductModel.updateProduct(id, body)
+        res.status(200).json({
+            success: true,
+            data: updatedProduct,
+            message: `Product "${updatedProduct.name} (${updatedProduct._id})" successfully updated`
+        })
     } catch (error) {
         res.status(400).json({ success: false, message: error.message })
     }

@@ -1,0 +1,43 @@
+@import '../../mixins';
+@import '../../vars';
+
+.loader {
+    width: 4.5rem;
+    height: 4.5rem;
+    aspect-ratio: 1;
+    --c: no-repeat linear-gradient(var(--primary-color) 0 0);
+    background:
+        var(--c) 0% 50%,
+        var(--c) 50% 50%,
+        var(--c) 100% 50%;
+    background-size: 20% 100%;
+    
+    transition: background .2s linear;
+    animation: l1 1s infinite linear;
+
+    &__white {
+        --c: no-repeat linear-gradient(var(--secondary-color) 0 0);
+    }
+}
+
+@keyframes l1 {
+    0% {
+        background-size: 20% 100%, 20% 100%, 20% 100%
+    }
+
+    33% {
+        background-size: 20% 10%, 20% 100%, 20% 100%
+    }
+
+    50% {
+        background-size: 20% 100%, 20% 10%, 20% 100%
+    }
+
+    66% {
+        background-size: 20% 100%, 20% 100%, 20% 10%
+    }
+
+    100% {
+        background-size: 20% 100%, 20% 100%, 20% 100%
+    }
+}

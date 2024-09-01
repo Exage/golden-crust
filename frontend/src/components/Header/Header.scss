@@ -14,6 +14,12 @@
 
     z-index: $zIndexHeader;
 
+    @include bp($bp-header-1) {
+        padding-top: 0.5rem;
+
+        height: 10.5rem;
+    }
+
     &__overlay {
         display: none;
 
@@ -277,9 +283,14 @@
                         }
                     }
 
+                    li {
+                        display: flex;
+                    }
+
                     &__link {
                         display: block;
                         text-align: left;
+                        white-space: nowrap;
                         padding: 0.5rem 2rem 0.5rem 1rem;
                         flex-grow: 1;
 
@@ -287,6 +298,10 @@
                             padding: 0.5rem 1rem;
                         }
                     }
+                }
+
+                .loader {
+                    margin: 1rem auto;
                 }
             }
 

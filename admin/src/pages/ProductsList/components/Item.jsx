@@ -7,6 +7,8 @@ import TextareaAutosize from 'react-textarea-autosize'
 import trash from '../../../assets/icons/trash.svg'
 import { ReactSVG } from 'react-svg'
 
+import camera from '../../../assets/icons/camera.svg'
+
 import './Item.scss'
 
 export const Item = ({ data }) => {
@@ -30,7 +32,11 @@ export const Item = ({ data }) => {
 
     const handlePatchProduct = async () => {
 
-        const patchedProduct = { _id: data._id, name, description, price, category, image }
+        const patchedProduct = { _id: data._id, name, description, price, category }
+
+        if (image) {
+            patchedProduct.image = image
+        }
 
         await patchProduct(patchedProduct)
         setShowEdit(false)
@@ -76,12 +82,23 @@ export const Item = ({ data }) => {
             <div className="page__item-preview">
                 <div className="page__item-photo">
 
-                    <label htmlFor={`page__item-photo__${data._id}`} className={`page__item-photo__label${showEdit ? ' isedit' : ''}`}>
+                    <label htmlFor={`page__item-photo__${data._id}`} className="page__item-photo__label">
                         <img src={image ? URL.createObjectURL(image) : `${import.meta.env.VITE_API_URL}/images/${data.image}`} alt="" />
-                        {/* <img src={URL.createObjectURL(image)} alt="" /> */}
+                        {showEdit && (
+                            <div className="page__item-photo__label-overlay">
+                                <img src={camera} alt="" />
+                            </div>
+                        )}
                     </label>
 
-                    <input type="file" id={`page__item-photo__${data._id}`} hidden disabled={!showEdit} onChange={Event => setImage(Event.target.files[0])} />
+                    <input
+                        type="file"
+                        id={`page__item-photo__${data._id}`}
+
+                        hidden
+                        disabled={!showEdit}
+                        onChange={Event => setImage(Event.target.files[0])}
+                    />
                 </div>
                 <form className={`page__item-columns${showEdit ? ' isedit' : ''}`} onSubmit={handleSubmit}>
                     <div className="page__item-column page__item-column__name">

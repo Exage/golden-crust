@@ -1,5 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ReactSVG } from 'react-svg'
+import { GoogleLogin } from '@react-oauth/google'
+import { useGoogleLogin } from '@react-oauth/google'
+
+import { useAuthContext } from '../../hooks/useAuthContext'
+import { useLogin } from '../../hooks/useLogin'
+import { Loader } from '../../components/Loader/Loader'
 
 import './SignIn.scss'
 
@@ -7,9 +13,49 @@ import xmark from '../../assets/icons/xmark.svg'
 import google from '../../assets/icons/google.svg'
 
 import { Title } from '../../components/Title/Title'
-import { InputPassword } from '../../components/UI/InputPassword'
+import { InputPassword } from '../../components/InputPassword/InputPassword'
 
 export const SignIn = ({ showSignInModal, setShowSignInModal }) => {
+
+    const { login, error, isLoading } = useLogin()
+    const { user } = useAuthContext()
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    useEffect(() => {
+        if (showSignInModal) {
+            document.body.classList.add('noscroll')
+        } else {
+            document.body.classList.remove('noscroll')
+        }
+    }, [showSignInModal])
+
+    // const googleAuth = useGoogleLogin({
+    //     onSuccess: async (response) => {
+
+    //         console.log(response)
+
+    //         const data = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo`, {
+    //             headers: {
+    //                 'Authorization': `Bearer ${response.access_token}`
+    //             }
+    //         })
+    //         const json = await data.json()
+
+    //         console.log(json)
+    //     }
+    // })
+    // const googleAuth = () => {
+    //     const clientId = import.meta.env.VITE_API_URL
+    //     const redirectUri = import.meta.env.VITE_REDIRECT_URI
+    //     const scope = 'https://www.googleapis.com/auth/userinfo.profile'
+    //     const responseType = 'code'
+
+    //     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`
+
+    //     window.location.href = authUrl
+    // }
 
     const closeWindow = (Event) => {
         Event.preventDefault()
@@ -20,8 +66,16 @@ export const SignIn = ({ showSignInModal, setShowSignInModal }) => {
         Event.stopPropagation()
     }
 
-    const handleSubmit = (Event) => {
+    const handleSubmit = async (Event) => {
         Event.preventDefault()
+
+        const data = await login(email.trim(), password.trim())
+
+        if (data) {
+            if (data.success) {
+                setShowSignInModal(false)
+            }
+        }
     }
 
     return (
@@ -38,16 +92,46 @@ export const SignIn = ({ showSignInModal, setShowSignInModal }) => {
 
                         <form className="auth__form" onSubmit={handleSubmit}>
                             <div className="auth__form-inputs">
-                                <input type="text" placeholder='Email' className="input auth__form-input" />
-                                <InputPassword placeholder='Password' />
+                                <input
+                                    type="email"
+                                    placeholder='Email'
+                                    className="input input__white auth__form-input"
+
+                                    value={email}
+                                    onChange={Event => setEmail(Event.target.value)}
+                                />
+                                <InputPassword
+                                    white={true}
+                                    placeholder='Password'
+
+                                    value={password}
+                                    onChange={Event => setPassword(Event.target.value)}
+                                />
                             </div>
-                            <hr className="auth__form-hr" />
+                            <div className="auth__form-error">
+                                {error && <div className="error">{error}</div>}
+                            </div>
+                            <hr className={`auth__form-hr${error ? " auth__form-hr__error" : ''}`} />
                             <div className="auth__form-btns">
-                                <button className="btn btn__white auth__form-btn">Sign In</button>
-                                <button className="btn btn__white auth__form-btn auth__form-btn__google">
+
+                                <button
+                                    type='submit'
+                                    className="btn btn__white auth__form-btn"
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? <Loader size={16} /> : 'Sign In'}
+                                </button>
+
+                                <button
+                                    type='button'
+                                    className="btn btn__white auth__form-btn auth__form-btn__google"
+                                    disabled={isLoading}
+                                    onClick={() => console.log('Google Auth!')}
+                                >
                                     <ReactSVG src={google} className="auth__form-btn__icon" />
                                     Continue with google
                                 </button>
+
                             </div>
                         </form>
 

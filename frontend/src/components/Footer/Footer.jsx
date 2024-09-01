@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { contacts } from '../../config/contacts'
 
 import './Footer.scss'
 
@@ -25,10 +26,31 @@ export const Footer = () => {
                         </div>
                         <div className="footer__inner-column">
                             <h1 className="footer__inner-column__title">Get in touch</h1>
-                            <a href="tel:+123456789" className="footer__inner-column__link">+123 456 789</a>
-                            <a href="tel:+123456789" className="footer__inner-column__link">+123 456 789</a>
-                            <a href="https://maps.app.goo.gl/S7D1tZYZ3eEmKBbr6" className="footer__inner-column__link" target='_blank'>st. Molodogvardeyskaya 1</a>
-                            <a href="mailto:goldencrust@gmail.com" className="footer__inner-column__link">goldencrust@gmail.com</a>
+
+                            {contacts.map((item, index) => {
+                                let data = item.link.trim()
+                                let type = ''
+
+                                if (item.type === 'email') {
+                                    type = 'mailto:'
+                                } else if (item.type === 'phone') {
+                                    type = 'tel:'
+                                    data = `${data.slice(0, 4)} (${data.slice(4, 6)}) ${data.slice(6, 9)}-${data.slice(9, 11)}-${data.slice(11)}`
+                                } else {
+                                    type = ''
+                                }
+
+                                return (
+                                    <a 
+                                        key={index}
+                                        href={`${type}${item.link}`} 
+                                        className="footer__inner-column__link"
+                                        target={`${item.blank ? '_blank' : '_self'}`}
+                                    >
+                                        {item.display ? item.display : data}
+                                    </a>
+                                )
+                            })}
                         </div>
                     </div>
 
@@ -52,7 +74,7 @@ export const Footer = () => {
                 </div>
 
                 <div className="footer__bottom">
-                    Copyright 2024 © All Right Reserved. 
+                    Copyright 2024 © All Right Reserved.
                 </div>
 
             </div>

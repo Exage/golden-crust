@@ -4,8 +4,11 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 
-const productsRoutes = require('./routes/products')
+const userRoutes = require('./routes/users')
 const personRoutes = require('./routes/category')
+const productsRoutes = require('./routes/products')
+const cartRoutes = require('./routes/cart')
+const orderRoutes = require('./routes/order')
 
 const app = express()
 app.use(cors())
@@ -17,8 +20,11 @@ app.use((req, res, next) => {
 })
 
 app.use('/images', express.static('uploads'))
-app.use('/api/products', productsRoutes)
+app.use('/api/users', userRoutes)
 app.use('/api/category', personRoutes)
+app.use('/api/products', productsRoutes)
+app.use('/api/bag', cartRoutes)
+app.use('/api/order', orderRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {

@@ -6,7 +6,7 @@ import { Title } from '../../components/Title/Title'
 
 export const AboutUs = () => {
     return (
-        <div className="aboutus">
+        <div className="aboutus page__padding">
             <Title>
                 Learn our history
             </Title>

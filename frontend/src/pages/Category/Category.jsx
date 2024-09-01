@@ -1,6 +1,8 @@
-import React, { useContext } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { StoreContext } from '../../context/StoreContext'
+import React from 'react'
+import { useParams } from 'react-router-dom'
+
+import { useCategoriesContext } from '../../hooks/useCategoriesContext'
+import { useProductsContext } from '../../hooks/useProductsContext'
 
 import './Category.scss'
 
@@ -9,16 +11,18 @@ import { Products } from './Components/Products'
 
 export const Category = () => {
 
-    const { category: currentCategory } = useParams()
-    const { categories, products } = useContext(StoreContext)
+    const { categoryName } = useParams()
+    
+    const { categories } = useCategoriesContext()
+    const { products: allProducts } = useProductsContext()
 
-    const { primaryColor, title, name } = categories.find(item => item.name === currentCategory)
-    const currentProducts = products.filter(product => product.category === name)
+    const category = categories ? categories.find(item => item.name === categoryName) : null
+    const products = allProducts ? allProducts.filter(item => item.category === categoryName) : null
 
     return (
         <div className="category">
-            <Header primaryColor={primaryColor} title={title} name={name} />
-            <Products primaryColor={primaryColor} products={currentProducts} />
+            <Header category={category} />
+            <Products category={category} products={products} />
         </div>
     )
 }

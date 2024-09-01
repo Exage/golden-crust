@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ReactSVG } from 'react-svg'
 
+import { useAuthContext } from '../../hooks/useAuthContext'
+import { useCategoriesContext } from '../../hooks/useCategoriesContext'
+
 import './Header.scss'
+
+import { Loader } from '../Loader/Loader'
 
 import logo from '../../assets/logo-white.svg'
 import bars from '../../assets/icons/bars.svg'
@@ -10,7 +15,18 @@ import xmark from '../../assets/icons/xmark.svg'
 
 export const Header = ({ setShowSignInModal, setShowSignUpModal }) => {
 
+    const { user } = useAuthContext()
+    const { categories, loading } = useCategoriesContext()
+
     const [burgerOpen, setBurgerOpen] = useState(false)
+
+    useEffect(() => {
+        if (burgerOpen) {
+            document.body.classList.add('noscroll')
+        } else {
+            document.body.classList.remove('noscroll')
+        }
+    }, [burgerOpen])
 
     const handleMenuToggle = () => {
         setBurgerOpen(!burgerOpen)
@@ -22,10 +38,12 @@ export const Header = ({ setShowSignInModal, setShowSignUpModal }) => {
 
     const handleOpenSignInModal = () => {
         setShowSignInModal(true)
+        setBurgerOpen(false)
     }
 
     const handleOpenSignUpModal = () => {
         setShowSignUpModal(true)
+        setBurgerOpen(false)
     }
 
     return (
@@ -49,18 +67,19 @@ export const Header = ({ setShowSignInModal, setShowSignUpModal }) => {
                                         Menu
                                         <div className="header__nav-link__dropdown-menu__wrapper">
                                             <ul className="header__nav-link__dropdown-menu">
-                                                <li>
-                                                    <NavLink to='/menu/cookies' className="header__nav-link__dropdown-menu__link">Cookies</NavLink>
-                                                </li>
-                                                <li>
-                                                    <NavLink to='/menu/donuts' className="header__nav-link__dropdown-menu__link">Donuts</NavLink>
-                                                </li>
-                                                <li>
-                                                    <NavLink to='/menu/pizza' className="header__nav-link__dropdown-menu__link">Pizza</NavLink>
-                                                </li>
-                                                <li>
-                                                    <NavLink to='/menu/cakes' className="header__nav-link__dropdown-menu__link">Cakes</NavLink>
-                                                </li>
+
+                                                {loading && <Loader white={true} size={24} />}
+
+                                                {categories && categories.map(item => (
+                                                    <li key={item._id}>
+                                                        <NavLink
+                                                            to={`/menu/${item.name}`}
+                                                            className="header__nav-link__dropdown-menu__link"
+                                                        >
+                                                            {item.title}
+                                                        </NavLink>
+                                                    </li>
+                                                ))}
                                                 <li>
                                                     <NavLink to='/menu' className="header__nav-link__dropdown-menu__link">Explore All</NavLink>
                                                 </li>
@@ -76,19 +95,34 @@ export const Header = ({ setShowSignInModal, setShowSignUpModal }) => {
                                     <NavLink to='/aboutus' className="header__nav-link">About Us</NavLink>
                                     <NavLink to='/bag' className="header__nav-link">Bag</NavLink>
 
-                                    <div className="header__nav-link header__nav-link__dropdown">
-                                        Account
-                                        <div className="header__nav-link__dropdown-menu__wrapper">
-                                            <ul className="header__nav-link__dropdown-menu">
-                                                <li>
-                                                    <button onClick={handleOpenSignInModal} className="header__nav-link__dropdown-menu__link">Sign&nbsp;In</button>
-                                                </li>
-                                                <li>
-                                                    <button onClick={handleOpenSignUpModal} className="header__nav-link__dropdown-menu__link">Sign&nbsp;Up</button>
-                                                </li>
-                                            </ul>
+                                    {!user && (
+                                        <div className="header__nav-link header__nav-link__dropdown">
+                                            Account
+                                            <div className="header__nav-link__dropdown-menu__wrapper">
+                                                <ul className="header__nav-link__dropdown-menu">
+                                                    <li>
+                                                        <button
+                                                            onClick={handleOpenSignInModal}
+                                                            className="header__nav-link__dropdown-menu__link"
+                                                        >
+                                                            Sign In
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button
+                                                            onClick={handleOpenSignUpModal}
+                                                            className="header__nav-link__dropdown-menu__link"
+                                                        >
+                                                            Sign Up
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
+
+                                    {user && <NavLink to='/account' className="header__nav-link">Account</NavLink>}
+
                                 </div>
                             </nav>
                         </div>
@@ -100,7 +134,7 @@ export const Header = ({ setShowSignInModal, setShowSignUpModal }) => {
                     </div>
                 </div>
 
-            </div>
-        </header>
+            </div >
+        </header >
     )
 }

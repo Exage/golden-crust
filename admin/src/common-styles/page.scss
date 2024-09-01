@@ -16,6 +16,10 @@
     border: 2px solid var(--primary-alt-color);
     background-color: var(--secondary-color);
 
+    &-sticky {
+        padding-right: 2rem;
+    }
+
     &-title {
         font-size: 2.4rem;
         text-align: center;
@@ -54,7 +58,7 @@
 
 .page__content {
     flex: 1;
-    padding-left: 2rem;
+    // padding-left: 2rem;
 }
 
 .page__items {
@@ -136,16 +140,14 @@
             border-radius: 2rem;
             overflow: hidden;
 
-            &.isedit {
-                cursor: pointer;
-            }
-
-            &.isedit::after {
-                content: "";
+            &-overlay {
                 position: absolute;
                 top: 0;
                 left: 0;
 
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
                 border-radius: 2rem;
                 border: 2px dashed var(--primary-alt-color);
@@ -156,11 +158,21 @@
                 background-size: 50px;
                 background-repeat: no-repeat;
                 background-position: center;
-            }
 
-            &.isedit:hover::after {
-                background-color: rgba($primaryAltColor, 0.6);
-                background-image: url(../../../assets/icons/camera.svg);
+                cursor: pointer;
+
+                img {
+                    display: none;
+                    width: 7rem;
+                }
+
+                &:hover {
+                    background-color: rgba(var(--primary-color-rgb), 0.5);
+
+                    img {
+                        display: block;
+                    }
+                }
             }
         }
     }
@@ -203,7 +215,7 @@
         }
 
         &__name {
-            max-width: 12rem;
+            max-width: 14rem;
             width: 100%;
         }
 
@@ -228,6 +240,12 @@
         }
     }
 
+    &-buttons {
+        max-width: 18rem;
+        width: 100%;
+        margin-left: auto;
+    }
+
     &-bottom {
 
         .btn__confirmation-wrapper {
@@ -247,5 +265,10 @@
             max-width: 10rem;
             width: 100%;
         }
+    }
+
+    .error,
+    .success {
+        margin-top: 2rem;
     }
 }

@@ -8,27 +8,27 @@ import { Outlet } from 'react-router-dom'
 
 export const Products = () => {
 
-    const { categories } = useCategoriesContext()
-    const { products } = useProductsContext()
+    // const { categories } = useCategoriesContext()
+    // const { products } = useProductsContext()
 
-    const { getCategories } = useFetchCategories()
-    const { getProducts } = useFetchProducts()
+    // const { getCategories } = useFetchCategories()
+    // const { getProducts } = useFetchProducts()
 
-    useEffect(() => {
+    // useEffect(() => {
         
-        const getData = async () => {
-            if (!categories) {
-                await getCategories()
-            }
+    //     const getData = async () => {
+    //         if (!categories) {
+    //             await getCategories()
+    //         }
 
-            if (!products) {
-                await getProducts()
-            }
-        }
+    //         if (!products) {
+    //             await getProducts()
+    //         }
+    //     }
 
-        getData()
+    //     getData()
 
-    }, [])
+    // }, [])
 
     return (
         <Outlet />

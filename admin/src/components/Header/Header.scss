@@ -23,7 +23,6 @@
         justify-content: space-between;
 
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--border-color);
 
         @include bp($bpHeader2) {
             flex-direction: column;
@@ -34,7 +33,9 @@
     &__nav {
         overflow-x: auto;
         padding-bottom: 1rem;
-        margin-top: 2rem;
+        padding-top: 2rem;
+
+        border-top: 1px solid var(--border-color);
 
         &-links {
             display: flex;
@@ -118,18 +119,12 @@
 
             position: absolute;
             top: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(1rem);
+            right: 0;
+            transform: translateY(1rem);
 
             cursor: default;
 
             @include defaultBlock($paddingX: 1rem, $paddingY: 1rem);
-
-            @include bp($bpHeader1) {
-                left: auto;
-                right: 0;
-                transform: translateX(0) translateY(1rem);
-            }
 
             &__wrapper {
                 position: relative;

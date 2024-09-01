@@ -1,0 +1,37 @@
+@import '../../../../mixins';
+@import '../../../../vars';
+
+.bag__checkout {
+    max-width: 44rem;
+    width: 100%;
+    
+    @include bp($bpBag1) {
+        max-width: 100%;
+        margin-top: 5rem;
+    }
+
+    &-title {
+        font-size: 2.4rem;
+        @include defaultHeadingFont;
+        text-align: center;
+
+        margin-top: 3rem;
+    }
+
+    &-sticky {
+        position: sticky;
+        top: 12rem;
+    }
+
+    &-sticky > &-title:first-child {
+        margin-top: 0;
+    }
+
+    &-delivery {
+        margin-top: 3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 1rem;
+    }
+}

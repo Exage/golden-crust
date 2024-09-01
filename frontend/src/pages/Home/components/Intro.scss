@@ -15,6 +15,10 @@
     background-repeat: no-repeat;
     background-position: center;
 
+    @include bp($bp-header-1) {
+        padding-top: 10.5rem;
+    }
+
     @include bp($bpHomeIntroMax) {
         min-height: 100vh;
         max-height: 108rem;

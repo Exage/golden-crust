@@ -3,8 +3,8 @@ import { ReactSVG } from 'react-svg'
 
 import './InputPassword.scss'
 
-import eye from '../../assets/icons/eye.svg'
-import eyeSlash from '../../assets/icons/eye-slash.svg'
+import eye from '../../../assets/icons/eye.svg'
+import eyeSlash from '../../../assets/icons/eye-slash.svg'
 
 export const InputPassword = ({ placeholder, value, onChange, className, disabled=false }) => {
 
@@ -26,9 +26,9 @@ export const InputPassword = ({ placeholder, value, onChange, className, disable
                 
                 disabled={disabled}
             />
-            <button className='input__password-icon' onClick={toggleShow}>
+            <div className='input__password-icon' onClick={toggleShow}>
                 {showPassword ? <ReactSVG src={eye} /> : <ReactSVG src={eyeSlash} />}
-            </button>
+            </div>
         </div>
     )
 }

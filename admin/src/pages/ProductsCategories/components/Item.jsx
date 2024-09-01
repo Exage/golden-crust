@@ -29,7 +29,6 @@ export const Item = ({ data }) => {
     const handlePatchProduct = async () => {
 
         const patchedCategory = { _id: data._id, title, name, description, primaryColor, secondaryColor }
-        console.log(patchedCategory)
 
         await patchCategory(patchedCategory)
         setShowEdit(false)

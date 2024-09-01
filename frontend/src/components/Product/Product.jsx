@@ -1,15 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useAuthContext } from '../../hooks/useAuthContext'
+import { useBagContext } from '../../hooks/useBagContext'
+import { useAddBagItem } from '../../hooks/useAddBagItem'
+import { useSubstractBagItem } from '../../hooks/useSubstractBagItem'
+
+import { Loader } from '../Loader/Loader'
 
 import './Product.scss'
 
-export const Product = ({ data, primaryColor, secondaryColor }) => {
+export const Product = ({ data, primaryColor }) => {
 
-    const { name, photo, description, price } = data
+    const { _id, name, image, description, price } = data
+
+    const { bag, loading: bagLoading } = useBagContext()
+    const { addBagItem, isLoading: addItemLoading } = useAddBagItem()
+    const { substractBagItem, isLoading: substractItemLoading } = useSubstractBagItem()
+
+    const bagItem = bag && bag[_id]
+    const bagMultiplier = bagItem ? bagItem : 1
+
+    const handleAddBagItemClick = async () => {
+        await addBagItem(_id)
+    }
+
+    const handleSubstractBagItemClick = async () => {
+        await substractBagItem(_id)
+    }
 
     return (
         <div className="product">
             <div className="product__photo">
-                <img src={photo} alt={name} />
+                <img src={`${import.meta.env.VITE_API_URL}/images/${image}`} alt={name} />
             </div>
             <div className="product__title-wrapper">
                 <h1 className="product__title">{name}</h1>
@@ -19,16 +40,65 @@ export const Product = ({ data, primaryColor, secondaryColor }) => {
             </div>
             <div className="product__price-wrapper">
                 <div className="product__price">
-                    <div className="product__price-amount">{price}</div>
+                    <div className="product__price-amount">{price * bagMultiplier}</div>
                     <div className="product__price-currency">$</div>
                 </div>
             </div>
-            <div className="product__btn-wrapper">
-                <button className="btn btn__custombg product__btn" style={{ borderColor: primaryColor, color: primaryColor, backgroundColor: primaryColor }}>
-                    <div className="product__btn-bg"></div>
-                    Add to Bag
-                </button>
-            </div>
+            {bagLoading && (
+                <div className="product__btn-wrapper">
+                    <Loader size={21} />
+                </div>
+            )}
+            {!bagLoading && (
+                <div className="product__btn-wrapper">
+                    {!bagItem && (
+                        <button
+                            className="btn btn__custombg product__btn"
+                            style={{
+                                borderColor: primaryColor,
+                                color: primaryColor,
+                                backgroundColor: primaryColor
+                            }}
+                            onClick={handleAddBagItemClick}
+                            disabled={addItemLoading}
+                        >
+                            <div className="product__btn-bg"></div>
+                            Add to Bag
+                        </button>
+                    )}
+                    {bagItem && (
+                        <>
+                            <button
+                                className="btn btn__custombg product__btn product__btn-counter"
+                                style={{
+                                    borderColor: primaryColor,
+                                    color: primaryColor,
+                                    backgroundColor: primaryColor
+                                }}
+                                onClick={handleAddBagItemClick}
+                                disabled={addItemLoading}
+                            >
+                                <div className="product__btn-bg"></div>
+                                +
+                            </button>
+                            <span className="product__counter" style={{ color: primaryColor }}>{bagItem}</span>
+                            <button
+                                className="btn btn__custombg product__btn product__btn-counter"
+                                style={{
+                                    borderColor: primaryColor,
+                                    color: primaryColor,
+                                    backgroundColor: primaryColor
+                                }}
+                                onClick={handleSubstractBagItemClick}
+                                disabled={substractItemLoading}
+                            >
+                                <div className="product__btn-bg"></div>
+                                -
+                            </button>
+                        </>
+                    )}
+                </div>
+            )}
         </div>
     )
 }

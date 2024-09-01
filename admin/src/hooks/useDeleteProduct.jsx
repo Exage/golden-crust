@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useAuthContext } from './useAuthContext'
 import { useProductsContext } from './useProductsContext'
 
 export const useDeleteProduct = () => {
@@ -7,24 +8,23 @@ export const useDeleteProduct = () => {
     const [isLoading, setIsLoading] = useState(null)
 
     const { dispatch } = useProductsContext()
-    // const { user } = useAuthContext()
+    const { user } = useAuthContext()
 
     const delteProduct = async (id) => {
         setIsLoading(true)
         setError(null)
         setSuccess(null)
 
-        // if (!user) {
-        //     setError('You must be logged in!')
-        //     return
-        // }
+        if (!user) {
+            setError('You must be logged in!')
+            return
+        }
 
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/products/delete/${id}`, {
             method: 'DELETE',
-            // headers: {
-                // 'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${user.token}`
-            // }
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         })
         const json = await response.json()
 

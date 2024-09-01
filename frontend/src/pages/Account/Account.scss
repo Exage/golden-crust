@@ -1,0 +1,15 @@
+@import '../../mixins';
+@import '../../vars';
+
+.account {
+    &__loader {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__bottom {
+        display: flex;
+        justify-content: center;
+        margin-top: 5rem;
+    }
+}

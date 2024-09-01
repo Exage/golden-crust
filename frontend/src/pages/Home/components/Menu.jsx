@@ -1,6 +1,9 @@
 import React, { useContext } from 'react'
 import { ReactSVG } from 'react-svg'
-import { StoreContext } from '../../../context/StoreContext'
+
+import { useCategoriesContext } from '../../../hooks/useCategoriesContext'
+
+import { Loader } from '../../../components/Loader/Loader'
 
 import './Menu.scss'
 
@@ -11,7 +14,7 @@ import { MenuCategory } from './MenuCategory'
 
 export const Menu = ({ menuRef }) => {
 
-    const { categories } = useContext(StoreContext)
+    const { categories, loading } = useCategoriesContext()
 
     return (
         <div className="home__menu" ref={menuRef}>
@@ -26,15 +29,19 @@ export const Menu = ({ menuRef }) => {
                 </div>
             </div>
 
+            {loading && (
+                <div className="container">
+                    <div className="home__menu-loader">
+                        <Loader />
+                    </div>
+                </div>
+            )}
+
             <div className="home__menu-categories">
-                {categories.map(category => (
+                {categories && categories.map(category => (
                     <MenuCategory
                         key={category._id}
-                        title={category.title}
-                        name={category.name}
-                        subtitle={category.description}
-                        primaryColor={category.primaryColor}
-                        secondaryColor={category.secondaryColor}
+                        category={category}
                     />
                 ))}
             </div>

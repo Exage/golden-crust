@@ -63,11 +63,23 @@ $secondary: #d3d3d3;
         }
     }
 
-    &__body {
+    &__loader {
         display: flex;
         justify-content: center;
+        align-items: center;
+        padding: 2rem 0;
+    }
+
+    &__body {
+        display: flex;
         margin-top: 2rem;
-        column-gap: 3rem;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        .swiper {
+            border-radius: 3rem;
+        }
 
         @include bp($bpHomeMenuCategory1) {
             max-width: 96rem;
@@ -75,10 +87,6 @@ $secondary: #d3d3d3;
 
             margin-left: auto;
             margin-right: auto;
-
-            .swiper {
-                border-radius: 3rem;
-            }
         }
 
         @include bp($bpHomeMenuCategory2) {

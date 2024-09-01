@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useAuthContext } from './useAuthContext'
 import { useCategoriesContext } from './useCategoriesContext'
 
 export const useAddCategory = () => {
@@ -7,17 +8,17 @@ export const useAddCategory = () => {
     const [isLoading, setIsLoading] = useState(null)
 
     const { dispatch } = useCategoriesContext()
-    // const { user } = useAuthContext()
+    const { user } = useAuthContext()
 
     const addCategory = async (name, title, description, primaryColor, secondaryColor) => {
         setIsLoading(true)
         setError(null)
         setSuccess(null)
 
-        // if (!user) {
-        //     setError('You must be logged in!')
-        //     return
-        // }
+        if (!user) {
+            setError('You must be logged in!')
+            return
+        }
         
         const category = { name, title, description, primaryColor, secondaryColor }
 
@@ -26,7 +27,7 @@ export const useAddCategory = () => {
             body: JSON.stringify(category),
             headers: {
                 'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${user.token}`
+                'Authorization': `Bearer ${user.token}`
             }
         })
         const json = await response.json()

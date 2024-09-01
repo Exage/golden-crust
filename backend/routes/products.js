@@ -7,6 +7,9 @@ const {
     deleteProduct 
 } = require('../controllers/productController')
 
+const requireAuth = require('../middlewares/requireAuth')
+const requireAdmin = require('../middlewares/requireAdmin')
+
 const router = express.Router()
 
 // store images
@@ -22,9 +25,9 @@ const maxSize = 2 * 1024 * 1024
 
 const upload = multer({ storage, limits: { fileSize: maxSize } })
 
-router.post('/add', upload.single('image'), addProduct)
+router.post('/add', requireAuth, requireAdmin, upload.single('image'), addProduct)
 router.get('/list', listProducts)
-router.put('/:id', upload.single('image'), updateProduct)
-router.delete('/delete/:id', deleteProduct)
+router.patch('/:id', requireAuth, requireAdmin, upload.single('image'), updateProduct)
+router.delete('/delete/:id', requireAuth, requireAdmin, deleteProduct)
 
 module.exports = router

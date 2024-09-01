@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useAuthContext } from './useAuthContext'
 import { useProductsContext } from './useProductsContext'
 
 export const usePatchProduct = () => {
@@ -7,33 +8,36 @@ export const usePatchProduct = () => {
     const [isLoading, setIsLoading] = useState(null)
 
     const { dispatch } = useProductsContext()
-    // const { user } = useAuthContext()
+    const { user } = useAuthContext()
 
     const patchProduct = async (data) => {
         setIsLoading(true)
         setError(null)
         setSuccess(null)
 
-        // if (!user) {
-        //     setError('You must be logged in!')
-        //     return
-        // }
+        if (!user) {
+            setError('You must be logged in!')
+            return
+        }
 
         const { _id, image, name, description, price, category } = data
 
         const formData = new FormData()
-        formData.append('image', image)
+
+        if (image) {
+            formData.append('image', image)
+        }
+        
         formData.append('name', name)
         formData.append('description', description)
         formData.append('price', price)
         formData.append('category', category)
 
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${_id}`, {
-            method: 'PUT',
+            method: 'PATCH',
             body: formData,
             headers: {
-                // 'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${user.token}`
+                'Authorization': `Bearer ${user.token}`
             }
         })
         const json = await response.json()

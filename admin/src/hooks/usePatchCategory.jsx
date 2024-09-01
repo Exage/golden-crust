@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useAuthContext } from './useAuthContext'
 import { useCategoriesContext } from './useCategoriesContext'
 
 export const usePatchCategory = () => {
@@ -7,28 +8,26 @@ export const usePatchCategory = () => {
     const [isLoading, setIsLoading] = useState(null)
 
     const { dispatch } = useCategoriesContext()
-    // const { user } = useAuthContext()
+    const { user } = useAuthContext()
 
     const patchCategory = async (data) => {
         setIsLoading(true)
         setError(null)
         setSuccess(null)
 
-        // if (!user) {
-        //     setError('You must be logged in!')
-        //     return
-        // }
+        if (!user) {
+            setError('You must be logged in!')
+            return
+        }
 
         const { _id } = data
-
-        console.log(data)
 
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/category/${_id}`, {
             method: 'PATCH',
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${user.token}`
+                'Authorization': `Bearer ${user.token}`
             }
         })
         const json = await response.json()

@@ -6,17 +6,23 @@ import App from './App.jsx'
 
 import './index.scss'
 
-import { ProductsContextProvider } from './context/ProductsContext.jsx'
+import { AuthContextProvider } from './context/AuthContext.jsx'
+import { ListUsersContextProvider } from './context/ListUsersContext.jsx'
 import { CategoriesContextProvider } from './context/CategoriesContext.jsx'
+import { ProductsContextProvider } from './context/ProductsContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<CategoriesContextProvider>
-				<ProductsContextProvider>
-					<App />
-				</ProductsContextProvider>
-			</CategoriesContextProvider>
+			<AuthContextProvider>
+				<ListUsersContextProvider>
+					<CategoriesContextProvider>
+						<ProductsContextProvider>
+							<App />
+						</ProductsContextProvider>
+					</CategoriesContextProvider>
+				</ListUsersContextProvider>
+			</AuthContextProvider>
 		</BrowserRouter>
 	</React.StrictMode>
 )

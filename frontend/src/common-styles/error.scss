@@ -1,0 +1,7 @@
+@import '../mixins';
+@import '../vars';
+
+.error {
+    color: var(--error-color);
+    text-align: center;
+}
