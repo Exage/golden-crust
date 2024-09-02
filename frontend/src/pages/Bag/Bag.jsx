@@ -26,6 +26,23 @@ export const Bag = () => {
             .map(item => ({ ...item, amount: bag[item._id] }))
     }
 
+    if (bagLoading || productsLoading) {
+        return (
+            <div className="page__padding">
+                <div className='bag page'>
+                    <div className="container">
+
+                        <Title>Bag</Title>
+
+                        <div className="bag__wrapper">
+                            <Loader />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className="page__padding">
             <div className={`bag page${bagItems && bagItems.length === 0 ? ' noproducts' : ''}`}>
@@ -34,7 +51,6 @@ export const Bag = () => {
                     <Title>Bag</Title>
 
                     <div className="bag__wrapper">
-                        {(bagLoading || productsLoading) && <Loader />}
                         {bagItems && (
                             <>
                                 {bagItems.length === 0 && (
