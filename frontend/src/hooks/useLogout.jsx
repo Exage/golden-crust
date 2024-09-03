@@ -10,7 +10,7 @@ export const useLogout = () => {
         localStorage.removeItem('golden-crust-user')
 
         authDispatch({ type: 'LOGOUT' })
-        bagContext({ type: 'SET_BAG', payload: [] })
+        bagContext({ type: 'SET_BAG', payload: {} })
     }
 
     return { logout }

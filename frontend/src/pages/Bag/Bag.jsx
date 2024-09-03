@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useBagContext } from '../../hooks/useBagContext'
 import { useProductsContext } from '../../hooks/useProductsContext'
@@ -15,18 +15,24 @@ import { Checkout } from './components/Checkout/Checkout'
 
 export const Bag = () => {
 
-    const { bag, loading: bagLoading } = useBagContext()
-    const { products: allProducts, loading: productsLoading } = useProductsContext()
+    const [bagItems, setBagItems] = useState(null)
 
-    let bagItems = null
+    const { bag, loading } = useBagContext()
+    const { products } = useProductsContext()
 
-    if (bag && allProducts) {
-        bagItems = allProducts
-            .filter(item => bag.hasOwnProperty(item._id))
-            .map(item => ({ ...item, amount: bag[item._id] }))
-    }
+    useEffect(() => {
+        if (bag) {
+            
+            const items = products
+                .filter(item => bag.hasOwnProperty(item._id))
+                .map(item => ({ ...item, quantity: bag[item._id] }))
 
-    if (bagLoading || productsLoading) {
+            setBagItems(items)
+        }
+    }, [bag])
+
+
+    if (loading) {
         return (
             <div className="page__padding">
                 <div className='bag page'>
@@ -60,7 +66,8 @@ export const Bag = () => {
                                             Your Bag is empty
                                         </h1>
                                         <p className="bag__wrapper-noproducts__text">
-                                            The cart is still empty, but this can be easily fixed. <br />Check out our selection and choose something delicious!
+                                            <span>The bag is still empty, but this can be easily fixed. </span> 
+                                            <span>Check out our selection and choose something delicious!</span>
                                         </p>
                                         <Link to='/' className="bag__wrapper-noproducts__link">continue shoping</Link>
                                     </div>

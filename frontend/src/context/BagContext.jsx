@@ -1,5 +1,6 @@
 import React, { useReducer, createContext, useEffect, useState } from "react"
 import { useAuthContext } from '../hooks/useAuthContext'
+import { useProductsContext } from '../hooks/useProductsContext'
 
 export const BagContext = createContext()
 
@@ -16,12 +17,13 @@ export const bagReducer = (state, action) => {
 
 export const BagContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(bagReducer, {
-        bag: JSON.parse(localStorage.getItem('golden-crust-bag')) || []
+        bag: null
     })
 
     const { user } = useAuthContext()
+    const { products } = useProductsContext()
 
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
     const fetchBag = async () => {
@@ -56,10 +58,19 @@ export const BagContextProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        if (user) {
-            fetchBag()
+        if (products) {
+
+            setLoading(true)
+
+            if (user) {
+                fetchBag()
+            } else {
+                dispatch({ type: "SET_BAG", payload: JSON.parse(localStorage.getItem('golden-crust-bag')) || {} })
+                setLoading(false)
+            }
+            
         }
-    }, [user])
+    }, [user, products])
 
     return (
         <BagContext.Provider value={{ ...state, dispatch, loading, error }}>

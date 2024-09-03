@@ -1,8 +1,8 @@
 const UserModel = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 
-const createToken = (_id, name, lastName, email, role) => {
-    return jwt.sign({ _id, name, lastName, email, role }, process.env.SECRET, { expiresIn: '7d' })
+const createToken = (_id, name, lastName, phone, email, role) => {
+    return jwt.sign({ _id, name, lastName, phone, email, role }, process.env.SECRET, { expiresIn: '7d' })
 }
 
 const signup = async (req, res) => {
@@ -12,7 +12,7 @@ const signup = async (req, res) => {
     try {
         const user = await UserModel.signup({ name, lastName, email, password })
 
-        const token = createToken(user._id, name, lastName, email, user.role)
+        const token = createToken(user._id, name, lastName, user.phone, email, user.role)
 
         res.status(200).json({ success: true, message: 'User Created', data: token })
     } catch (error) {
@@ -27,7 +27,7 @@ const signinUser = async (req, res) => {
     try {
         const user = await UserModel.signin({ email, password })
 
-        const token = createToken(user._id, user.name, user.lastName, email, user.role, user.bagData, user.addresses)
+        const token = createToken(user._id, user.name, user.lastName, user.phone, email, user.role)
 
         res.status(200).json({ success: true, message: 'User Find', data: token })
     } catch (error) {
@@ -47,7 +47,7 @@ const signinAdmin = async (req, res) => {
             return res.status(403).json({ success: false, message: 'Access denied. Admins only' })
         }
 
-        const token = createToken(user._id, user.name, user.lastName, email, user.role, user.bagData, user.addresses)
+        const token = createToken(user._id, user.name, user.lastName, email, user.role)
 
         res.status(200).json({ success: true, message: 'User Find', data: token })
     } catch (error) {

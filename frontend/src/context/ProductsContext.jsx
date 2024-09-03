@@ -8,9 +8,6 @@ export const ProductsContextProvider = ({ children }) => {
     const [error, setError] = useState(null)
 
     const fetchProducts = async () => {
-        setLoading(true)
-        setError(null)
-
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/products/list`, {
                 headers: {

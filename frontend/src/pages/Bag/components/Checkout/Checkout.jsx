@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import { useAuthContext } from '../../../../hooks/useAuthContext'
+
 import './Checkout.scss'
 
 import { Radio } from '../../../../components/Radio/Radio'
@@ -10,12 +12,15 @@ import { Delivery } from '../DeliveryMethods/Delivery'
 export const Checkout = ({ bagItems }) => {
 
     const deliveryMethodName = 'delivery-method'
+
+    const { user } = useAuthContext()
+
     const [deliveryMethod, setDeliveryMethod] = useState('self-pickup')
     const [totalPrice, setTotalPrice] = useState(null)
 
     const calcTotalPrice = () => {
         const totalPrice = bagItems && bagItems.reduce((accumulator, currentValue) => {
-            return accumulator + (currentValue.price * currentValue.amount)
+            return accumulator + (currentValue.price * currentValue.quantity)
         }, 0)
 
         return totalPrice
@@ -56,14 +61,13 @@ export const Checkout = ({ bagItems }) => {
                     </Radio>
                 </div>
 
-
                 <h1 className="bag__checkout-title">
-                    Delivery method
+                    Delivery information
                 </h1>
 
                 <div className="bag__checkout-forms">
-                    {deliveryMethod === 'self-pickup' && <SelfPickup totalPrice={totalPrice} />}
-                    {deliveryMethod === 'delivery' && <Delivery totalPrice={totalPrice} deliveryFee={5} />}
+                    {deliveryMethod === 'self-pickup' && <SelfPickup totalPrice={totalPrice} bagItems={bagItems} />}
+                    {deliveryMethod === 'delivery' && <Delivery totalPrice={totalPrice} bagItems={bagItems} deliveryFee={8} />}
                 </div>
             </div>
         </div>

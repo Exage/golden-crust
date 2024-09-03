@@ -15,6 +15,8 @@ import { AboutUs } from './pages/AboutUs/AboutUs'
 import { PrivacyPolicy } from './pages/PrivacyPolicy/PrivacyPolicy'
 import { Account } from './pages/Account/Account'
 import { Bag } from './pages/Bag/Bag'
+import { Verify } from './pages/Verify/Verify'
+import { MyOrders } from './pages/MyOrders/MyOrders'
 import { NotFound } from './pages/NotFound/NotFound'
 
 import { SignIn } from './modals/SignIn/SignIn'
@@ -47,7 +49,9 @@ function App() {
 				<Route path='/aboutus' element={<AboutUs />} />
 				<Route path='/privacypolicy' element={<PrivacyPolicy />} />
 				<Route path='/account' element={user ? <Account /> : <Navigate to='/' />} />
+				<Route path='/verify' element={<Verify />} />
 				<Route path='/bag' element={<Bag />} />
+				<Route path='/myorders' element={<MyOrders />} />
 
 				<Route path='*' element={<NotFound />} />
 			</Routes>

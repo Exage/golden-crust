@@ -87,6 +87,10 @@ select {
     padding-bottom: 10rem;
     display: block;
     flex: 1;
+
+    @include bp($bp-header-1) {
+        padding-bottom: 3rem;
+    }
 }
 
 .page__padding {
@@ -99,6 +103,13 @@ select {
     @include bp($bp-header-1) {
         padding-top: 10.5rem;
     }
+}
+
+.page__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0;
 }
 
 @import './common-styles/container';

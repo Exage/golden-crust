@@ -8,9 +8,6 @@ export const CategoriesContextProvider = ({ children }) => {
     const [error, setError] = useState(null)
 
     const fetchCategories = async () => {
-        setLoading(true)
-        setError(null)
-
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/category`, {
                 headers: {

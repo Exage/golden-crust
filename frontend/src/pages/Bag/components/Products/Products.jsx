@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+
 import { useBagContext } from '../../../../hooks/useBagContext'
 import { useProductsContext } from '../../../../hooks/useProductsContext'
 import { useRemoveAllBagItems } from '../../../../hooks/useRemoveAllBagItems'
@@ -7,9 +7,7 @@ import { useRemoveAllBagItems } from '../../../../hooks/useRemoveAllBagItems'
 import './Products.scss'
 import { Loader } from '../../../../components/Loader/Loader'
 
-import cookies from '../../../../assets/bag/cookies.svg'
-
-import { Product } from './components/Product/Product'
+import { Product } from '../Product/Product'
 
 export const Products = ({ bagItems }) => {
 

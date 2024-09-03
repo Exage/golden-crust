@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { useAddBagItem } from '../../../../../../hooks/useAddBagItem'
-import { useSubstractBagItem } from '../../../../../../hooks/useSubstractBagItem'
-import { useRemoveBagItem } from '../../../../../../hooks/useRemoveBagItem'
+import { useAddBagItem } from '../../../../hooks/useAddBagItem'
+import { useSubstractBagItem } from '../../../../hooks/useSubstractBagItem'
+import { useRemoveBagItem } from '../../../../hooks/useRemoveBagItem'
 
 import './Product.scss'
 
@@ -12,7 +12,7 @@ export const Product = ({ data }) => {
     const { substractBagItem, isLoading: substractBagItemLoading } = useSubstractBagItem()
     const { removeBagItem, isLoading: removaBagItemLoading } = useRemoveBagItem()
 
-    const { _id, image, name, description, price, amount } = data
+    const { _id, image, name, description, price, quantity } = data
 
     const handleAddBagItemClick = async () => {
         await addBagItem(_id)
@@ -40,7 +40,7 @@ export const Product = ({ data }) => {
                     {description}
                 </p>
                 <div className="bag__product-info__price">
-                    <div className="bag__product-info__price-amount">{price * amount}</div>
+                    <div className="bag__product-info__price-amount">{price * quantity}</div>
                     <div className="bag__product-info__price-currency">$</div>
                 </div>
 
@@ -53,7 +53,7 @@ export const Product = ({ data }) => {
                         +
                     </button>
                     <div className="bag__product-counter__amount">
-                        {amount}
+                        {quantity}
                     </div>
                     <button
                         className="bag__product-counter__btn bag__product-counter__btn-substract"

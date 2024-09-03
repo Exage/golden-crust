@@ -21,9 +21,9 @@ export const useRemoveAllBagItems = () => {
             setError(null)
             setSuccess(null)
 
-            localStorage.setItem('golden-crust-bag', JSON.stringify([]))
+            localStorage.setItem('golden-crust-bag', JSON.stringify({}))
 
-            dispatch({ type: 'SET_BAG', payload: [] })
+            dispatch({ type: 'SET_BAG', payload: {} })
 
             return
         }

@@ -1,0 +1,16 @@
+@import '../../mixins';
+@import '../../vars';
+
+.verify {
+
+    &__loader {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &-title {
+            @include defaultHeadingFont;
+            margin-top: 2rem;
+        }
+    }
+}
