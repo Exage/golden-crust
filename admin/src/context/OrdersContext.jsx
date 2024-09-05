@@ -15,7 +15,7 @@ export const ordersReducer = (state, action) => {
             }
         case 'UPDATE_ORDER':
             return {
-                orders: state.products.map((item) =>
+                orders: state.orders.map((item) =>
                     item._id === action.payload._id ? { ...item, ...action.payload } : item
                 )
             }

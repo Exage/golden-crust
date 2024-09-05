@@ -1,15 +1,12 @@
 import React from 'react'
-import { useOrdersContext } from '../../hooks/useOrdersContext'
+import { Items } from './components/Items'
 
 export const Orders = () => {
-    
-    const { orders } = useOrdersContext()
-
-    console.log(orders)
-    
     return (
         <div className="orders">
-            {orders && orders.map(item => item._id)}
+            <div className="page__content">
+                <Items />
+            </div>
         </div>
     )
 }
