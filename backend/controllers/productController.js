@@ -5,6 +5,11 @@ const fs = require('fs')
 const addProduct = async (req, res) => {
 
     const { name, description, price, category } = req.body
+    const file = req.file
+
+    if (!file) {
+        return res.status(400).json({ success: false, message: 'File is not defined' })
+    }
 
     let image = `${req.file.filename}`
 
@@ -35,6 +40,7 @@ const updateProduct = async (req, res) => {
 
     try {
         const existingProduct = await ProductModel.findById(id)
+
         if (!existingProduct) {
             return res.status(404).json({ success: false, message: 'No such product' })
         }
@@ -45,11 +51,13 @@ const updateProduct = async (req, res) => {
         }
 
         const updatedProduct = await ProductModel.updateProduct(id, body)
+
         res.status(200).json({
             success: true,
             data: updatedProduct,
             message: `Product "${updatedProduct.name} (${updatedProduct._id})" successfully updated`
         })
+        
     } catch (error) {
         res.status(400).json({ success: false, message: error.message })
     }

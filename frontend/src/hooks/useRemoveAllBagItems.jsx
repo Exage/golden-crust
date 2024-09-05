@@ -16,15 +16,7 @@ export const useRemoveAllBagItems = () => {
         setSuccess(null)
 
         if (!user) {
-
-            setIsLoading(false)
-            setError(null)
-            setSuccess(null)
-
-            localStorage.setItem('golden-crust-bag', JSON.stringify({}))
-
-            dispatch({ type: 'SET_BAG', payload: {} })
-
+            setError('User not auth')
             return
         }
 

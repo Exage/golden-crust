@@ -29,15 +29,15 @@ export const Delivery = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
             name: name.trim(),
             lastname: lastname.trim(),
             items: bagItems,
-            amount: totalPrice + deliveryFee,
+            amount: totalPrice,
             phone: phone.replace(/\s/g, ""),
             address: { street, house, flat },
-            deliveryFee
+            deliveryFee: deliveryFee,
+            type: 'delivery',
         })
 
         if (response.success) {
             const { session_url } = response.data
-            localStorage.setItem('golden-crust-bag', JSON.stringify({}))
             window.location.replace(session_url)
         }
 

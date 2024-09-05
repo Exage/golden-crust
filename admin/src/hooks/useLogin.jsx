@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAuthContext } from './useAuthContext'
+import { jwtDecode } from 'jwt-decode'
 
 export const useLogin = () => {
     const [error, setError] = useState(null)
@@ -26,9 +27,13 @@ export const useLogin = () => {
         }
 
         if (response.ok) {
-            localStorage.setItem('golden-crust-admin', JSON.stringify(json.data))
 
-            dispatch({ type: 'LOGIN', payload: json.data })
+            localStorage.setItem('golden-crust-admin', JSON.stringify(json.data))
+            
+            const user = jwtDecode(json.data) 
+            const payload = { ...user, token: json.data }
+
+            dispatch({ type: 'LOGIN', payload })
 
             setIsLoading(false)
         }

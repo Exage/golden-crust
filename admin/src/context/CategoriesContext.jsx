@@ -33,7 +33,7 @@ export const CategoriesContextProvider = ({ children }) => {
 
     const { user } = useAuthContext()
 
-    const [loading, setLoading] = useState(null)
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
     const fetchCategories = async () => {

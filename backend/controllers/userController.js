@@ -47,7 +47,7 @@ const signinAdmin = async (req, res) => {
             return res.status(403).json({ success: false, message: 'Access denied. Admins only' })
         }
 
-        const token = createToken(user._id, user.name, user.lastName, email, user.role)
+        const token = createToken(user._id, user.name, user.lastName, user.phone, email, user.role)
 
         res.status(200).json({ success: true, message: 'User Find', data: token })
     } catch (error) {

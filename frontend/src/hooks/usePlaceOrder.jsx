@@ -10,7 +10,7 @@ export const usePlaceOrder = () => {
         setError(null)
         setSuccess(null)
 
-        const { userId, name, lastname, address, items, phone, amount, deliveryFee } = data
+        const { userId, name, lastname, address, items, phone, amount, deliveryFee, type } = data
         let uid = 'none'
 
         if (userId) {
@@ -19,7 +19,7 @@ export const usePlaceOrder = () => {
 
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/order/place`, {
             method: 'POST',
-            body: JSON.stringify({ userId, name, lastname, address, items, phone, amount, deliveryFee }),
+            body: JSON.stringify({ userId, name, lastname, address, items, phone, amount, deliveryFee, type }),
             headers: {
                 'Content-Type': 'application/json'
             }

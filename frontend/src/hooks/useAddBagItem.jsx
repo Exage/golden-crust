@@ -16,23 +16,7 @@ export const useAddBagItem = () => {
         setSuccess(null)
 
         if (!user) {
-            
-            setIsLoading(false)
-            setError(null)
-            setSuccess(null)
-
-            const bag = JSON.parse(localStorage.getItem('golden-crust-bag')) || {}
-            
-            if (!bag[id]) {
-                bag[id] = 1
-            } else {
-                bag[id] += 1
-            }
-
-            localStorage.setItem('golden-crust-bag', JSON.stringify(bag))
-
-            dispatch({ type: 'SET_BAG', payload: bag })
-
+            setError('User not auth')
             return
         }
 

@@ -25,7 +25,6 @@ export const Verify = () => {
 
         if (response.success) {
             navigate('/myorders')
-            dispatch({ type: 'ADD_ORDER', payload: response.data })
         } else {
             navigate('/')
         }

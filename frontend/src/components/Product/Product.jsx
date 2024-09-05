@@ -12,6 +12,7 @@ export const Product = ({ data, primaryColor }) => {
 
     const { _id, name, image, description, price } = data
 
+    const { user } = useAuthContext()
     const { bag, loading: bagLoading } = useBagContext()
     const { addBagItem, isLoading: addItemLoading } = useAddBagItem()
     const { substractBagItem, isLoading: substractItemLoading } = useSubstractBagItem()
@@ -20,11 +21,19 @@ export const Product = ({ data, primaryColor }) => {
     const bagMultiplier = bagItem ? bagItem : 1
 
     const handleAddBagItemClick = async () => {
-        await addBagItem(_id)
+        if (user) {
+            await addBagItem(_id)
+        } else {
+            alert('unauthorized interaction is temporarily unavailable')
+        }
     }
 
     const handleSubstractBagItemClick = async () => {
-        await substractBagItem(_id)
+        if (user) {
+            await substractBagItem(_id)
+        } else {
+            alert('unauthorized interaction is temporarily unavailable')
+        }
     }
 
     return (
@@ -44,12 +53,12 @@ export const Product = ({ data, primaryColor }) => {
                     <div className="product__price-currency">$</div>
                 </div>
             </div>
-            {bagLoading && (
+            {/* {bagLoading && (
                 <div className="product__btn-wrapper">
                     <Loader size={21} />
                 </div>
-            )}
-            {!bagLoading && (
+            )} */}
+            {/* {!bagLoading && ( */}
                 <div className="product__btn-wrapper">
                     {!bagItem && (
                         <button
@@ -98,7 +107,7 @@ export const Product = ({ data, primaryColor }) => {
                         </>
                     )}
                 </div>
-            )}
+            {/* )} */}
         </div>
     )
 }

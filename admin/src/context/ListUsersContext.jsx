@@ -63,7 +63,7 @@ export const ListUsersContextProvider = ({ children }) => {
 
     useEffect(() => {
         if (user) {
-            fetchUsers()
+            // fetchUsers()
         }
     }, [user])
 

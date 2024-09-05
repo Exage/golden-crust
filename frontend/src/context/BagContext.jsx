@@ -59,16 +59,9 @@ export const BagContextProvider = ({ children }) => {
 
     useEffect(() => {
         if (products) {
-
-            setLoading(true)
-
             if (user) {
                 fetchBag()
-            } else {
-                dispatch({ type: "SET_BAG", payload: JSON.parse(localStorage.getItem('golden-crust-bag')) || {} })
-                setLoading(false)
             }
-            
         }
     }, [user, products])
 

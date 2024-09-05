@@ -33,7 +33,8 @@ export const AuthContextProvider = ({ children }) => {
             const currentDate = Date.now() / 1000
             
             if (user.role === 'admin' && user.exp > currentDate) {
-                dispatch({ type: 'LOGIN', payload: {...user, token} })
+                const payload = {...user, token}
+                dispatch({ type: 'LOGIN', payload })
             } else {
                 dispatch({ type: 'LOGOUT' })
             }

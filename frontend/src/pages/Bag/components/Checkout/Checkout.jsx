@@ -9,11 +9,11 @@ import { Radio } from '../../../../components/Radio/Radio'
 import { SelfPickup } from '../DeliveryMethods/SelfPickup'
 import { Delivery } from '../DeliveryMethods/Delivery'
 
+import { globalData } from '../../../../config/global'
+
 export const Checkout = ({ bagItems }) => {
 
     const deliveryMethodName = 'delivery-method'
-
-    const { user } = useAuthContext()
 
     const [deliveryMethod, setDeliveryMethod] = useState('self-pickup')
     const [totalPrice, setTotalPrice] = useState(null)
@@ -67,7 +67,7 @@ export const Checkout = ({ bagItems }) => {
 
                 <div className="bag__checkout-forms">
                     {deliveryMethod === 'self-pickup' && <SelfPickup totalPrice={totalPrice} bagItems={bagItems} />}
-                    {deliveryMethod === 'delivery' && <Delivery totalPrice={totalPrice} bagItems={bagItems} deliveryFee={8} />}
+                    {deliveryMethod === 'delivery' && <Delivery totalPrice={totalPrice} bagItems={bagItems} deliveryFee={globalData.deliveryFee} />}
                 </div>
             </div>
         </div>

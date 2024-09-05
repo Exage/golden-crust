@@ -23,6 +23,10 @@ const orderSchema = new Schema({
         type: Number,
         required: true
     },
+    deliveryFee: {
+        type: Number,
+        default: 0
+    },
     phone: {
         type: String,
         required: true
@@ -38,10 +42,18 @@ const orderSchema = new Schema({
     payment: {
         type: Boolean,
         default: false
+    },
+    type: {
+        type: String,
+        require: true
+    },
+    status: {
+        type: String,
+        default: ""
     }
 })
 
-orderSchema.statics.placeOrder = async function ({ userId, name, lastname, items, amount, phone, address }) {
+orderSchema.statics.placeOrder = async function ({ userId, name, lastname, items, amount, phone, address, type, deliveryFee }) {
     
     let uid = 'none'
 
@@ -49,11 +61,11 @@ orderSchema.statics.placeOrder = async function ({ userId, name, lastname, items
         uid = userId
     }
     
-    if (!name || !lastname || !items || !amount || !phone || !address) {
+    if (!name || !lastname || !items || !amount || !phone || !address || !type) {
         throw new Error('All fields must be filled')
     }
 
-    const newOrder = await this.create({ userId: uid, name, lastname, items, amount, phone, address })
+    const newOrder = await this.create({ userId: uid, name, lastname, items, amount, phone, address, type, deliveryFee })
 
     return newOrder
 

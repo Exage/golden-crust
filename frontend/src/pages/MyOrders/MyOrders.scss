@@ -1,2 +1,16 @@
 @import '../../mixins';
 @import '../../vars';
+
+.myorders {
+    &__items {
+        margin-top: 5rem;
+    }
+
+    &__items > &__item {
+        margin-top: 2rem;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+}

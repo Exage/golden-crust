@@ -21,10 +21,10 @@ const sendSmsNotification = async (phoneNumber, message) => {
 
 const placeOrder = async (req, res) => {
 
-    const { userId, name, lastname, items, amount, phone, address, deliveryFee } = req.body
+    const { userId, name, lastname, items, amount, phone, address, deliveryFee, type } = req.body
 
     try {
-        const order = await Order.placeOrder({ userId, name, lastname, items, amount, phone, address })
+        const order = await Order.placeOrder({ userId, name, lastname, items, amount, phone, address, deliveryFee, type })
 
         if (userId !== 'none') {
             await User.findByIdAndUpdate(userId, { bagData: {} })
@@ -76,7 +76,7 @@ const verifyOrder = async (req, res) => {
             const order = await Order.findById(orderId) 
             
             if (!order.payment) {
-                const newOrder = await Order.findByIdAndUpdate(orderId, { payment: true }, { new: true })
+                const newOrder = await Order.findByIdAndUpdate(orderId, { payment: true, status: 'preparing for deliver' }, { new: true })
 
                 res.status(200).json({ message: 'Paid successfuly', success: true, data: newOrder })
                 sendSmsNotification(order.phone, sms('success', order))
@@ -101,6 +101,15 @@ const getUserOrders = async (req, res) => {
     } catch (error) {
         res.status(400).json({ success: false, message: error })
     }
-} 
+}
 
-module.exports = { placeOrder, verifyOrder, getUserOrders }
+const listAllOrders = async (req, res) => {
+    try {
+        const orders = await Order.find({})
+        res.status(200).json({ success: true, data: orders })
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+    }
+}
+
+module.exports = { placeOrder, verifyOrder, getUserOrders, listAllOrders }

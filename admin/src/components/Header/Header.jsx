@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState } from 'react'
 
 import { useAuthContext } from '../../hooks/useAuthContext'
 import { useLogout } from '../../hooks/useLogout'
@@ -63,8 +63,7 @@ export const Header = () => {
                     {user && (
                         <div className="header__nav">
                             <div className="header__nav-links">
-                                {/* <NavLink to='/' className='header__nav-link'>users</NavLink> */}
-                                <NavLink to='/' className='header__nav-link'>orders</NavLink>
+                                <NavLink to='/orders' className='header__nav-link'>orders</NavLink>
                                 <NavLink to='/products/categories' className='header__nav-link'>categories</NavLink>
                                 <NavLink to='/products/list' className='header__nav-link'>products</NavLink>
                             </div>

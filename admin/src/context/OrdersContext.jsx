@@ -1,16 +1,28 @@
-import React, { useReducer, createContext, useEffect, useState } from "react"
+import { createContext, useReducer, useEffect, useState } from "react"
 import { useAuthContext } from '../hooks/useAuthContext'
 
 export const OrdersContext = createContext()
 
 export const ordersReducer = (state, action) => {
     switch (action.type) {
-        case 'SET_ORDERS':
+        case "SET_ORDERS":
             return {
                 orders: action.payload
             }
-        default:
-            return state
+        case "ADD_ORDER":
+            return {
+                orders: [action.payload, ...state.orders]
+            }
+        case 'UPDATE_ORDER':
+            return {
+                orders: state.products.map((item) =>
+                    item._id === action.payload._id ? { ...item, ...action.payload } : item
+                )
+            }
+        case 'DELETE_ORDER':
+            return {
+                orders: state.orders.filter((item) => item._id !== action.payload._id)
+            }
     }
 }
 
@@ -25,14 +37,13 @@ export const OrdersContextProvider = ({ children }) => {
     const [error, setError] = useState(null)
 
     const fetchOrders = async () => {
+        
         setLoading(true)
-        setError(null)
+        setError('')
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/order/userorders/`, {
-                method: "GET",
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/order/list`, {
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user.token}`
                 }
             })
@@ -43,13 +54,12 @@ export const OrdersContextProvider = ({ children }) => {
 
             const json = await response.json()
 
-            dispatch({ type: "SET_ORDERS", payload: json.data.reverse() })
-
-            setError(null)
+            dispatch({ type: 'SET_ORDERS', payload: json.data.reverse() })
+            setError('')
 
         } catch (error) {
-            setError(error.message)
-            console.error(error.message)
+            setError(json.message)
+            console.error(json.message)
         } finally {
             setLoading(false)
         }
@@ -62,7 +72,7 @@ export const OrdersContextProvider = ({ children }) => {
     }, [user])
 
     return (
-        <OrdersContext.Provider value={{ ...state, dispatch, loading, error }}>
+        <OrdersContext.Provider value={{ ...state, loading, error, dispatch }}>
             {children}
         </OrdersContext.Provider>
     )

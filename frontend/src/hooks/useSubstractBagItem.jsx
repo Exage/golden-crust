@@ -16,25 +16,7 @@ export const useSubstractBagItem = () => {
         setSuccess(null)
 
         if (!user) {
-
-            setIsLoading(false)
-            setError(null)
-            setSuccess(null)
-
-            const bag = JSON.parse(localStorage.getItem('golden-crust-bag')) || {}
-
-            if (bag[id]) {
-                if (bag[id] > 1) {
-                    bag[id] -= 1
-                } else {
-                    delete bag[id]
-                }
-            }
-
-            localStorage.setItem('golden-crust-bag', JSON.stringify(bag))
-
-            dispatch({ type: 'SET_BAG', payload: bag })
-
+            setError('User not auth')
             return
         }
 

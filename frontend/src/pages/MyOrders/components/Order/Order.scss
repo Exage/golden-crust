@@ -1,0 +1,72 @@
+@import '../../../../mixins';
+@import '../../../../vars';
+
+.myorders__item {
+    padding: 1rem 3rem;
+    border: 2px solid var(--primary-alt-color);
+    border-radius: 2rem;
+
+    &-header {
+        display: flex;
+        align-items: center;
+
+        &__info {
+            &-title {
+                @include defaultHeadingFont;
+            }
+
+            &-status {
+                display: flex;
+                align-items: center;
+                font-size: 1.6rem;
+                margin-top: 1rem;
+                font-weight: 400;
+
+                &::before {
+                    content: "";
+                    display: block;
+                    width: 1.2rem;
+                    height: 1.2rem;
+
+                    border-radius: 50%;
+                    
+                    background-color: var(--preparing-color);
+
+                    margin-right: 1rem;
+                }
+            }
+        }
+
+        &__address {
+            margin-left: 5rem;
+        }
+
+        &__showdetails {
+            margin-left: auto;
+        }
+    }
+}
+
+.myorders__products {
+    max-width: 30rem;
+    width: 100%;
+    padding: 3rem 0;
+
+    & > .myorders__product:first-child {
+        margin-top: 0;
+    }
+
+    &-total {
+        border-top: 1px solid var(--primary-alt-color);
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+}
+
+.myorders__product {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
