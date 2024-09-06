@@ -92,7 +92,7 @@ export const Header = ({ setShowSignInModal, setShowSignUpModal }) => {
                                 </div>
                                 <div className="header__nav-right">
 
-                                    <NavLink to='/aboutus' className="header__nav-link">About Us</NavLink>
+                                    <NavLink to='/myorders' className="header__nav-link">My Orders</NavLink>
                                     <NavLink to='/bag' className="header__nav-link">Bag</NavLink>
 
                                     {!user && (

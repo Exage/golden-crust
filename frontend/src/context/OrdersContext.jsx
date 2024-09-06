@@ -9,6 +9,12 @@ export const ordersReducer = (state, action) => {
             return {
                 orders: action.payload
             }
+        case 'UPDATE_ORDER':
+            return {
+                orders: state.orders.map((item) =>
+                    item._id === action.payload._id ? { ...item, ...action.payload } : item
+                )
+            }
         default:
             return state
     }

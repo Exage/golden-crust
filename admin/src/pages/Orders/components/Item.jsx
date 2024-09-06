@@ -3,9 +3,15 @@ import { usePatchStatus } from '../../../hooks/usePatchStatus'
 
 const deliveryStatuses = {
     delivery: [
-        'preparing for deliver',
+        'preparing',
         'on the way',
         'ready to receive',
+        'order received'
+    ],
+    selfpickup: [
+        'preparing',
+        'ready for pickup',
+        'order received'
     ]
 }
 
@@ -99,15 +105,17 @@ export const Item = ({ data }) => {
                         </div>
                     </div>
                     <div className="page__item-column page__item-column__status">
-                        <select
-                            disabled={!showEdit}
-                            value={status}
-                            onChange={Event => setStatus(Event.target.value)}
-                        >
-                            {deliveryStatuses[data.type].map((item, index) => (
-                                <option key={index} value={item}>{item}</option>
-                            ))}
-                        </select>
+                        {status === 'canceled' ? <span>canceled</span> : (
+                            <select
+                                disabled={!showEdit}
+                                value={status}
+                                onChange={Event => setStatus(Event.target.value)}
+                            >
+                                {deliveryStatuses[data.type].map((item, index) => (
+                                    <option key={index} value={item}>{item}</option>
+                                ))}
+                            </select>
+                        )}
                     </div>
 
                     <div className="page__item-column page__item-buttons">

@@ -62,3 +62,32 @@
         }
     }
 }
+
+.select__address {
+    
+    width: 100%;
+    padding-left: 6rem !important;
+
+    &-wrapper {
+        position: relative;
+    }
+
+    &-icon {
+        position: absolute;
+        top: calc(50% - 1rem);
+        fill: var(--primary-alt-color);
+        width: 2rem;
+        height: 2rem;
+
+        &__location {
+            left: 3rem;
+        }
+
+        &__arrow {
+            top: calc(50% - 0.8rem);
+            right: 3rem;
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+    }
+}

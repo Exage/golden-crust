@@ -76,7 +76,8 @@ const verifyOrder = async (req, res) => {
             const order = await Order.findById(orderId) 
             
             if (!order.payment) {
-                const newOrder = await Order.findByIdAndUpdate(orderId, { payment: true, status: 'preparing for deliver' }, { new: true })
+
+                const newOrder = await Order.findByIdAndUpdate(orderId, { payment: true, status: 'preparing' }, { new: true })
 
                 res.status(200).json({ message: 'Paid successfuly', success: true, data: newOrder })
                 sendSmsNotification(order.phone, sms('success', order))
@@ -122,9 +123,32 @@ const updateStatus = async (req, res) => {
 
         res.status(200).json({ success: true, data: order, message: 'Status successfully updated!' })
 
+        if (status === 'on the way') {
+            sendSmsNotification(order.phone, sms('on the way', order))
+        } else if (status === 'ready to receive') {
+            sendSmsNotification(order.phone, sms('ready to receive', order))
+        } else if (status === 'ready for pickup') {
+            sendSmsNotification(order.phone, sms('ready for pickup', order))
+        }
+
     } catch (error) {
         res.status(400).json({ success: false, message: error.message })
     }
 }
 
-module.exports = { placeOrder, verifyOrder, getUserOrders, listAllOrders, updateStatus }
+const cancelOrder = async (req, res) => {
+    
+    const { id } = req.params
+    
+    try {
+        const order = await Order.findByIdAndUpdate(id, { status: 'canceled' }, { new: true })
+
+        sendSmsNotification(order.phone, sms('cancel', order))
+        res.status(200).json({ success: true, data: order, message: 'Status successfully updated!' })
+
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+    }
+}
+
+module.exports = { placeOrder, verifyOrder, getUserOrders, listAllOrders, updateStatus, cancelOrder }

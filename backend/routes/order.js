@@ -4,7 +4,8 @@ const {
     verifyOrder, 
     getUserOrders, 
     listAllOrders, 
-    updateStatus 
+    updateStatus,
+    cancelOrder
 } = require('../controllers/orderController')
 
 const requireAuth = require('../middlewares/requireAuth')
@@ -17,5 +18,6 @@ router.post('/verify', verifyOrder)
 router.get('/userorders', requireAuth, getUserOrders)
 router.get('/list', requireAuth, requireAdmin, listAllOrders)
 router.patch('/updateStatus/:id', requireAuth, requireAdmin, updateStatus)
+router.patch('/cancel/:id', cancelOrder)
 
 module.exports = router

@@ -122,4 +122,36 @@ button {
             }
         }
     }
+
+    &__red {
+        // background-color: var(--error-color);
+        border-color: var(--error-sec-color);
+        color: var(--error-color);
+
+        .loader {
+            --c: no-repeat linear-gradient(var(--error-color) 0 0)
+        }
+
+        &:hover {
+            background-color: var(--error-color);
+            border-color: var(--error-color);
+
+            .loader {
+                --c: no-repeat linear-gradient(var(--secondary-color) 0 0)
+            }
+        }
+
+        &:disabled {
+            opacity: 0.5;
+
+            &:hover {
+                border-color: var(--error-sec-color);
+                color: var(--error-sec-color);
+
+                .loader {
+                    --c: no-repeat linear-gradient(var(--error-color) 0 0)
+                }
+            }
+        }
+    }
 }
