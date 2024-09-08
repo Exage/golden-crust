@@ -111,9 +111,20 @@ const removeAllItems = async (req, res) => {
 }
 
 const getBag = async (req, res) => {
+
+    const { items } = req.body
+
     try {
         const user = await UserModel.findOne({ _id: req.user._id })
         const bagData = await user.bagData
+
+        if (items) {
+            const mergedBag = Object.assign({}, bagData, items)
+            const userUpdated = await UserModel.findOneAndUpdate(req.user._id, { bagData: mergedBag }, { new: true })
+            const bagUpdated = await userUpdated.bagData
+            
+            return res.status(200).json({ success: true, data: bagUpdated, merged: true })
+        }
 
         res.status(200).json({ success: true, data: bagData })
     } catch (error) {

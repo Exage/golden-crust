@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const { v4: uuidv4 } = require('uuid')
 
 const Schema = mongoose.Schema
 
@@ -33,6 +34,10 @@ const userSchema = new Schema({
         type: Object,
         default: {}
     },
+    ordersId: {
+        type: String,
+        required: true
+    },
     role: {
         type: String,
         default: 'user'
@@ -55,10 +60,12 @@ userSchema.statics.signup = async function({name, lastName, email, password}) {
         throw Error('This user already exists!')
     }
 
+    const ordersId = uuidv4()
+
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
 
-    const user = await this.create({ name, lastName, email, password: hashedPassword })
+    const user = await this.create({ name, lastName, email, password: hashedPassword, ordersId })
 
     return user
 

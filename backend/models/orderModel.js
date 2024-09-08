@@ -3,9 +3,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const orderSchema = new Schema({
-    userId: {
+    uuid: {
         type: String,
-        default: "none"
+        default: "",
+        required: true
     },
     name: {
         type: String,
@@ -53,19 +54,13 @@ const orderSchema = new Schema({
     }
 })
 
-orderSchema.statics.placeOrder = async function ({ userId, name, lastname, items, amount, phone, address, type, deliveryFee }) {
+orderSchema.statics.placeOrder = async function ({ uuid, name, lastname, items, amount, phone, address, type, deliveryFee }) {
     
-    let uid = 'none'
-
-    if (userId) {
-        uid = userId
-    }
-    
-    if (!name || !lastname || !items || !amount || !phone || !address || !type) {
+    if ( !uuid || !name || !lastname || !items || !amount || !phone || !address || !type) {
         throw new Error('All fields must be filled')
     }
 
-    const newOrder = await this.create({ userId: uid, name, lastname, items, amount, phone, address, type, deliveryFee })
+    const newOrder = await this.create({ uuid, name, lastname, items, amount, phone, address, type, deliveryFee })
 
     return newOrder
 

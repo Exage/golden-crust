@@ -29,9 +29,9 @@ export const SelfPickup = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
     const { user, error } = useAuthContext()
     const { placeOrder, isLoading } = usePlaceOrder()
 
-    const [name, setName] = useState(user ? user.name : '')
-    const [lastname, setLastname] = useState(user ? user.lastName : '')
-    const [phone, setPhone] = useState(user ? user.phone : '')
+    const [name, setName] = useState(user !== 'guest' ? user.name : '')
+    const [lastname, setLastname] = useState(user !== 'guest' ? user.lastName : '')
+    const [phone, setPhone] = useState(user !== 'guest' ? user.phone : '')
     const [shop, setShop] = useState(addresses[0])
 
     const [disableBtn, setDisableBtn] = useState(false)
@@ -42,7 +42,7 @@ export const SelfPickup = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
         setDisableBtn(true)
 
         const response = await placeOrder({
-            userId: user ? user._id : 'none',
+            uuid: user === 'guest' ? JSON.parse(localStorage.getItem('golden-crust-orders-uuid')) : user.ordersId,
             name: name.trim(),
             lastname: lastname.trim(),
             items: bagItems,

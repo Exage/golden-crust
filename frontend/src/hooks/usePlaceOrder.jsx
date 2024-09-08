@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import { useAuthContext } from './useAuthContext'
 
 export const usePlaceOrder = () => {
+    const user = useAuthContext()
+
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
@@ -10,26 +13,32 @@ export const usePlaceOrder = () => {
         setError(null)
         setSuccess(null)
 
-        const { userId, name, lastname, address, items, phone, amount, deliveryFee, type } = data
-        let uid = 'none'
-
-        if (userId) {
-            uid = userId
-        }
+        const { uuid, name, lastname, address, items, phone, amount, deliveryFee, type } = data
 
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/order/place`, {
             method: 'POST',
-            body: JSON.stringify({ userId, name, lastname, address, items, phone, amount, deliveryFee, type }),
+            body: JSON.stringify({ uuid, name, lastname, address, items, phone, amount, deliveryFee, type }),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
         const json = await response.json()
 
-        setIsLoading(false)
-        setSuccess(json.message)
+        if (response.ok) {
+            setIsLoading(false)
+            setSuccess(json.message)
 
-        return json
+            if (user === 'guest') {
+                localStorage.setItem('golden-crust-bag', JSON.stringify({}))
+            }
+
+            return json
+        }
+
+        if (!response.ok) {
+            setError(json.message)
+            setIsLoading(false)
+        }
     }
 
     return { isLoading, placeOrder, error, success }

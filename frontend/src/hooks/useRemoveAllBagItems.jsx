@@ -20,6 +20,17 @@ export const useRemoveAllBagItems = () => {
             return
         }
 
+        if (user === 'guest') {
+            const bagData = {}
+
+            localStorage.setItem('golden-crust-bag', JSON.stringify(bagData))
+            dispatch({ type: "SET_BAG", payload: bagData })
+
+            setIsLoading(false)
+
+            return
+        }
+
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/bag/removeAll`, {
             method: 'POST',
             headers: {

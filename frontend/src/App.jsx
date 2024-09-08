@@ -48,7 +48,7 @@ function App() {
 				<Route path='/location' element={<Location />} />
 				<Route path='/aboutus' element={<AboutUs />} />
 				<Route path='/privacypolicy' element={<PrivacyPolicy />} />
-				<Route path='/account' element={user ? <Account /> : <Navigate to='/' />} />
+				<Route path='/account' element={user !== 'guest' ? <Account /> : <Navigate to='/' />} />
 				<Route path='/verify' element={<Verify />} />
 				<Route path='/bag' element={<Bag />} />
 				<Route path='/myorders' element={<MyOrders />} />
@@ -56,8 +56,8 @@ function App() {
 				<Route path='*' element={<NotFound />} />
 			</Routes>
 
-			{!user && <SignIn showSignInModal={showSignInModal} setShowSignInModal={setShowSignInModal} />}
-			{!user && <SignUp showSignUpModal={showSignUpModal} setShowSignUpModal={setShowSignUpModal} />}
+			{user === 'guest' && <SignIn showSignInModal={showSignInModal} setShowSignInModal={setShowSignInModal} />}
+			{user === 'guest' && <SignUp showSignUpModal={showSignUpModal} setShowSignUpModal={setShowSignUpModal} />}
 
 			<Footer />
 		</div>

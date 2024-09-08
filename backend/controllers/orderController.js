@@ -21,14 +21,10 @@ const sendSmsNotification = async (phoneNumber, message) => {
 
 const placeOrder = async (req, res) => {
 
-    const { userId, name, lastname, items, amount, phone, address, deliveryFee, type } = req.body
+    const { uuid, name, lastname, items, amount, phone, address, deliveryFee, type } = req.body
 
     try {
-        const order = await Order.placeOrder({ userId, name, lastname, items, amount, phone, address, deliveryFee, type })
-
-        if (userId !== 'none') {
-            await User.findByIdAndUpdate(userId, { bagData: {} })
-        }
+        const order = await Order.placeOrder({ uuid, name, lastname, items, amount, phone, address, deliveryFee, type })
 
         const line_items = items.map(item => ({
             price_data: {
@@ -96,12 +92,16 @@ const verifyOrder = async (req, res) => {
 }
 
 const getUserOrders = async (req, res) => {
+
+    const { ordersId } = req.body
+
     try {
-        const orders = await Order.find({ userId: req.user._id })
+        const orders = await Order.find({ uuid: ordersId })
         res.status(200).json({ success: true, data: orders })
     } catch (error) {
         res.status(400).json({ success: false, message: error })
     }
+
 }
 
 const listAllOrders = async (req, res) => {
@@ -151,4 +151,11 @@ const cancelOrder = async (req, res) => {
     }
 }
 
-module.exports = { placeOrder, verifyOrder, getUserOrders, listAllOrders, updateStatus, cancelOrder }
+module.exports = { 
+    placeOrder, 
+    verifyOrder, 
+    getUserOrders, 
+    listAllOrders, 
+    updateStatus, 
+    cancelOrder
+}

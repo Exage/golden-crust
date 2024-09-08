@@ -15,7 +15,7 @@ const router = express.Router()
 
 router.post('/place', placeOrder)
 router.post('/verify', verifyOrder)
-router.get('/userorders', requireAuth, getUserOrders)
+router.post('/userorders', getUserOrders)
 router.get('/list', requireAuth, requireAdmin, listAllOrders)
 router.patch('/updateStatus/:id', requireAuth, requireAdmin, updateStatus)
 router.patch('/cancel/:id', cancelOrder)

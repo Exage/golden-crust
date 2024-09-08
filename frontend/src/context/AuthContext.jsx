@@ -1,5 +1,6 @@
 import React, { useReducer, createContext, useEffect, useState } from "react"
 import { jwtDecode } from 'jwt-decode'
+import { v4 as uuidv4 } from 'uuid'
 
 export const AuthContext = createContext()
 
@@ -11,7 +12,7 @@ export const authReducer = (state, action) => {
             }
         case 'LOGOUT':
             return {
-                user: null
+                user: 'guest'
             }
         default:
             return state
@@ -28,7 +29,7 @@ export const AuthContextProvider = ({ children }) => {
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('golden-crust-user'))
 
-        if (token) {
+        if (token && token !== 'guest') {
             const user = jwtDecode(token)
             const currentDate = Date.now() / 1000
             
@@ -37,6 +38,16 @@ export const AuthContextProvider = ({ children }) => {
             } else {
                 dispatch({ type: 'LOGOUT' })
             }
+        } else {
+            localStorage.setItem('golden-crust-user', JSON.stringify('guest'))
+
+            const ordersUuid = JSON.parse(localStorage.getItem('golden-crust-orders-uuid'))
+
+            if (!ordersUuid) {
+                localStorage.setItem('golden-crust-orders-uuid', JSON.stringify(uuidv4()))
+            }
+            
+            dispatch({ type: 'LOGIN', payload: 'guest' })
         }
 
         setLoading(false)

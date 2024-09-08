@@ -17,6 +17,6 @@ router.post('/add/:id', addItem)
 router.post('/substract/:id', substractItem)
 router.delete('/:id', removeItem)
 router.post('/removeAll', removeAllItems)
-router.get('/', getBag)
+router.post('/get', getBag)
 
 module.exports = router

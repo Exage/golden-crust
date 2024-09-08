@@ -35,11 +35,14 @@ export const OrdersContextProvider = ({ children }) => {
         setError(null)
 
         try {
+
+            const ordersId = user !== 'guest' ? user.ordersId : JSON.parse(localStorage.getItem('golden-crust-orders-uuid'))
+
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/order/userorders/`, {
-                method: "GET",
+                method: "POST",
+                body: JSON.stringify({ ordersId }),
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`
+                    'Content-Type': 'application/json'
                 }
             })
 

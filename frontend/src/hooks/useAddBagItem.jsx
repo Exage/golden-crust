@@ -7,7 +7,7 @@ export const useAddBagItem = () => {
     const [success, setSuccess] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
 
-    const { dispatch } = useBagContext()
+    const { dispatch, bag } = useBagContext()
     const { user } = useAuthContext()
 
     const addBagItem = async (id) => {
@@ -17,6 +17,23 @@ export const useAddBagItem = () => {
 
         if (!user) {
             setError('User not auth')
+            return
+        }
+
+        if (user === 'guest') {
+            const bagData = {...bag}
+
+            if (bagData[id]) {
+                bagData[id] += 1
+            } else {
+                bagData[id] = 1
+            }
+
+            localStorage.setItem('golden-crust-bag', JSON.stringify(bagData))
+            dispatch({ type: "SET_BAG", payload: bagData })
+
+            setIsLoading(false)
+
             return
         }
 

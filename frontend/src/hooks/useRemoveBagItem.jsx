@@ -7,7 +7,7 @@ export const useRemoveBagItem = () => {
     const [success, setSuccess] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
 
-    const { dispatch } = useBagContext()
+    const { dispatch, bag } = useBagContext()
     const { user } = useAuthContext()
 
     const removeBagItem = async (id) => {
@@ -17,6 +17,21 @@ export const useRemoveBagItem = () => {
 
         if (!user) {
             setError('User not auth!')
+            return
+        }
+
+        if (user === 'guest') {
+            const bagData = {...bag}
+            
+            if (bagData[id]) {
+                delete bagData[id]
+            }
+
+            localStorage.setItem('golden-crust-bag', JSON.stringify(bagData))
+            dispatch({ type: "SET_BAG", payload: bagData })
+
+            setIsLoading(false)
+
             return
         }
 

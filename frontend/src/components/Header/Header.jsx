@@ -95,7 +95,7 @@ export const Header = ({ setShowSignInModal, setShowSignUpModal }) => {
                                     <NavLink to='/myorders' className="header__nav-link">My Orders</NavLink>
                                     <NavLink to='/bag' className="header__nav-link">Bag</NavLink>
 
-                                    {!user && (
+                                    {user === 'guest' && (
                                         <div className="header__nav-link header__nav-link__dropdown">
                                             Account
                                             <div className="header__nav-link__dropdown-menu__wrapper">
@@ -121,7 +121,7 @@ export const Header = ({ setShowSignInModal, setShowSignUpModal }) => {
                                         </div>
                                     )}
 
-                                    {user && <NavLink to='/account' className="header__nav-link">Account</NavLink>}
+                                    {user !== 'guest' && <NavLink to='/account' className="header__nav-link">Account</NavLink>}
 
                                 </div>
                             </nav>

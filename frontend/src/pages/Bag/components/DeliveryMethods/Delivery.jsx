@@ -10,9 +10,9 @@ export const Delivery = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
     const { user, error } = useAuthContext()
     const { placeOrder, isLoading } = usePlaceOrder()
 
-    const [name, setName] = useState(user ? user.name : '')
-    const [lastname, setLastname] = useState(user ? user.lastName : '')
-    const [phone, setPhone] = useState(user ? user.phone : '')
+    const [name, setName] = useState(user !== 'guest' ? user.name : '')
+    const [lastname, setLastname] = useState(user !== 'guest' ? user.lastName : '')
+    const [phone, setPhone] = useState(user !== 'guest' ? user.phone : '')
     const [street, setStreet] = useState('')
     const [house, setHouse] = useState('')
     const [flat, setFlat] = useState('')
@@ -25,7 +25,7 @@ export const Delivery = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
         setDisableBtn(true)
 
         const response = await placeOrder({
-            userId: user ? user._id : 'none',
+            uuid: user === 'guest' ? JSON.parse(localStorage.getItem('golden-crust-orders-uuid')) : user.ordersId,
             name: name.trim(),
             lastname: lastname.trim(),
             items: bagItems,
@@ -39,6 +39,10 @@ export const Delivery = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
         if (response.success) {
             const { session_url } = response.data
             window.location.replace(session_url)
+
+            if (user === 'guest') {
+                localStorage.setItem('golden-crust-bag', JSON.stringify({}))
+            }
         }
 
     }

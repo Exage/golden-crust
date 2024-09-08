@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSearchParams } from 'react-router-dom'
 import { useVerifyPayment } from '../../hooks/useVerifyPayment'
+import { useAuthContext } from '../../hooks/useAuthContext'
 import { useOrdersContext } from '../../hooks/useOrdersContext'
 
 import './Verify.scss'
@@ -13,7 +14,10 @@ import { Failed } from './components/Failed'
 export const Verify = () => {
     const [searchParams, _] = useSearchParams()
     const { verifyPayment, isLoading } = useVerifyPayment()
+    const { user } = useAuthContext()
     const { dispatch } = useOrdersContext()
+
+    const [isCalled, setIsCalled] = useState(true)
 
     const success = searchParams.get('success')
     const orderId = searchParams.get('orderId')
@@ -23,15 +27,21 @@ export const Verify = () => {
     const handleVerifyPayment = async () => {
         const response = await verifyPayment(orderId, success)
 
-        if (response.success) {
-            navigate('/myorders')
-        } else {
-            navigate('/')
+        if (response) {
+            if (response.success) {
+                navigate('/myorders')
+            } else {
+                navigate('/')
+            }
         }
+
+        setIsCalled(false)
     }
 
     useEffect(() => {
-        handleVerifyPayment()
+        if (isCalled) {
+            handleVerifyPayment()
+        }
     }, [])
 
     if (isLoading) {
