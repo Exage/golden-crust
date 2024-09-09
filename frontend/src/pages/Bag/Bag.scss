@@ -7,15 +7,59 @@
 
     margin: 0 auto;
 
-    &.noproducts {
+    &__empty {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
 
+    &__loader {
         display: flex;
-        
-        .container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+        justify-content: center;
+    }
+
+    &__noproducts {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        max-width: 45rem;
+        width: 100%;
+
+        margin: 0 auto;
+
+        &-img {
+            pointer-events: none;
+            user-select: none;
+            height: 9rem;
+        }
+
+        &-title {
+            font-size: 3.4rem;
+            @include defaultHeadingFont;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        &-text {
+            max-width: 45rem;
+            width: 100%;
+            text-align: center;
+            margin-top: 1.8rem;
+
+            span {
+                display: block;
+                line-height: 1.2;
+
+                @include bp(470px) {
+                    display: contents;
+                }
+            }
+        }
+
+        &-link {
+            text-decoration: underline;
+            margin-top: 1rem;
         }
     }
 
@@ -34,56 +78,6 @@
             max-width: 50rem;
             width: 100%;
             margin: 5rem auto 0 auto
-        }
-
-        .loader {
-            margin: 0 auto;
-        }
-
-        &-noproducts {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            height: 100%;
-
-            padding: 3rem 0;
-
-            &__img {
-                pointer-events: none;
-                user-select: none;
-                height: 9rem;
-            }
-
-            &__title {
-                font-size: 3.4rem;
-                @include defaultHeadingFont;
-                text-align: center;
-                margin-top: 1rem;
-            }
-
-            &__text {
-                max-width: 45rem;
-                width: 100%;
-                text-align: center;
-                margin-top: 1.8rem;
-                
-                span {
-                    display: block;
-                    line-height: 1.2;
-
-                    @include bp(470px) {
-                        display: contents;
-                    }
-                }
-            }
-
-            &__link {
-                text-decoration: underline;
-                margin-top: 1rem;
-            }
         }
     }
 

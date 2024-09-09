@@ -65,6 +65,10 @@ a {
     text-decoration: none;
 }
 
+.link {
+    text-decoration: underline;
+}
+
 img,
 picture,
 svg,
@@ -93,6 +97,7 @@ select {
 
     @include bp($bp-header-1) {
         padding-bottom: 3rem;
+        min-height: calc(100vh - 10.5rem);
     }
 }
 

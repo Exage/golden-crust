@@ -22,6 +22,11 @@ const sendSmsNotification = async (phoneNumber, message) => {
 const placeOrder = async (req, res) => {
 
     const { uuid, name, lastname, items, amount, phone, address, deliveryFee, type } = req.body
+    const user = await User.findOne({ ordersId: uuid })
+
+    if (user) {
+        await User.findOneAndUpdate(user._id, { bagData: {} })
+    }
 
     try {
         const order = await Order.placeOrder({ uuid, name, lastname, items, amount, phone, address, deliveryFee, type })
@@ -71,7 +76,7 @@ const verifyOrder = async (req, res) => {
             
             const order = await Order.findById(orderId) 
             
-            if (!order.payment) {
+            if (order.payment) {
 
                 const newOrder = await Order.findByIdAndUpdate(orderId, { payment: true, status: 'preparing' }, { new: true })
 

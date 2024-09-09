@@ -8,11 +8,12 @@ import { Title } from '../../components/Title/Title'
 
 export const Menu = () => {
     return (
-        <div className="menu page__padding">
-            <Title>Menu</Title>
-            <button type='submit' className="btn auth__form-btn">
-                {true ? <Loader size={16} /> : 'Sign In'}
-            </button>
+        <div className="page__padding">
+            <div className="page menu">
+                <div className="container">
+                    <Title>Menu</Title>
+                </div>
+            </div>
         </div>
     )
 }

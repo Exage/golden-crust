@@ -118,7 +118,7 @@ const getBag = async (req, res) => {
         const user = await UserModel.findOne({ _id: req.user._id })
         const bagData = await user.bagData
 
-        if (items) {
+        if (items && Object.keys(items).length > 0) {
             const mergedBag = Object.assign({}, bagData, items)
             const userUpdated = await UserModel.findOneAndUpdate(req.user._id, { bagData: mergedBag }, { new: true })
             const bagUpdated = await userUpdated.bagData

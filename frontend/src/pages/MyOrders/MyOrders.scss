@@ -2,6 +2,19 @@
 @import '../../vars';
 
 .myorders {
+
+    &__empty {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     &__items {
         margin-top: 5rem;
     }
@@ -11,6 +24,24 @@
 
         &:first-child {
             margin-top: 0;
+        }
+    }
+
+    &__noitems {
+        max-width: 45rem;
+        width: 100%;
+
+        margin: 0 auto;
+        text-align: center;
+
+        &-title {
+            @include defaultHeadingFont;
+            margin-top: 1rem;
+            font-size: 3.4rem;
+        }
+
+        &-text {
+            margin-top: 1.8rem;
         }
     }
 }
