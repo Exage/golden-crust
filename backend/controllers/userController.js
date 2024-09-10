@@ -1,7 +1,8 @@
 const UserModel = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 
-const createToken = (_id, name, lastName, phone, email, role, ordersId) => {
+const createToken = (user) => {
+    const { _id, name, lastName, phone, email, role, ordersId } = user
     return jwt.sign({ _id, name, lastName, phone, email, role, ordersId }, process.env.SECRET, { expiresIn: '7d' })
 }
 
@@ -12,7 +13,7 @@ const signup = async (req, res) => {
     try {
         const user = await UserModel.signup({ name, lastName, email, password })
 
-        const token = createToken(user._id, name, lastName, user.phone, email, user.role, user.ordersId)
+        const token = createToken(user)
 
         res.status(200).json({ success: true, message: 'User Created', data: token })
     } catch (error) {
@@ -27,7 +28,7 @@ const signinUser = async (req, res) => {
     try {
         const user = await UserModel.signin({ email, password })
 
-        const token = createToken(user._id, user.name, user.lastName, user.phone, email, user.role, user.ordersId)
+        const token = createToken(user)
 
         res.status(200).json({ success: true, message: 'User Find', data: token })
     } catch (error) {
@@ -47,7 +48,7 @@ const signinAdmin = async (req, res) => {
             return res.status(403).json({ success: false, message: 'Access denied. Admins only' })
         }
 
-        const token = createToken(user._id, user.name, user.lastName, user.phone, email, user.role, user.ordersId)
+        const token = createToken(user)
 
         res.status(200).json({ success: true, message: 'User Find', data: token })
     } catch (error) {
@@ -72,9 +73,25 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+const updatePhone = async (req, res) => {
+    const { phone } = req.body
+
+    try {
+        const user = await UserModel.updatePhone(req.user._id, phone)
+
+        const token = createToken(user)
+
+        res.status(200).json({ success: true, data: token })
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+    }
+
+}
+
 module.exports = {
     signup,
     signinUser,
     signinAdmin,
-    getAllUsers
+    getAllUsers,
+    updatePhone
 }

@@ -43,6 +43,7 @@ export const OrdersContextProvider = ({ children }) => {
 
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/order/list`, {
+                method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }

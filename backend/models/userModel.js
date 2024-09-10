@@ -132,7 +132,7 @@ userSchema.statics.updatePassword = async function({ email, password, newPasswor
 
 }
 
-userSchema.statics.updateName = async function({ email, name, newName }) {
+userSchema.statics.updateName = async function({ id, name, newName }) {
     
     if ( !newName ) {
         throw Error('All fields must be filled in!')
@@ -142,7 +142,19 @@ userSchema.statics.updateName = async function({ email, name, newName }) {
         throw Error('Names must be diffrent')
     }
 
-    const user = await this.findOneAndUpdate({ email }, { name: newName })
+    const user = await this.findOneAndUpdate(id, { name: newName })
+
+    return user
+
+}
+
+userSchema.statics.updatePhone = async function(id, phone) {
+    
+    if ( !phone ) {
+        throw Error('All fields must be filled in!')
+    }
+
+    const user = await this.findOneAndUpdate(id, { phone }, { new: true })
 
     return user
 

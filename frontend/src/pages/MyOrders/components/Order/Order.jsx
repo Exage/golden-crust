@@ -29,8 +29,6 @@ export const Order = ({ data, setOrderData, setShowConfirmation }) => {
         setOrderData(data)
     }
 
-    console.log(data)
-
     return (
         <div className="myorders__item">
 

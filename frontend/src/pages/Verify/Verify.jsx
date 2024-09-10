@@ -39,9 +39,7 @@ export const Verify = () => {
     }
 
     useEffect(() => {
-        if (isCalled) {
-            handleVerifyPayment()
-        }
+        handleVerifyPayment()
     }, [])
 
     if (isLoading) {

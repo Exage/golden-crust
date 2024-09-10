@@ -12,4 +12,69 @@
         justify-content: center;
         margin-top: 5rem;
     }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 2rem;
+
+        max-width: 80rem;
+        width: 100%;
+
+        margin: 2rem auto 0 auto;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+    }
+
+    &__item:hover>&__btns {
+        opacity: 1;
+    }
+
+    &__title {
+        @include defaultHeadingFont;
+        font-size: 2.4rem;
+    }
+
+    &__btns {
+        margin-left: 1rem;
+        opacity: 0;
+
+        transition: opacity .2s ease;
+    }
+
+    &__btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 3.5rem;
+        height: 3.5rem;
+
+        background-color: rgba(var(--primary-color-rgb), 0);
+
+        border-radius: 50%;
+
+        transition: background-color .2s linear;
+
+        &:hover {
+            background-color: rgba(var(--primary-color-rgb), 0.2);
+        }
+
+        .icon {
+            width: 1.5rem;
+            height: 1.5rem;
+
+            fill: var(--primary-color);
+        }
+    }
 }

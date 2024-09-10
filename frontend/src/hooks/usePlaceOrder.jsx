@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useAuthContext } from './useAuthContext'
 
 export const usePlaceOrder = () => {
-    const user = useAuthContext()
+    const { user } = useAuthContext()
 
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)

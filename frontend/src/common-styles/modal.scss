@@ -42,6 +42,12 @@
         color: var(--secondary-color);
         fill: var(--secondary-color);
         -webkit-text-stroke-color: var(--secondary-color);
+
+        &-normal {
+            @include defaultHeadingFont;
+            font-size: 3.6rem;
+            text-align: center;
+        }
     }
 
     &__content {
@@ -61,6 +67,7 @@
 
     &__close {
         position: absolute;
+        top: 2rem;
         width: 1.6rem;
         right: 3.5rem;
 

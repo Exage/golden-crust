@@ -4,8 +4,11 @@ const sms = (type, data) => {
     let message = ''
 
     switch (type) {
-        case 'success':
+        case 'success_delivery':
             message = `Hello, ${name}. Your order will be delivered to the address: st. ${address.street}, house ${address.house}${address.flat ? `, flat ${address.flat}` : ''}. Total amount: ${amount + deliveryFee}$`
+            break
+        case 'success_selfpickup':
+            message = `Hello, ${name}. Your order for ${amount}$ is being prepared`
             break
         case 'on the way':
             message = `Dear, ${name}. Your order will be delivered within 40 minutes.`

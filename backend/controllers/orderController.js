@@ -76,14 +76,15 @@ const verifyOrder = async (req, res) => {
             
             const order = await Order.findById(orderId) 
             
-            if (order.payment) {
+            if (!order.payment) {
 
                 const newOrder = await Order.findByIdAndUpdate(orderId, { payment: true, status: 'preparing' }, { new: true })
 
                 res.status(200).json({ message: 'Paid successfuly', success: true, data: newOrder })
-                sendSmsNotification(order.phone, sms('success', order))
+
+                sendSmsNotification(order.phone, sms(`success_${order.type}`, order))
             } else {
-                res.status(200).json({ message: 'The order has already been paid', success: true, data: newOrder })
+                res.status(200).json({ message: 'The order has already been paid', success: true, data: order })
             }
 
         } else {
