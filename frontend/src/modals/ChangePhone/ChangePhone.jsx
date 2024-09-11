@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ReactSVG } from 'react-svg'
+import { useSetPhone } from '../../hooks/useSetPhone' 
 
-import { Title } from '../../components/Title/Title'
 import { Loader } from '../../components/Loader/Loader'
 
 import './ChangePhone.scss'
@@ -10,7 +10,9 @@ import xmark from '../../assets/icons/xmark.svg'
 
 export const ChangePhone = ({ showChangePhone, setShowChangePhone }) => {
 
-    const [phone, setPhone] = useState('')
+    const { setPhone, isLoading, error } = useSetPhone()
+
+    const [phoneField, setPhoneField] = useState('')
 
     const closeWindow = (Event) => {
         Event.preventDefault()
@@ -31,6 +33,12 @@ export const ChangePhone = ({ showChangePhone, setShowChangePhone }) => {
 
     const handleSubmit = async (Event) => {
         Event.preventDefault()
+        const response = await setPhone(phoneField)
+
+        if (response && response.success) {
+            setShowChangePhone(false)
+            setPhoneField('')
+        }
     }
 
     return (
@@ -43,32 +51,28 @@ export const ChangePhone = ({ showChangePhone, setShowChangePhone }) => {
                             <ReactSVG src={xmark} />
                         </button>
 
-                        <h1 className="modal__title-normal">Change Phone</h1>
+                        <h1 className="modal__title-normal">Set New Phone</h1>
 
                         <form className="auth__form" onSubmit={handleSubmit}>
                             <div className="auth__form-inputs">
                                 <input
                                     type="text"
-                                    placeholder='Name'
+                                    placeholder='New Phone Number'
                                     className="input input__white auth__form-input"
 
-                                    value={phone}
-                                    onChange={Event => setPhone(Event.target.value)}
+                                    value={phoneField}
+                                    onChange={Event => setPhoneField(Event.target.value)}
                                 />
                             </div>
-                            {/* <div className="auth__form-error">
+                            <div className="auth__form-error">
                                 {error && <div className="error">{error}</div>}
                             </div>
                             <hr className="auth__form-hr" />
                             <div className="auth__form-btns">
                                 <button type='submit' className="btn btn__white auth__form-btn" disabled={isLoading}>
-                                    {isLoading ? <Loader size={16} /> : 'Sign Up'}
+                                    {isLoading ? <Loader size={16} /> : 'Update phone number'}
                                 </button>
-                                <button type='button' className="btn btn__white auth__form-btn auth__form-btn__google" disabled={isLoading}>
-                                    <ReactSVG src={google} className="auth__form-btn__icon" />
-                                    Continue with google
-                                </button>
-                            </div> */}
+                            </div>
                         </form>
 
                     </div>

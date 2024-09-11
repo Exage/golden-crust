@@ -44,8 +44,8 @@ const userSchema = new Schema({
     }
 }, { minimize: false })
 
-userSchema.statics.signup = async function({name, lastName, email, password}) {
-    
+userSchema.statics.signup = async function ({ name, lastName, email, password }) {
+
     if (!name || !lastName || !email || !password) {
         throw Error('All fields must be filled in!')
     }
@@ -71,8 +71,8 @@ userSchema.statics.signup = async function({name, lastName, email, password}) {
 
 }
 
-userSchema.statics.signin = async function({email, password}) {
-    
+userSchema.statics.signin = async function ({ email, password }) {
+
     if (!email || !password) {
         throw Error('All fields must be filled in!')
     }
@@ -97,13 +97,13 @@ userSchema.statics.signin = async function({email, password}) {
 
 }
 
-userSchema.statics.updatePassword = async function({ email, password, newPassword}) {
-    
-    if ( !password || !newPassword) {
+userSchema.statics.updatePassword = async function ({ email, password, newPassword }) {
+
+    if (!password || !newPassword) {
         throw Error('All fields must be filled in!')
     }
 
-    if ( password === newPassword ) {
+    if (password === newPassword) {
         throw Error('Passwords must be diffrent')
     }
 
@@ -132,13 +132,13 @@ userSchema.statics.updatePassword = async function({ email, password, newPasswor
 
 }
 
-userSchema.statics.updateName = async function({ id, name, newName }) {
-    
-    if ( !newName ) {
+userSchema.statics.updateName = async function ({ id, name, newName }) {
+
+    if (!newName) {
         throw Error('All fields must be filled in!')
     }
 
-    if ( name === newName ) {
+    if (name === newName) {
         throw Error('Names must be diffrent')
     }
 
@@ -148,10 +148,22 @@ userSchema.statics.updateName = async function({ id, name, newName }) {
 
 }
 
-userSchema.statics.updatePhone = async function(id, phone) {
-    
-    if ( !phone ) {
+userSchema.statics.updatePhone = async function (id, phone) {
+
+    if (!phone) {
         throw Error('All fields must be filled in!')
+    }
+
+    const phoneRegex = /^\+375\d{9}$/
+
+    if (!phoneRegex.test(phone)) {
+        throw Error('Invalid phone number format!')
+    }
+
+    const isExist = await this.findOne({ phone })
+
+    if (isExist) {
+        throw Error('This phone number is already in use!')
     }
 
     const user = await this.findOneAndUpdate(id, { phone }, { new: true })
