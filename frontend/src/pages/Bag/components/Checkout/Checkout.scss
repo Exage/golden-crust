@@ -34,4 +34,39 @@
         align-items: flex-start;
         row-gap: 1rem;
     }
+
+    &-addresses {
+
+        width: 100%;
+        border: none;
+        outline: none;
+
+        line-height: 1.5;
+
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+        padding: 1.2rem 4.2rem 1.2rem 3rem;
+
+        appearance: none;
+
+        border-radius: 5rem;
+
+        @include defaultHeadingFont;
+
+        &__wrapper {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        &__arrow {
+            position: absolute;
+            top: calc(50% - 0.8rem);
+            right: 3rem;
+
+            width: 1.2rem;
+            height: 1.2rem;
+
+            fill: var(--secondary-color);
+        }
+    }
 }

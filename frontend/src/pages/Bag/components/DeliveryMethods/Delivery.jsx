@@ -1,14 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { ReactSVG } from 'react-svg'
 import { usePlaceOrder } from '../../../../hooks/usePlaceOrder'
 import { useAuthContext } from '../../../../hooks/useAuthContext'
+import { useAddressesContext } from '../../../../hooks/useAddressesContext'
 
 import './DeliveryMethod.scss'
 import { Loader } from '../../../../components/Loader/Loader'
+import arrowDown from '../../../../assets/icons/arrow-down.svg'
 
 export const Delivery = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
 
     const { user, error } = useAuthContext()
     const { placeOrder, isLoading } = usePlaceOrder()
+    const { addresses } = useAddressesContext()
+
+    const [selectAddress, setSelectAddress] = useState('none')
 
     const [name, setName] = useState(user !== 'guest' ? user.name : '')
     const [lastname, setLastname] = useState(user !== 'guest' ? user.lastName : '')
@@ -18,6 +24,23 @@ export const Delivery = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
     const [flat, setFlat] = useState('')
 
     const [disableBtn, setDisableBtn] = useState(false)
+
+    useEffect(() => {
+        if (selectAddress !== 'none') {
+            const address = addresses.find(item => item._id === selectAddress)
+
+            setStreet(address.street)
+            setHouse(address.house)
+            setFlat(address.flat)
+
+        } else {
+
+            setStreet('')
+            setHouse('')
+            setFlat('')
+
+        }
+    }, [selectAddress])
 
     const placeOrderHandle = async (Event) => {
         Event.preventDefault()
@@ -48,87 +71,110 @@ export const Delivery = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
     }
 
     return (
-        <form onSubmit={placeOrderHandle} className="bag__checkout-form">
-            <div className="bag__checkout-form__row">
-                <input
-                    type='text'
-                    className="input"
-                    placeholder='Name*'
+        <>
+            {addresses && (
+                <div className="bag__checkout-addresses__wrapper">
+                    <select
+                        className="bag__checkout-addresses"
 
-                    value={name}
-                    onChange={Event => setName(Event.target.value)}
-
-                    required
-                />
-                <input
-                    type='text'
-                    className="input"
-                    placeholder='Last name*'
-
-                    value={lastname}
-                    onChange={Event => setLastname(Event.target.value)}
-
-                    required
-                />
-            </div>
-            <input
-                type='phone'
-                className="input"
-                placeholder='Phone number*'
-
-                value={phone}
-                onChange={Event => setPhone(Event.target.value)}
-
-                required
-            />
-            <input
-                type='text'
-                className="input"
-                placeholder='Street*'
-
-                value={street}
-                onChange={Event => setStreet(Event.target.value)}
-
-                required
-            />
-            <input
-                type='text'
-                className="input"
-                placeholder='House*'
-
-                value={house}
-                onChange={Event => setHouse(Event.target.value)}
-
-                required
-            />
-            <input
-                type='text'
-                className="input"
-                placeholder='Flat'
-
-                value={flat}
-                onChange={Event => setFlat(Event.target.value)}
-            />
-            <div className="bag__checkout-form__helper">* - must be filled</div>
-            <div className="bag__checkout-form__price">
-                <p className="bag__checkout-form__price-subtotal">
-                    subtotal: {totalPrice ? `${totalPrice}$` : '--'}
-                </p>
-                <p className="bag__checkout-form__price-subtotal">
-                    delivery fee: {deliveryFee ? `${deliveryFee}$` : '--'}
-                </p>
-                <p className="bag__checkout-form__price-total">total: {totalPrice ? `${totalPrice + deliveryFee}$` : '--'}</p>
-            </div>
-            <div className="bag__checkout-form__btns">
-                <button className="btn btn__black bag__checkout-form__btn" disabled={disableBtn}>
-                    {isLoading ? <Loader size={16} /> : 'Order'}
-                </button>
-            </div>
-            {error && (
-                <div className="bag__checkout-form__message">
-                    <div className="error">{error}</div>
+                        value={selectAddress}
+                        onChange={Event => setSelectAddress(Event.target.value)}
+                    >
+                        <option value="none">Choose Address</option>
+                        {addresses.map(item => (
+                            <option
+                                key={item._id}
+                                value={item._id}
+                            >
+                                st. {item.street} {item.flat ? `${item.house}, ${item.flat}` : item.house}
+                            </option>
+                        ))}
+                    </select>
+                    <ReactSVG src={arrowDown} className='bag__checkout-addresses__arrow' />
                 </div>
             )}
-        </form>
+            <form onSubmit={placeOrderHandle} className="bag__checkout-form">
+                <div className="bag__checkout-form__row">
+                    <input
+                        type='text'
+                        className="input"
+                        placeholder='Name*'
+
+                        value={name}
+                        onChange={Event => setName(Event.target.value)}
+
+                        required
+                    />
+                    <input
+                        type='text'
+                        className="input"
+                        placeholder='Last name*'
+
+                        value={lastname}
+                        onChange={Event => setLastname(Event.target.value)}
+
+                        required
+                    />
+                </div>
+                <input
+                    type='phone'
+                    className="input"
+                    placeholder='Phone number*'
+
+                    value={phone}
+                    onChange={Event => setPhone(Event.target.value)}
+
+                    required
+                />
+                <input
+                    type='text'
+                    className="input"
+                    placeholder='Street*'
+
+                    value={street}
+                    onChange={Event => setStreet(Event.target.value)}
+
+                    required
+                />
+                <input
+                    type='text'
+                    className="input"
+                    placeholder='House*'
+
+                    value={house}
+                    onChange={Event => setHouse(Event.target.value)}
+
+                    required
+                />
+                <input
+                    type='text'
+                    className="input"
+                    placeholder='Flat'
+
+                    value={flat}
+                    onChange={Event => setFlat(Event.target.value)}
+                />
+                <div className="bag__checkout-form__helper">* - must be filled</div>
+                <div className="bag__checkout-form__price">
+                    <p className="bag__checkout-form__price-subtotal">
+                        subtotal: {totalPrice ? `${totalPrice}$` : '--'}
+                    </p>
+                    <p className="bag__checkout-form__price-subtotal">
+                        delivery fee: {deliveryFee ? `${deliveryFee}$` : '--'}
+                    </p>
+                    <p className="bag__checkout-form__price-total">total: {totalPrice ? `${totalPrice + deliveryFee}$` : '--'}</p>
+                </div>
+                <div className="bag__checkout-form__btns">
+                    <button className="btn btn__black bag__checkout-form__btn" disabled={disableBtn}>
+                        {isLoading ? <Loader size={16} /> : 'Checkout'}
+                    </button>
+                </div>
+                {error && (
+                    <div className="bag__checkout-form__message">
+                        <div className="error">{error}</div>
+                    </div>
+                )}
+            </form>
+        </>
     )
 }

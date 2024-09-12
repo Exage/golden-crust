@@ -15,7 +15,7 @@ import google from '../../assets/icons/google.svg'
 import { Title } from '../../components/Title/Title'
 import { InputPassword } from '../../components/InputPassword/InputPassword'
 
-export const SignIn = ({ showSignInModal, setShowSignInModal }) => {
+export const SignIn = ({ showModal, setShowModal }) => {
 
     const { login, error, isLoading } = useLogin()
     const { user } = useAuthContext()
@@ -24,12 +24,12 @@ export const SignIn = ({ showSignInModal, setShowSignInModal }) => {
     const [password, setPassword] = useState('')
 
     useEffect(() => {
-        if (showSignInModal) {
+        if (showModal) {
             document.body.classList.add('noscroll')
         } else {
             document.body.classList.remove('noscroll')
         }
-    }, [showSignInModal])
+    }, [showModal])
 
     // const googleAuth = useGoogleLogin({
     //     onSuccess: async (response) => {
@@ -59,7 +59,7 @@ export const SignIn = ({ showSignInModal, setShowSignInModal }) => {
 
     const closeWindow = (Event) => {
         Event.preventDefault()
-        setShowSignInModal(false)
+        setShowModal(false)
     }
 
     const stopPropagation = (Event) => {
@@ -73,13 +73,13 @@ export const SignIn = ({ showSignInModal, setShowSignInModal }) => {
 
         if (data) {
             if (data.success) {
-                setShowSignInModal(false)
+                setShowModal(false)
             }
         }
     }
 
     return (
-        <div className={`modal__overlay${showSignInModal ? ' open' : ''}`} onClick={closeWindow}>
+        <div className={`modal__overlay${showModal ? ' open' : ''}`} onClick={closeWindow}>
             <div className="modal__overflow">
                 <div className="container">
                     <div className="modal__content" onClick={stopPropagation}>

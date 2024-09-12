@@ -115,7 +115,7 @@ export const SelfPickup = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
             </div>
             <div className="bag__checkout-form__btns">
                 <button className="btn btn__black bag__checkout-form__btn" disabled={disableBtn}>
-                    {isLoading ? <Loader size={16} /> : 'Order'}
+                    {isLoading ? <Loader size={16} /> : 'Checkout'}
                 </button>
             </div>
             {error && (

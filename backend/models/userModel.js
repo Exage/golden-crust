@@ -32,7 +32,7 @@ const userSchema = new Schema({
     },
     addresses: {
         type: Object,
-        default: {}
+        default: []
     },
     ordersId: {
         type: String,
@@ -132,17 +132,25 @@ userSchema.statics.updatePassword = async function ({ email, password, newPasswo
 
 }
 
-userSchema.statics.updateName = async function ({ id, name, newName }) {
+userSchema.statics.updateName = async function (id, newName, newLastname) {
 
-    if (!newName) {
+    const { name, lastName } = await this.findOne({ _id: id })
+
+    if (!newName && !newLastname) {
         throw Error('All fields must be filled in!')
     }
 
-    if (name === newName) {
-        throw Error('Names must be diffrent')
+    if ((name === newName) && (lastName === newLastname)) {
+        throw Error('Name and Lastname must be diffrent')
     }
 
-    const user = await this.findOneAndUpdate(id, { name: newName })
+    const user = await this.findOneAndUpdate(id,
+        {
+            name: newName ? newName : name,
+            lastName: newLastname ? newLastname : lastName
+        },
+        { new: true }
+    )
 
     return user
 
@@ -169,6 +177,61 @@ userSchema.statics.updatePhone = async function (id, phone) {
     const user = await this.findOneAndUpdate(id, { phone }, { new: true })
 
     return user
+
+}
+
+userSchema.statics.addAddress = async function ({ userId, street, house, flat }) {
+
+    if (!userId || !street || !house ) {
+        throw Error('All fields must be filled in!')
+    }
+
+    // const userPhone = await this.findOne({ phone }).select('phone')
+
+    // const phoneRegex = /^\+375\d{9}$/
+
+    // if (!phoneRegex.test(phone)) {
+    //     throw Error('Invalid phone number format!')
+    // }
+
+    // if (userPhone) {
+    //     if (userId.toString() !== userPhone._id.toString()) {
+    //         throw Error('This phone number is already in use!')
+    //     }
+    // }
+
+    const address = {
+        _id: uuidv4(),
+        street,
+        house,
+        flat: flat ? flat : ''
+    }
+
+    const { addresses } = await this.findOne({ _id: userId }).select('addresses')
+    await this.findOneAndUpdate(userId, { addresses: [...addresses, address] })
+
+    return address
+
+}
+
+userSchema.statics.removeAddress = async function ({ userId, addressId }) {
+
+    if (!userId || !addressId) {
+        throw Error('All fields must be filled in!')
+    }
+
+    const { addresses } = await this.findOne({ _id: userId }).select('addresses')
+    const addressToRemove = addresses.find(item => item._id === addressId)
+
+    if (!addressToRemove) {
+        throw Error('Address not found!')
+    }
+
+    const newAddresses = addresses.filter(item => item._id !== addressId)
+
+    await this.findOneAndUpdate({ _id: userId }, { addresses: newAddresses })
+
+    return addressToRemove
 
 }
 

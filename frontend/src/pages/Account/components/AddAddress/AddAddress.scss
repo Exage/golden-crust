@@ -1,0 +1,24 @@
+@import '../../../../mixins';
+@import '../../../../vars';
+
+.account__addaddress {
+
+    height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+
+    border: 1px solid var(--border-color);
+    border-radius: 2rem;
+
+    &-text {
+        @include defaultHeadingFont;
+
+        &__plus {
+            font-size: 4.2rem;
+        }
+
+    }
+
+}

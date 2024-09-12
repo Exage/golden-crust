@@ -5,14 +5,19 @@ import './Account.scss'
 import { Title } from '../../components/Title/Title'
 import { Loader } from '../../components/Loader/Loader'
 import { Header } from './components/Header/Header'
+import { Addresses } from './components/Addresses/Addresses'
 
 import { ChangePhone } from '../../modals/ChangePhone/ChangePhone'
 import { ConfirmLogout } from '../../modals/ConfirmLogout/ConfirmLogout'
+import { ChangeName } from '../../modals/ChangeName/ChangeName'
+import { SetAddress } from '../../modals/SetAddress/SetAddress'
 
 export const Account = () => {
 
     const [showChangePhone, setShowChangePhone] = useState(false)
     const [showLogout, setShowLogout] = useState(false)
+    const [showChangeName, setShowChangeName] = useState(false)
+    const [showSetAddress, setShowSetAddress] = useState(false)
 
     const { user, loading } = useAuthContext()
 
@@ -40,17 +45,21 @@ export const Account = () => {
                         <Header
                             setShowChangePhone={setShowChangePhone}
                             setShowLogout={setShowLogout}
+                            setShowChangeName={setShowChangeName}
                         />
 
-                        <div className="account__addresses">
-                            <div className="account__address"></div>
-                        </div>
+                        <Addresses 
+                            setShowSetAddress={setShowSetAddress}
+                        />
+                        
                     </div>
 
                 </div>
 
-                {user && <ChangePhone showChangePhone={showChangePhone} setShowChangePhone={setShowChangePhone} />}
-                {user && <ConfirmLogout showLogout={showLogout} setShowLogout={setShowLogout} />}
+                {user && <ChangePhone showModal={showChangePhone} setShowModal={setShowChangePhone} />}
+                {user && <ConfirmLogout showModal={showLogout} setShowModal={setShowLogout} />}
+                {user && <ChangeName showModal={showChangeName} setShowModal={setShowChangeName} />}
+                {user && <SetAddress showModal={showSetAddress} setShowModal={setShowSetAddress} />}
 
             </div>
         </div>

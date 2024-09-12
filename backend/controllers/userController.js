@@ -88,10 +88,26 @@ const updatePhone = async (req, res) => {
 
 }
 
+const updateName = async (req, res) => {
+    const { name, lastname } = req.body
+
+    try {
+        const user = await UserModel.updateName(req.user._id, name, lastname)
+
+        const token = createToken(user)
+
+        res.status(200).json({ success: true, data: token })
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+    }
+
+}
+
 module.exports = {
     signup,
     signinUser,
     signinAdmin,
     getAllUsers,
-    updatePhone
+    updatePhone,
+    updateName
 }

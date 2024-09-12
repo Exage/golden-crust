@@ -69,8 +69,8 @@ export const MyOrders = () => {
                 </div>
 
                 <OrderCancel
-                    showConfirmation={showConfirmation}
-                    setShowConfirmation={setShowConfirmation}
+                    showModal={showConfirmation}
+                    setShowModal={setShowConfirmation}
                     orderData={orderData}
                 />
 

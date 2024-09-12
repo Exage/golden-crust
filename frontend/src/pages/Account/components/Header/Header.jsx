@@ -6,7 +6,7 @@ import logoutIcon from '../../../../assets/icons/logout.svg'
 import edit from '../../../../assets/icons/edit.svg'
 import phone from '../../../../assets/icons/phone.svg'
 
-export const Header = ({ setShowChangePhone, setShowLogout }) => {
+export const Header = ({ setShowChangePhone, setShowLogout, setShowChangeName }) => {
 
     const { user } = useAuthContext()
 
@@ -18,6 +18,10 @@ export const Header = ({ setShowChangePhone, setShowLogout }) => {
         setShowLogout(true)
     }
 
+    const handleOpenSetChangeName = () => {
+        setShowChangeName(true)
+    }
+
     return (
         <>
             <div className="account__header">
@@ -25,7 +29,7 @@ export const Header = ({ setShowChangePhone, setShowLogout }) => {
                 <div className="account__item">
                     <h1 className="account__title">{user.name} {user.lastName}</h1>
                     <div className="account__btns">
-                        <button className='account__btn'>
+                        <button className='account__btn' onClick={handleOpenSetChangeName}>
                             <ReactSVG src={edit} className='icon' />
                         </button>
                     </div>
@@ -33,7 +37,7 @@ export const Header = ({ setShowChangePhone, setShowLogout }) => {
 
                 <div className="account__item">
                     <button className='account__btn' onClick={handleOpenShowLogoutModal}>
-                        logout
+                        Log out
                         <ReactSVG src={logoutIcon} className='icon' />
                     </button>
                 </div>

@@ -8,14 +8,14 @@ import './OrderCancel.scss'
 
 import xmark from '../../assets/icons/xmark.svg'
 
-export const OrderCancel = ({ showConfirmation, setShowConfirmation, orderData }) => {
+export const OrderCancel = ({ showModal, setShowModal, orderData }) => {
 
     const { cancelOrder, isLoading } = useCancelOrder()
     const [showMore, setShowMore] = useState(false)
 
     const closeWindow = (Event) => {
         Event.preventDefault()
-        setShowConfirmation(false)
+        setShowModal(false)
     }
 
     const stopPropagation = (Event) => {
@@ -23,20 +23,20 @@ export const OrderCancel = ({ showConfirmation, setShowConfirmation, orderData }
     }
 
     useEffect(() => {
-        if (showConfirmation) {
+        if (showModal) {
             document.body.classList.add('noscroll')
         } else {
             document.body.classList.remove('noscroll')
         }
-    }, [showConfirmation])
+    }, [showModal])
 
     const handleCancelOrder = async () => {
         await cancelOrder(orderData._id)
-        setShowConfirmation(false)
+        setShowModal(false)
     }
 
     return (
-        <div className={`modal__overlay${showConfirmation ? ' open' : ''}`} onClick={closeWindow}>
+        <div className={`modal__overlay${showModal ? ' open' : ''}`} onClick={closeWindow}>
             <div className="modal__overflow">
                 <div className="container">
                     <div className="modal__content" onClick={stopPropagation}>

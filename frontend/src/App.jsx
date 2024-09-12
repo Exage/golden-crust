@@ -56,8 +56,8 @@ function App() {
 				<Route path='*' element={<NotFound />} />
 			</Routes>
 
-			{user === 'guest' && <SignIn showSignInModal={showSignInModal} setShowSignInModal={setShowSignInModal} />}
-			{user === 'guest' && <SignUp showSignUpModal={showSignUpModal} setShowSignUpModal={setShowSignUpModal} />}
+			{user === 'guest' && <SignIn showModal={showSignInModal} setShowModal={setShowSignInModal} />}
+			{user === 'guest' && <SignUp showModal={showSignUpModal} setShowModal={setShowSignUpModal} />}
 
 			<Footer />
 		</div>

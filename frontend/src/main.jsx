@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { AuthContextProvider } from './context/AuthContext.jsx'
 import { BagContextProvider } from './context/BagContext.jsx'
 import { OrdersContextProvider } from './context/OrdersContext.jsx'
+import { AddressesContextProvider } from './context/AddressesContext.jsx'
 import { CategoriesContextProvider } from './context/CategoriesContext.jsx'
 import { ProductsContextProvider } from './context/ProductsContext.jsx'
 
@@ -20,11 +21,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 				<CategoriesContextProvider>
 					<ProductsContextProvider>
 						<AuthContextProvider>
-							<BagContextProvider>
-								<OrdersContextProvider>
-									<App />
-								</OrdersContextProvider>
-							</BagContextProvider>
+							<AddressesContextProvider>
+								<BagContextProvider>
+									<OrdersContextProvider>
+										<App />
+									</OrdersContextProvider>
+								</BagContextProvider>
+							</AddressesContextProvider>
 						</AuthContextProvider>
 					</ProductsContextProvider>
 				</CategoriesContextProvider>

@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { ReactSVG } from 'react-svg'
-import { useSetPhone } from '../../hooks/useSetPhone' 
+import { useSetName } from '../../hooks/useSetName'
 
 import { Loader } from '../../components/Loader/Loader'
 
-import './ChangePhone.scss'
+import './ChangeName.scss'
 
 import xmark from '../../assets/icons/xmark.svg'
 
-export const ChangePhone = ({ showModal, setShowModal }) => {
+export const ChangeName = ({ showModal, setShowModal }) => {
 
-    const { setPhone, isLoading, error } = useSetPhone()
+    const { setName, isLoading, error } = useSetName()
 
-    const [phoneField, setPhoneField] = useState('')
+    const [name, setNameField] = useState('')
+    const [lastname, setLastnameField] = useState('')
 
     const closeWindow = (Event) => {
         Event.preventDefault()
@@ -33,9 +34,10 @@ export const ChangePhone = ({ showModal, setShowModal }) => {
 
     const handleSubmit = async (Event) => {
         Event.preventDefault()
-        const response = await setPhone(phoneField)
+        const response = await setName(name, lastname)
 
-        setPhoneField('')
+        setNameField('')
+        setLastnameField('')
 
         if (response && response.success) {
             setShowModal(false)
@@ -52,18 +54,28 @@ export const ChangePhone = ({ showModal, setShowModal }) => {
                             <ReactSVG src={xmark} />
                         </button>
 
-                        <h1 className="modal__title-normal">Set New Phone</h1>
+                        <h1 className="modal__title-normal">Set Name & Lastname</h1>
 
                         <form className="auth__form" onSubmit={handleSubmit}>
                             <div className="auth__form-inputs">
-                                <input
-                                    type="text"
-                                    placeholder='New Phone Number'
-                                    className="input input__white auth__form-input"
+                                <div className="auth__form-row">
+                                    <input
+                                        type="text"
+                                        placeholder='Name'
+                                        className="input input__white auth__form-input"
 
-                                    value={phoneField}
-                                    onChange={Event => setPhoneField(Event.target.value)}
-                                />
+                                        value={name}
+                                        onChange={Event => setNameField(Event.target.value)}
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder='Last Name'
+                                        className="input input__white auth__form-input"
+
+                                        value={lastname}
+                                        onChange={Event => setLastnameField(Event.target.value)}
+                                    />
+                                </div>
                             </div>
                             <div className="auth__form-error">
                                 {error && <div className="error">{error}</div>}
@@ -71,7 +83,7 @@ export const ChangePhone = ({ showModal, setShowModal }) => {
                             <hr className="auth__form-hr" />
                             <div className="auth__form-btns">
                                 <button type='submit' className="btn btn__white auth__form-btn" disabled={isLoading}>
-                                    {isLoading ? <Loader size={16} /> : 'Update phone number'}
+                                    {isLoading ? <Loader size={16} /> : 'submit'}
                                 </button>
                             </div>
                         </form>

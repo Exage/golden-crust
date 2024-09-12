@@ -8,13 +8,13 @@ import './ConfirmLogout.scss'
 
 import xmark from '../../assets/icons/xmark.svg'
 
-export const ConfirmLogout = ({ showLogout, setShowLogout }) => {
+export const ConfirmLogout = ({ showModal, setShowModal }) => {
 
     const { logout } = useLogout()
 
     const closeWindow = (Event) => {
         Event.preventDefault()
-        setShowLogout(false)
+        setShowModal(false)
     }
 
     const stopPropagation = (Event) => {
@@ -22,12 +22,12 @@ export const ConfirmLogout = ({ showLogout, setShowLogout }) => {
     }
 
     useEffect(() => {
-        if (showLogout) {
+        if (showModal) {
             document.body.classList.add('noscroll')
         } else {
             document.body.classList.remove('noscroll')
         }
-    }, [showLogout])
+    }, [showModal])
 
     const handleSubmit = async (Event) => {
         Event.preventDefault()
@@ -35,7 +35,7 @@ export const ConfirmLogout = ({ showLogout, setShowLogout }) => {
     }
 
     return (
-        <div className={`modal__overlay${showLogout ? ' open' : ''}`} onClick={closeWindow}>
+        <div className={`modal__overlay${showModal ? ' open' : ''}`} onClick={closeWindow}>
             <div className="modal__overflow">
                 <div className="container">
                     <div className="modal__content" onClick={stopPropagation}>

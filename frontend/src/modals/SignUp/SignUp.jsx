@@ -13,7 +13,7 @@ import google from '../../assets/icons/google.svg'
 import { Title } from '../../components/Title/Title'
 import { InputPassword } from '../../components/InputPassword/InputPassword'
 
-export const SignUp = ({ showSignUpModal, setShowSignUpModal }) => {
+export const SignUp = ({ showModal, setShowModal }) => {
 
     const { signup, error, isLoading } = useSignup()
 
@@ -23,16 +23,16 @@ export const SignUp = ({ showSignUpModal, setShowSignUpModal }) => {
     const [password, setPassword] = useState('')
 
     useEffect(() => {
-        if (showSignUpModal) {
+        if (showModal) {
             document.body.classList.add('noscroll')
         } else {
             document.body.classList.remove('noscroll')
         }
-    }, [showSignUpModal])
+    }, [showModal])
 
     const closeWindow = (Event) => {
         Event.preventDefault()
-        setShowSignUpModal(false)
+        setShowModal(false)
     }
 
     const stopPropagation = (Event) => {
@@ -46,13 +46,13 @@ export const SignUp = ({ showSignUpModal, setShowSignUpModal }) => {
 
         if (data) {
             if (data.success) {
-                setShowSignUpModal(false)
+                setShowModal(false)
             }
         }
     }
 
     return (
-        <div className={`modal__overlay${showSignUpModal ? ' open' : ''}`} onClick={closeWindow}>
+        <div className={`modal__overlay${showModal ? ' open' : ''}`} onClick={closeWindow}>
             <div className="modal__overflow">
                 <div className="container">
                     <div className="modal__content" onClick={stopPropagation}>
@@ -91,7 +91,6 @@ export const SignUp = ({ showSignUpModal, setShowSignUpModal }) => {
                                     value={email}
                                     onChange={Event => setEmail(Event.target.value)}
                                 />
-                                {/* <input type="text" placeholder='Password' className="input input__white auth__form-input" /> */}
                                 <InputPassword
                                     white={true}
                                     placeholder='Password'
