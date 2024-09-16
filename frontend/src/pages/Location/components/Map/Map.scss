@@ -1,0 +1,130 @@
+@import '../../../../mixins';
+@import '../../../../vars';
+
+.location__map {
+
+    width: 71rem;
+    height: 40rem;
+    border-radius: 2rem;
+    overflow: hidden;
+
+    z-index: 1;
+
+    @include bp($bpLocation1) {
+        width: 100%;
+    }
+
+    &-wrapper {
+        display: grid;
+        grid-template-columns: 71rem 1fr;
+
+        @include bp($bpLocation1) {
+            max-width: 71rem;
+            width: 100%;
+
+            margin: 0 auto;
+
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &-tabs {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1.5rem;
+        width: 100%;
+        padding-left: 2rem;
+
+        @include bp($bpLocation1) {
+            padding-left: 0;
+            margin-top: 5rem;
+        }
+    }
+
+    &-tab {
+        text-align: left;
+        padding: 1.8rem 3rem;
+        border: 3px solid var(--border-color);
+        color: var(--border-color);
+
+        border-radius: 4rem;
+
+        transition-property: border-color, color, background-color;
+        transition-timing-function: linear;
+        transition-duration: 200ms;
+
+        &__heading {
+            font-size: 1.8rem;
+            @include defaultHeadingFont;
+            display: flex;
+            align-items: center;
+
+            .icon {
+                width: 2rem;
+                display: flex;
+                margin-right: 2rem;
+
+                svg {
+                    width: 100%;
+                    fill: var(--border-color);
+                }
+            }
+        }
+
+        &.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--secondary-color);
+            cursor: default;
+
+            svg {
+                fill: var(--secondary-color);
+            }
+        }
+
+        &__body {
+            display: flex;
+            flex-direction: column;
+            row-gap: 1rem;
+            margin-top: 2rem;
+            padding-left: 4rem;
+        }
+
+        &__bottom {
+
+            margin-top: 1rem;
+            display: flex;
+            justify-content: flex-end;
+            column-gap: 2rem;
+
+            @include bp($bpLocation1) {
+                justify-content: center;
+            }
+
+            &-btn {
+
+                width: 4rem;
+                height: 4rem;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                background-color: rgba(var(--secondary-color-rgb), 0);
+                border-radius: 1rem;
+
+                transition: background-color .2s linear;
+
+                &:hover {
+                    background-color: rgba(var(--secondary-color-rgb), 0.1);
+                }
+
+                .icon {
+                    svg {
+                        height: 2rem;
+                    }
+                }
+            }
+        }
+    }
+}

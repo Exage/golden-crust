@@ -22,6 +22,10 @@
         row-gap: 2rem;
         grid-template-columns: repeat(2, 1fr);
 
+        @include bp($bpAccount1) {
+            grid-template-columns: 1fr;
+        }
+
         &.noitems {
             grid-template-columns: repeat(1, 1fr);
         }

@@ -1,2 +1,8 @@
 @import '../../mixins';
 @import '../../vars';
+
+.location {
+    &__wrapper {
+        margin-top: 5rem;
+    }
+}

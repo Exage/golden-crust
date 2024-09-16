@@ -1,0 +1,116 @@
+@import '../../../../mixins';
+@import '../../../../vars';
+
+.account__header {
+
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 5rem;
+
+    &-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        max-width: 80rem;
+        width: 100%;
+
+        margin: 2rem auto 0 auto;
+    }
+
+    &-item {
+        display: flex;
+        align-items: center;
+    }
+
+    &-logout {
+        @include bp($bpAccount2) {
+            display: none;
+        }
+
+        &__response {
+            display: none;
+            
+            @include bp($bpAccount2) {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 2.5rem;
+            }
+        }
+    }
+
+    &-item:hover>&-btns {
+        opacity: 1;
+    }
+
+    &-title {
+        @include defaultHeadingFont;
+        font-size: 2.4rem;
+
+        word-break: break-all;
+
+        &.icon {
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .icon {
+            position: absolute;
+            top: calc(50% - 0.7rem);
+            left: 0;
+            width: 1.4rem;
+
+            fill: var(--primary-color);
+        }
+
+        &-phone {
+            @include defaultHeadingFont;
+            color: var(--primary-alt-color);
+            font-size: 1.8rem;
+
+            .icon {
+                transform: translateY(-0.3rem);
+                fill: var(--primary-alt-color);
+            }
+        }
+    }
+
+    &-btns {
+        margin-left: 1rem;
+        opacity: 0;
+
+        transition: opacity .2s ease;
+
+        @include bp($bp-header-1) {
+            opacity: 1;
+        }
+    }
+
+    &-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        column-gap: 1rem;
+        line-height: 0.6;
+        padding: 1rem;
+
+        background-color: rgba(var(--primary-color-rgb), 0);
+
+        border-radius: 2rem;
+
+        transition: background-color .2s linear;
+
+        &:hover {
+            background-color: rgba(var(--primary-color-rgb), 0.2);
+        }
+
+        .icon {
+            width: 1.5rem;
+            height: 1.5rem;
+
+            fill: var(--primary-color);
+        }
+    }
+}
