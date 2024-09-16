@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { ReactSVG } from 'react-svg'
+import { useGoogleLogin } from '@react-oauth/google'
 
 import './SignUp.scss'
 
-import { useAuthContext } from '../../hooks/useAuthContext'
+import { useGoogleAuth } from '../../hooks/useGoogleAuth'
 import { useSignup } from '../../hooks/useSignup'
 import { Loader } from '../../components/Loader/Loader'
 
@@ -15,13 +16,49 @@ import { InputPassword } from '../../components/InputPassword/InputPassword'
 
 export const SignUp = ({ showModal, setShowModal }) => {
 
-    const { signup, error, isLoading } = useSignup()
+    const { signup, error: signupError, isLoading: signupLoading } = useSignup()
+    const { googleAuth, error: googleError, isLoading: googleLoading } = useGoogleAuth()
 
     const [name, setName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const [error, setError] = useState('')
+
+    useEffect(() => {
+        if (signupError || googleError) {
+            setError(signupError || googleError)
+        }
+    }, [signupError, googleError])
+
+    // Handle Google
+    const loginWithGoogle = useGoogleLogin({
+        onSuccess: async tokenResponse => {
+            try {
+                const { access_token } = tokenResponse
+                const data = await googleAuth(access_token)
+
+                if (data && data.success) {
+                    setShowModal(false)
+                }
+            } catch (error) {
+                setError(error.message)
+                console.error('Error fetching user info:', error)
+            }
+        },
+        onError: error => {
+            setError(error)
+            console.error('Login Failed:', error)
+        }
+    })
+
+    const handleGoogleAuth = () => {
+        setError('')
+        loginWithGoogle()
+    }
+
+    // Handle modal interaction
     useEffect(() => {
         if (showModal) {
             document.body.classList.add('noscroll')
@@ -33,6 +70,7 @@ export const SignUp = ({ showModal, setShowModal }) => {
     const closeWindow = (Event) => {
         Event.preventDefault()
         setShowModal(false)
+        setError('')
     }
 
     const stopPropagation = (Event) => {
@@ -42,12 +80,10 @@ export const SignUp = ({ showModal, setShowModal }) => {
     const handleSubmit = async (Event) => {
         Event.preventDefault()
 
-        const data = await signup(name, lastName, email, password)
+        const data = await signup(name.trim(), lastName.trim(), email.trim(), password.trim())
 
-        if (data) {
-            if (data.success) {
-                setShowModal(false)
-            }
+        if (data && data.success) {
+            setShowModal(false)
         }
     }
 
@@ -71,6 +107,8 @@ export const SignUp = ({ showModal, setShowModal }) => {
                                         placeholder='Name'
                                         className="input input__white auth__form-input"
 
+                                        disabled={signupLoading}
+
                                         value={name}
                                         onChange={Event => setName(Event.target.value)}
                                     />
@@ -78,6 +116,8 @@ export const SignUp = ({ showModal, setShowModal }) => {
                                         type="text"
                                         placeholder='Last Name'
                                         className="input input__white auth__form-input"
+
+                                        disabled={signupLoading}
 
                                         value={lastName}
                                         onChange={Event => setLastName(Event.target.value)}
@@ -88,12 +128,16 @@ export const SignUp = ({ showModal, setShowModal }) => {
                                     placeholder="Email"
                                     className="input input__white auth__form-input"
 
+                                    disabled={signupLoading}
+
                                     value={email}
                                     onChange={Event => setEmail(Event.target.value)}
                                 />
                                 <InputPassword
                                     white={true}
                                     placeholder='Password'
+
+                                    disabled={signupLoading}
 
                                     value={password}
                                     onChange={Event => setPassword(Event.target.value)}
@@ -104,13 +148,21 @@ export const SignUp = ({ showModal, setShowModal }) => {
                             </div>
                             <hr className="auth__form-hr" />
                             <div className="auth__form-btns">
-                                <button type='submit' className="btn btn__white auth__form-btn" disabled={isLoading}>
-                                    {isLoading ? <Loader size={16} /> : 'Sign Up'}
+
+                                <button type='submit' className="btn btn__white auth__form-btn" disabled={signupLoading}>
+                                    {signupLoading ? <Loader size={16} /> : 'Sign Up'}
                                 </button>
-                                <button type='button' className="btn btn__white auth__form-btn auth__form-btn__google" disabled={isLoading}>
+
+                                <button 
+                                    type='button' 
+                                    className="btn btn__white auth__form-btn auth__form-btn__google" 
+                                    disabled={signupLoading}
+                                    onClick={handleGoogleAuth}
+                                >
                                     <ReactSVG src={google} className="auth__form-btn__icon" />
                                     Continue with google
                                 </button>
+
                             </div>
                         </form>
 

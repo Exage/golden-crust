@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { usePlaceOrder } from '../../../../hooks/usePlaceOrder'
 import { useAuthContext } from '../../../../hooks/useAuthContext'
 import { ReactSVG } from 'react-svg'
@@ -9,20 +10,7 @@ import arrowDown from '../../../../assets/icons/arrow-down.svg'
 import './DeliveryMethod.scss'
 import { Loader } from '../../../../components/Loader/Loader'
 
-const addresses = [
-    {
-        id: 1,
-        street: 'Pushkinskaya',
-        house: '18-15',
-        flat: ''
-    },
-    {
-        id: 2,
-        street: '28 July',
-        house: '1A',
-        flat: ''
-    },
-]
+import { addresses } from '../../../../config/addresses'
 
 export const SelfPickup = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
 
@@ -61,68 +49,77 @@ export const SelfPickup = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
     }
 
     return (
-        <form className="bag__checkout-form" onSubmit={placeOrderHandle}>
-            <div className="bag__checkout-form__row">
-                <input
-                    required
-                    type='text'
-                    className="input"
-                    placeholder='Name*'
-
-                    value={name}
-                    onChange={Event => setName(Event.target.value)}
-                />
-                <input
-                    required
-                    type='text'
-                    className="input"
-                    placeholder='Last name*'
-
-                    value={lastname}
-                    onChange={Event => setLastname(Event.target.value)}
-                />
-            </div>
-            <input
-                required
-                type='phone'
-                className="input"
-                placeholder='Phone number*'
-
-                value={phone}
-                onChange={Event => setPhone(Event.target.value)}
-            />
-            <div className="select__address-wrapper">
-                <ReactSVG src={location} className='select__address-icon select__address-icon__location' />
-                <select
-                    className='input select__address'
-                    value={shop.id}
-                    onChange={Event => setShop(addresses.find(item => item.id === parseInt(Event.target.value)))}
-                >
-                    {addresses.map(item => (
-                        <option key={item.id} value={item.id}>
-                            st. {item.street} {item.house}
-                        </option>
-                    ))}
-                </select>
-                <ReactSVG src={arrowDown} className='select__address-icon select__address-icon__arrow' />
-            </div>
-            <div className="bag__checkout-form__helper">* - must be filled</div>
-            <div className="bag__checkout-form__price">
-                <p className="bag__checkout-form__price-subtotal">
-                    subtotal: {totalPrice ? `${totalPrice}$` : '--'}
-                </p>
-                <p className="bag__checkout-form__price-total">total: {totalPrice ? `${totalPrice + deliveryFee}$` : '--'}</p>
-            </div>
-            <div className="bag__checkout-form__btns">
-                <button className="btn btn__black bag__checkout-form__btn" disabled={disableBtn}>
-                    {isLoading ? <Loader size={16} /> : 'Checkout'}
-                </button>
-            </div>
-            {error && (
-                <div className="bag__checkout-form__message">
-                    <div className="error">{error}</div>
+        <>
+            {!user.phone && (
+                <div className="bag__checkout-addresses__wrapper">
+                    <p className="bag__checkout-addresses__noitems">
+                        If you don't want to enter your phone number, go here and fill them out <Link className='link' to='/account'>there</Link>.
+                    </p>
                 </div>
             )}
-        </form>
+            <form className="bag__checkout-form" onSubmit={placeOrderHandle}>
+                <div className="bag__checkout-form__row">
+                    <input
+                        required
+                        type='text'
+                        className="input"
+                        placeholder='Name*'
+
+                        value={name}
+                        onChange={Event => setName(Event.target.value)}
+                    />
+                    <input
+                        required
+                        type='text'
+                        className="input"
+                        placeholder='Last name*'
+
+                        value={lastname}
+                        onChange={Event => setLastname(Event.target.value)}
+                    />
+                </div>
+                <input
+                    required
+                    type='phone'
+                    className="input"
+                    placeholder='Phone number*'
+
+                    value={phone}
+                    onChange={Event => setPhone(Event.target.value)}
+                />
+                <div className="select__address-wrapper">
+                    <ReactSVG src={location} className='select__address-icon select__address-icon__location' />
+                    <select
+                        className='input select__address'
+                        value={shop.id}
+                        onChange={Event => setShop(addresses.find(item => item.id === parseInt(Event.target.value)))}
+                    >
+                        {addresses.map(item => (
+                            <option key={item.id} value={item.id}>
+                                {item.name}
+                            </option>
+                        ))}
+                    </select>
+                    <ReactSVG src={arrowDown} className='select__address-icon select__address-icon__arrow' />
+                </div>
+                <div className="bag__checkout-form__helper">* - must be filled</div>
+                <div className="bag__checkout-form__price">
+                    <p className="bag__checkout-form__price-subtotal">
+                        subtotal: {totalPrice ? `${totalPrice}$` : '--'}
+                    </p>
+                    <p className="bag__checkout-form__price-total">total: {totalPrice ? `${totalPrice + deliveryFee}$` : '--'}</p>
+                </div>
+                <div className="bag__checkout-form__btns">
+                    <button className="btn btn__black bag__checkout-form__btn" disabled={disableBtn}>
+                        {isLoading ? <Loader size={16} /> : 'Checkout'}
+                    </button>
+                </div>
+                {error && (
+                    <div className="bag__checkout-form__message">
+                        <div className="error">{error}</div>
+                    </div>
+                )}
+            </form>
+        </>
     )
 }

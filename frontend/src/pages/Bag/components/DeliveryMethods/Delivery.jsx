@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ReactSVG } from 'react-svg'
 import { usePlaceOrder } from '../../../../hooks/usePlaceOrder'
 import { useAuthContext } from '../../../../hooks/useAuthContext'
@@ -72,7 +73,7 @@ export const Delivery = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
 
     return (
         <>
-            {addresses && (
+            {(addresses && addresses.length > 0) && (
                 <div className="bag__checkout-addresses__wrapper">
                     <select
                         className="bag__checkout-addresses"
@@ -91,6 +92,13 @@ export const Delivery = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
                         ))}
                     </select>
                     <ReactSVG src={arrowDown} className='bag__checkout-addresses__arrow' />
+                </div>
+            )}
+            {addresses.length === 0 && (
+                <div className="bag__checkout-addresses__wrapper">
+                    <p className="bag__checkout-addresses__noitems">
+                        If you don't want to enter the data, go here and fill it out <Link className='link' to='/account'>there</Link>.
+                    </p>
                 </div>
             )}
             <form onSubmit={placeOrderHandle} className="bag__checkout-form">

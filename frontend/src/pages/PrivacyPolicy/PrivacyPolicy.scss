@@ -1,2 +1,24 @@
 @import '../../mixins';
 @import '../../vars';
+
+.privacy {
+    &__wrapper {
+        max-width: 91rem;
+        width: 100%;
+        margin: 0 auto;
+        padding-top: 5rem;
+    }
+
+    &__block {
+        margin-top: 2rem;
+    }
+
+    &__block > &__paragraph {
+        margin-top: 1rem;
+    }
+
+    &__title {
+        @include defaultHeadingFont;
+        font-size: 2.4rem;
+    }
+}

@@ -7,11 +7,13 @@ const Schema = mongoose.Schema
 const userSchema = new Schema({
     name: {
         type: String,
-        required: true
+    },
+    googleId: {
+        type: String,
+        default: ""
     },
     lastName: {
         type: String,
-        required: true
     },
     email: {
         type: String,
@@ -23,8 +25,7 @@ const userSchema = new Schema({
         default: ''
     },
     password: {
-        type: String,
-        required: true
+        type: String
     },
     bagData: {
         type: Object,
@@ -87,6 +88,10 @@ userSchema.statics.signin = async function ({ email, password }) {
         throw Error('This user was not found!')
     }
 
+    if (user.googleId) {
+        throw Error('This account is linked with Google')
+    }
+
     const match = await bcrypt.compare(password, user.password)
 
     if (!match) {
@@ -95,6 +100,30 @@ userSchema.statics.signin = async function ({ email, password }) {
 
     return user
 
+}
+
+userSchema.statics.googleAuth = async function ({ email, given_name, family_name, sub }) {
+
+    const user = await this.findOne({ email })
+
+    if (!user) {
+        console.log(family_name)
+        const newUser = await this.create({ 
+            name: given_name,
+            lastName: family_name || "",
+            googleId: sub,
+            email,
+            ordersId: uuidv4()
+        })
+
+        return newUser
+    }
+
+    if (!user.googleId) {
+        throw new Error('This email is already use')
+    }
+
+    return user
 }
 
 userSchema.statics.updatePassword = async function ({ email, password, newPassword }) {
@@ -182,7 +211,7 @@ userSchema.statics.updatePhone = async function (id, phone) {
 
 userSchema.statics.addAddress = async function ({ userId, street, house, flat }) {
 
-    if (!userId || !street || !house ) {
+    if (!userId || !street || !house) {
         throw Error('All fields must be filled in!')
     }
 

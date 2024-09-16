@@ -10,7 +10,7 @@ import { Loader } from '../../components/Loader/Loader'
 
 import { OrderCancel } from '../../modals/OrderCancel/OrderCancel'
 
-import noProductsIcon from '../../assets/bag/cookies.svg'
+import noProductsIcon from '../../assets/orders/bag.svg'
 
 export const MyOrders = () => {
 
@@ -47,7 +47,7 @@ export const MyOrders = () => {
                             </div>
                             <h1 className='myorders__noitems-title'>No orders</h1>
                             <p className='myorders__noitems-text'>
-                                You currently have no active orders. Once you place an order, it will appear here. Check out our <Link to='/' className='link'>menu </Link> to choose something delicious!
+                                You currently have no active orders. Once you place an order, it will appear here. Check out our <Link to='/' className='link'>menu</Link> to choose something delicious!
                             </p>
                         </div>
 

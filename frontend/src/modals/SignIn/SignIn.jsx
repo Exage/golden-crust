@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { ReactSVG } from 'react-svg'
-import { GoogleLogin } from '@react-oauth/google'
 import { useGoogleLogin } from '@react-oauth/google'
 
-import { useAuthContext } from '../../hooks/useAuthContext'
+import './SignIn.scss'
+
+import { useGoogleAuth } from '../../hooks/useGoogleAuth'
 import { useLogin } from '../../hooks/useLogin'
 import { Loader } from '../../components/Loader/Loader'
-
-import './SignIn.scss'
 
 import xmark from '../../assets/icons/xmark.svg'
 import google from '../../assets/icons/google.svg'
@@ -17,12 +16,47 @@ import { InputPassword } from '../../components/InputPassword/InputPassword'
 
 export const SignIn = ({ showModal, setShowModal }) => {
 
-    const { login, error, isLoading } = useLogin()
-    const { user } = useAuthContext()
+    const { login, error: loginError, isLoading: loginLoading } = useLogin()
+    const { googleAuth, error: googleError, isLoading: googleLoading } = useGoogleAuth()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const [error, setError] = useState('')
+
+    useEffect(() => {
+        if (loginError || googleError) {
+            setError(loginError || googleError)
+        }
+    }, [loginError, googleError])
+
+    // Handle Google
+    const loginWithGoogle = useGoogleLogin({
+        onSuccess: async tokenResponse => {
+            try {
+                const { access_token } = tokenResponse
+                const data = await googleAuth(access_token)
+
+                if (data && data.success) {
+                    setShowModal(false)
+                }
+            } catch (error) {
+                setError(error.message)
+                console.error('Error fetching user info:', error)
+            }
+        },
+        onError: error => {
+            setError(error)
+            console.error('Login Failed:', error)
+        }
+    })
+
+    const handleGoogleAuth = () => {
+        setError('')
+        loginWithGoogle()
+    }
+
+    // Handle modal interaction
     useEffect(() => {
         if (showModal) {
             document.body.classList.add('noscroll')
@@ -31,35 +65,10 @@ export const SignIn = ({ showModal, setShowModal }) => {
         }
     }, [showModal])
 
-    // const googleAuth = useGoogleLogin({
-    //     onSuccess: async (response) => {
-
-    //         console.log(response)
-
-    //         const data = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo`, {
-    //             headers: {
-    //                 'Authorization': `Bearer ${response.access_token}`
-    //             }
-    //         })
-    //         const json = await data.json()
-
-    //         console.log(json)
-    //     }
-    // })
-    // const googleAuth = () => {
-    //     const clientId = import.meta.env.VITE_API_URL
-    //     const redirectUri = import.meta.env.VITE_REDIRECT_URI
-    //     const scope = 'https://www.googleapis.com/auth/userinfo.profile'
-    //     const responseType = 'code'
-
-    //     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`
-
-    //     window.location.href = authUrl
-    // }
-
     const closeWindow = (Event) => {
         Event.preventDefault()
         setShowModal(false)
+        setError('')
     }
 
     const stopPropagation = (Event) => {
@@ -68,13 +77,12 @@ export const SignIn = ({ showModal, setShowModal }) => {
 
     const handleSubmit = async (Event) => {
         Event.preventDefault()
+        setError('')
 
         const data = await login(email.trim(), password.trim())
 
-        if (data) {
-            if (data.success) {
-                setShowModal(false)
-            }
+        if (data && data.success) {
+            setShowModal(false)
         }
     }
 
@@ -97,12 +105,16 @@ export const SignIn = ({ showModal, setShowModal }) => {
                                     placeholder='Email'
                                     className="input input__white auth__form-input"
 
+                                    disabled={loginLoading}
+
                                     value={email}
                                     onChange={Event => setEmail(Event.target.value)}
                                 />
                                 <InputPassword
                                     white={true}
                                     placeholder='Password'
+
+                                    disabled={loginLoading}
 
                                     value={password}
                                     onChange={Event => setPassword(Event.target.value)}
@@ -117,16 +129,16 @@ export const SignIn = ({ showModal, setShowModal }) => {
                                 <button
                                     type='submit'
                                     className="btn btn__white auth__form-btn"
-                                    disabled={isLoading}
+                                    disabled={loginLoading}
                                 >
-                                    {isLoading ? <Loader size={16} /> : 'Sign In'}
+                                    {loginLoading ? <Loader size={16} /> : 'Sign In'}
                                 </button>
 
                                 <button
                                     type='button'
                                     className="btn btn__white auth__form-btn auth__form-btn__google"
-                                    disabled={isLoading}
-                                    onClick={() => console.log('Google Auth!')}
+                                    onClick={handleGoogleAuth}
+                                    disabled={loginLoading}
                                 >
                                     <ReactSVG src={google} className="auth__form-btn__icon" />
                                     Continue with google

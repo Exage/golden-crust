@@ -10,14 +10,12 @@ import { addresses } from '../../../../config/addresses'
 
 export const Map = () => {
     const [activeMarker, setActiveMarker] = useState(addresses[0].position)
-    const [zoomLevel, setZoomLevel] = useState(18)
+    const [zoomLevel, setZoomLevel] = useState(16)
     const [activeTab, setActiveTab] = useState(addresses[0])
-
-    const [mapWidth, setMapWidth] = useState(710)
 
     const handleMarkerClick = (marker) => {
         setActiveMarker(marker.position)
-        setZoomLevel(18)
+        setZoomLevel(16)
         setActiveTab(marker)
     }
 

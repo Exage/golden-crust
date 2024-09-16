@@ -6,6 +6,23 @@ const createToken = (user) => {
     return jwt.sign({ _id, name, lastName, phone, email, role, ordersId }, process.env.SECRET, { expiresIn: '7d' })
 }
 
+const getUserInfo = async (accessToken) => {
+    try {
+        const response = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+        
+        const data = await response.json()
+
+        return data
+    } catch (error) {
+        console.error('Error fetching user info:', error)
+        throw new Error('Unable to fetch user info')
+    }
+}
+
 const signup = async (req, res) => {
 
     const { name, lastName, email, password } = req.body
@@ -51,6 +68,23 @@ const signinAdmin = async (req, res) => {
         const token = createToken(user)
 
         res.status(200).json({ success: true, message: 'User Find', data: token })
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message })
+    }
+
+}
+
+const googleAuth = async (req, res) => {
+
+    const { token } = req.body
+
+    try {
+        const userInfo = await getUserInfo(token)
+        const user = await UserModel.googleAuth(userInfo)
+
+        const jwtToken = createToken(user)
+
+        res.status(200).json({ success: true, message: 'Authed by google', data: jwtToken })
     } catch (error) {
         res.status(400).json({ success: false, message: error.message })
     }
@@ -107,6 +141,7 @@ module.exports = {
     signup,
     signinUser,
     signinAdmin,
+    googleAuth,
     getAllUsers,
     updatePhone,
     updateName
