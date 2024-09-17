@@ -51,6 +51,26 @@ userSchema.statics.signup = async function ({ name, lastName, email, password })
         throw Error('All fields must be filled in!')
     }
 
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!emailPattern.test(email)) {
+        throw Error('Please enter a valid email address.')
+    }
+
+    const maxLength = 30
+
+    if (email.length > maxLength) {
+        throw Error(`Email cannot be longer than ${maxLength} characters`)
+    }
+
+    if (name.length > maxLength) {
+        throw Error(`Name cannot be longer than ${maxLength} characters`)
+    }
+
+    if (lastName.length > maxLength) {
+        throw Error(`LastName cannot be longer than ${maxLength} characters`)
+    }
+
     if (password.length < 6) {
         throw Error('Password must be more than 6 characters long!')
     }
@@ -78,6 +98,18 @@ userSchema.statics.signin = async function ({ email, password }) {
         throw Error('All fields must be filled in!')
     }
 
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!emailPattern.test(email)) {
+        throw Error('Please enter a valid email address.')
+    }
+
+    const maxLength = 30
+
+    if (email.length > maxLength) {
+        throw Error(`Email cannot be longer than ${maxLength} characters`)
+    }
+
     if (password.length < 6) {
         throw Error('Password must be more than 6 characters long!')
     }
@@ -102,16 +134,15 @@ userSchema.statics.signin = async function ({ email, password }) {
 
 }
 
-userSchema.statics.googleAuth = async function ({ email, given_name, family_name, sub }) {
+userSchema.statics.googleAuth = async function ({ email, given_name, family_name, id }) {
 
     const user = await this.findOne({ email })
 
     if (!user) {
-        console.log(family_name)
         const newUser = await this.create({ 
             name: given_name,
             lastName: family_name || "",
-            googleId: sub,
+            googleId: id,
             email,
             ordersId: uuidv4()
         })
@@ -173,6 +204,16 @@ userSchema.statics.updateName = async function (id, newName, newLastname) {
         throw Error('Name and Lastname must be diffrent')
     }
 
+    const maxLength = 30
+
+    if (newName.length > maxLength) {
+        throw Error(`Name cannot be longer than ${maxLength} characters`)
+    }
+
+    if (newLastname.length > maxLength) {
+        throw Error(`LastName cannot be longer than ${maxLength} characters`)
+    }
+
     const user = await this.findOneAndUpdate(id,
         {
             name: newName ? newName : name,
@@ -215,19 +256,19 @@ userSchema.statics.addAddress = async function ({ userId, street, house, flat })
         throw Error('All fields must be filled in!')
     }
 
-    // const userPhone = await this.findOne({ phone }).select('phone')
+    const maxLength = 30
 
-    // const phoneRegex = /^\+375\d{9}$/
+    if (street.length > maxLength) {
+        throw Error(`Street cannot be longer than ${maxLength} characters`)
+    }
 
-    // if (!phoneRegex.test(phone)) {
-    //     throw Error('Invalid phone number format!')
-    // }
+    if (house.length > maxLength) {
+        throw Error(`House cannot be longer than ${maxLength} characters`)
+    }
 
-    // if (userPhone) {
-    //     if (userId.toString() !== userPhone._id.toString()) {
-    //         throw Error('This phone number is already in use!')
-    //     }
-    // }
+    if (flat.length > maxLength) {
+        throw Error(`Flat cannot be longer than ${maxLength} characters`)
+    }
 
     const address = {
         _id: uuidv4(),

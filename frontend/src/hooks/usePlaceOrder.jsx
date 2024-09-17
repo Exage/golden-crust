@@ -31,14 +31,14 @@ export const usePlaceOrder = () => {
             if (user === 'guest') {
                 localStorage.setItem('golden-crust-bag', JSON.stringify({}))
             }
-
-            return json
         }
 
         if (!response.ok) {
             setError(json.message)
             setIsLoading(false)
         }
+
+        return json
     }
 
     return { isLoading, placeOrder, error, success }

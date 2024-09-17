@@ -54,7 +54,7 @@ export const Map = () => {
                     >
                         <div className="location__map-tab__heading">
                             <ReactSVG src={location} className='icon' />
-                            {marker.name}
+                            st. {marker.address.street} {marker.address.house}
                         </div>
                         {
                             (activeTab.id === marker.id) && (

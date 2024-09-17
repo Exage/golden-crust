@@ -64,7 +64,7 @@ const placeOrder = async (req, res) => {
 
         res.status(200).json({ message: 'Order placed', success: true, data: { session_url: session.url } })
     } catch (error) {
-        res.status(400).json({ message: error.message })
+        res.status(400).json({ message: error.message, success: false })
     }
 }
 

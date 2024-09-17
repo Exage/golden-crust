@@ -56,8 +56,38 @@ const orderSchema = new Schema({
 
 orderSchema.statics.placeOrder = async function ({ uuid, name, lastname, items, amount, phone, address, type, deliveryFee }) {
     
-    if ( !uuid || !name || !lastname || !items || !amount || !phone || !address || !type) {
+    if ( !uuid || !name || !lastname || !items || !amount || !phone || !address.street || !address.house || !address.flat || !type) {
         throw new Error('All fields must be filled')
+    }
+
+    const maxLength = 30
+
+    if (name.length > maxLength) {
+        throw Error(`Name cannot be longer than ${maxLength} characters`)
+    }
+
+    if (lastname.length > maxLength) {
+        throw Error(`Last Name cannot be longer than ${maxLength} characters`)
+    }
+
+    const phoneRegex = /^\+375\d{9}$/
+
+    if (!phoneRegex.test(phone)) {
+        throw Error('Invalid phone number format!')
+    }
+
+    console.log(address)
+
+    if (address.street.length > maxLength) {
+        throw Error(`Street cannot be longer than ${maxLength} characters`)
+    }
+
+    if (address.house.length > maxLength) {
+        throw Error(`House cannot be longer than ${maxLength} characters`)
+    }
+
+    if (address.flat.length > maxLength) {
+        throw Error(`Flat cannot be longer than ${maxLength} characters`)
     }
 
     const newOrder = await this.create({ uuid, name, lastname, items, amount, phone, address, type, deliveryFee })

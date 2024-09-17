@@ -20,7 +20,11 @@ export const useAddAddress = () => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${user.token}`
             },
-            body: JSON.stringify({ street, flat, house })
+            body: JSON.stringify({ 
+                street: street.trim(), 
+                flat: flat.trim(), 
+                house: house.trim() 
+            })
         })
         const json = await response.json()
 

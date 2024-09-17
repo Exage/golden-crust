@@ -5,6 +5,7 @@ import './Order.scss'
 
 import { ReactSVG } from 'react-svg'
 import xmark from '../../../../assets/icons/xmark.svg'
+import arrow from '../../../../assets/icons/arrow-down.svg'
 
 const setStatus = (status) => {
     if (status === 'preparing') {
@@ -45,24 +46,34 @@ export const Order = ({ data, setOrderData, setShowConfirmation }) => {
                     <h1 className="myorders__item-header__info-title">
                         {data.type === 'selfpickup' ? 'self-pickup' : data.type}
                     </h1>
-                    <h2
-                        className={`myorders__item-header__info-status ${setStatus(data.status)}`}
-                    >
-                        {data.status}
-                    </h2>
+                    {data.status !== 'canceled' && (
+                        <h2
+                            className={`myorders__item-header__info-status ${data.payment ? setStatus(data.status) : ''}`}
+                        >
+                            {data.payment ? data.status : 'awaiting payment'}
+                        </h2>
+                    )}
+                    {data.status === 'canceled' && (
+                        <h2
+                            className="myorders__item-header__info-status canceled"
+                        >
+                            canceled
+                        </h2>
+                    )}
                 </div>
                 <div className="myorders__item-header__address">
                     {data.type === 'delivery' && 'delivery address: '}
                     {data.type === 'selfpickup' && 'shop address: '}
-        
+
                     st. {data.address.street}, {data.address.house}
                     {data.address.flat ? `, flat: ${data.address.flat}` : ''}
                 </div>
                 <button
                     onClick={() => setShowDetails(!showDetails)}
-                    className="myorders__item-header__showdetails"
+                    className={`myorders__item-header__showdetails${showDetails ? ' open' : ''}`}
                 >
                     show more
+                    <ReactSVG src={arrow}  className='icon' />
                 </button>
             </div>
             {showDetails && (

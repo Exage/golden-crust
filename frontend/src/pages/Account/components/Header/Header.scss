@@ -48,7 +48,7 @@
         @include defaultHeadingFont;
         font-size: 2.4rem;
 
-        word-break: break-all;
+        word-break: break-word;
 
         &.icon {
             padding-left: 2rem;

@@ -11,8 +11,8 @@ import arrowDown from '../../../../assets/icons/arrow-down.svg'
 
 export const Delivery = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
 
-    const { user, error } = useAuthContext()
-    const { placeOrder, isLoading } = usePlaceOrder()
+    const { user } = useAuthContext()
+    const { placeOrder, isLoading, error } = usePlaceOrder()
     const { addresses } = useAddressesContext()
 
     const [selectAddress, setSelectAddress] = useState('none')
@@ -67,6 +67,8 @@ export const Delivery = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
             if (user === 'guest') {
                 localStorage.setItem('golden-crust-bag', JSON.stringify({}))
             }
+        } else {
+            setDisableBtn(false)
         }
 
     }
@@ -94,7 +96,7 @@ export const Delivery = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
                     <ReactSVG src={arrowDown} className='bag__checkout-addresses__arrow' />
                 </div>
             )}
-            {addresses.length === 0 && (
+            {(addresses && addresses.length === 0) && (
                 <div className="bag__checkout-addresses__wrapper">
                     <p className="bag__checkout-addresses__noitems">
                         If you don't want to enter the data, go here and fill it out <Link className='link' to='/account'>there</Link>.

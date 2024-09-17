@@ -36,7 +36,11 @@ export const SelfPickup = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
             items: bagItems,
             amount: totalPrice,
             phone: phone.replace(/\s/g, ""),
-            address: { street: shop.street, house: shop.house, flat: shop.flat },
+            address: { 
+                street: shop.address.street, 
+                house: shop.address.house, 
+                flat: '' 
+            },
             deliveryFee: deliveryFee,
             type: 'selfpickup',
         })
@@ -50,7 +54,7 @@ export const SelfPickup = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
 
     return (
         <>
-            {!user.phone && (
+            {(user !== 'guest' && !user.phone) && (
                 <div className="bag__checkout-addresses__wrapper">
                     <p className="bag__checkout-addresses__noitems">
                         If you don't want to enter your phone number, go here and fill them out <Link className='link' to='/account'>there</Link>.
@@ -96,7 +100,7 @@ export const SelfPickup = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
                     >
                         {addresses.map(item => (
                             <option key={item.id} value={item.id}>
-                                {item.name}
+                                st. {item.address.street} {item.address.house}
                             </option>
                         ))}
                     </select>
