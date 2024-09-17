@@ -14,8 +14,8 @@ import { addresses } from '../../../../config/addresses'
 
 export const SelfPickup = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
 
-    const { user, error } = useAuthContext()
-    const { placeOrder, isLoading } = usePlaceOrder()
+    const { user } = useAuthContext()
+    const { placeOrder, isLoading, error } = usePlaceOrder()
 
     const [name, setName] = useState(user !== 'guest' ? user.name : '')
     const [lastname, setLastname] = useState(user !== 'guest' ? user.lastName : '')
@@ -48,6 +48,12 @@ export const SelfPickup = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
         if (response.success) {
             const { session_url } = response.data
             window.location.replace(session_url)
+
+            if (user === 'guest') {
+                localStorage.setItem('golden-crust-bag', JSON.stringify({}))
+            }
+        } else {
+            setDisableBtn(false)
         }
 
     }

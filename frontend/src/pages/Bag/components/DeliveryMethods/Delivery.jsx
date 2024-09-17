@@ -55,7 +55,11 @@ export const Delivery = ({ totalPrice, bagItems, deliveryFee = 0 }) => {
             items: bagItems,
             amount: totalPrice,
             phone: phone.replace(/\s/g, ""),
-            address: { street, house, flat },
+            address: { 
+                street: street.trim(), 
+                house: house.trim(), 
+                flat: flat.trim() 
+            },
             deliveryFee: deliveryFee,
             type: 'delivery',
         })

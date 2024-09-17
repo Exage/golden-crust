@@ -56,7 +56,7 @@ const orderSchema = new Schema({
 
 orderSchema.statics.placeOrder = async function ({ uuid, name, lastname, items, amount, phone, address, type, deliveryFee }) {
     
-    if ( !uuid || !name || !lastname || !items || !amount || !phone || !address.street || !address.house || !address.flat || !type) {
+    if ( !uuid || !name || !lastname || !items || !amount || !phone || !address.street || !address.house || !type) {
         throw new Error('All fields must be filled')
     }
 
