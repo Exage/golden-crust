@@ -29,7 +29,7 @@ export const Product = ({ data }) => {
     return (
         <div className={`bag__product${removaBagItemLoading ? " bag__product-disabled" : ""}`}>
             <div className="bag__product-photo">
-                <img src={`${import.meta.env.VITE_API_URL}/images/${image}`} alt={name} title={name} />
+                <img src={`https://${import.meta.env.VITE_AWS_BUCKET_NAME}.s3.${import.meta.env.VITE_AWS_REGION}.amazonaws.com/uploads/${data.image}`} alt={name} title={name} />
             </div>
             <div className="bag__product-info">
 
