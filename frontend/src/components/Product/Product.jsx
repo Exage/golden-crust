@@ -35,7 +35,10 @@ export const Product = ({ data, primaryColor }) => {
     return (
         <div className="product">
             <div className="product__photo">
-                <img src={`${import.meta.env.VITE_API_URL}/images/${image}`} alt={name} />
+                <img 
+                    src={`https://${import.meta.env.VITE_AWS_BUCKET_NAME}.s3.${import.meta.env.VITE_AWS_REGION}.amazonaws.com/uploads/${data.image}`} 
+                    alt={name} 
+                />
             </div>
             <div className="product__title-wrapper">
                 <h1 className="product__title">{name}</h1>

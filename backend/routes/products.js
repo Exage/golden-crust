@@ -14,16 +14,8 @@ const router = express.Router()
 
 // store images
 
-const storage = multer.diskStorage({
-    destination: 'uploads',
-    filename: (req, file, cb) => {
-        return cb(null, `${Date.now()}-${file.originalname}`)
-    }
-})
-
-const maxSize = 2 * 1024 * 1024
-
-const upload = multer({ storage, limits: { fileSize: maxSize } })
+const storage = multer.memoryStorage()
+const upload = multer({ storage })
 
 router.post('/add', requireAuth, requireAdmin, upload.single('image'), addProduct)
 router.get('/list', listProducts)

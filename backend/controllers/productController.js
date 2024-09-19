@@ -1,6 +1,18 @@
 const mongoose = require('mongoose')
 const ProductModel = require('../models/productModel')
 const fs = require('fs')
+const { S3Client, PutObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3')
+const crypto = require('crypto')
+
+const s3 = new S3Client({
+    region: process.env.AWS_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    }
+})
+
+const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex')
 
 const addProduct = async (req, res) => {
 
@@ -11,7 +23,17 @@ const addProduct = async (req, res) => {
         return res.status(400).json({ success: false, message: 'File is not defined' })
     }
 
-    let image = `${req.file.filename}`
+    const image = randomImageName()
+
+    const params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: `uploads/${image}`,
+        Body: req.file.buffer,
+        ContentType: req.file.mimetype
+    }
+
+    const command = new PutObjectCommand(params)
+    await s3.send(command)
 
     try {
         const product = await ProductModel.addProduct({ name, description, price, category, image })
@@ -46,8 +68,25 @@ const updateProduct = async (req, res) => {
         }
 
         if (req.file) {
-            fs.unlink(`uploads/${existingProduct.image}`, () => { })
-            body = { ...body, image: req.file.filename }
+            const deleteParams = {
+                Bucket: process.env.AWS_BUCKET_NAME,
+                Key: `uploads/${existingProduct.image}`
+            }
+            const deleteCommand = new DeleteObjectCommand(deleteParams)
+            await s3.send(deleteCommand)
+
+            const newImageName = randomImageName()
+
+            const uploadParams = {
+                Bucket: process.env.AWS_BUCKET_NAME,
+                Key: `uploads/${newImageName}`,
+                Body: req.file.buffer,
+                ContentType: req.file.mimetype
+            }
+            const uploadCommand = new PutObjectCommand(uploadParams)
+            await s3.send(uploadCommand)
+
+            body = { ...body, image: newImageName }
         }
 
         const updatedProduct = await ProductModel.updateProduct(id, body)
@@ -57,7 +96,7 @@ const updateProduct = async (req, res) => {
             data: updatedProduct,
             message: `Product "${updatedProduct.name} (${updatedProduct._id})" successfully updated`
         })
-        
+
     } catch (error) {
         res.status(400).json({ success: false, message: error.message })
     }
@@ -76,7 +115,13 @@ const deleteProduct = async (req, res) => {
         return res.status(400).json({ success: false, message: 'No such product' })
     }
 
-    fs.unlink(`uploads/${product.image}`, () => { })
+    const params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: `uploads/${product.image}`
+    }
+
+    const command = new DeleteObjectCommand(params)
+    await s3.send(command)
 
     res.status(200).json({ success: true, message: `Product "${product.name} (${product._id})" successfully deleted`, data: product })
 }

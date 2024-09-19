@@ -12,6 +12,9 @@ export const Menu = () => {
             <div className="page menu">
                 <div className="container">
                     <Title>Menu</Title>
+
+                    
+
                 </div>
             </div>
         </div>
