@@ -83,13 +83,7 @@ export const Item = ({ data }) => {
                 <div className="page__item-photo">
 
                     <label htmlFor={`page__item-photo__${data._id}`} className="page__item-photo__label">
-                        <img 
-                            src={
-                                image ? 
-                                    URL.createObjectURL(image) : 
-                                    `https://${import.meta.env.VITE_AWS_BUCKET_NAME}.s3.${import.meta.env.VITE_AWS_REGION}.amazonaws.com/uploads/${data.image}`
-                            } 
-                            alt="" />
+                        <img src={image ? URL.createObjectURL(image) : `https://${import.meta.env.VITE_AWS_BUCKET_NAME}.s3.${import.meta.env.VITE_AWS_REGION}.amazonaws.com/uploads/${data.image}`} alt="" />
                         {showEdit && (
                             <div className="page__item-photo__label-overlay">
                                 <img src={camera} alt="" />
