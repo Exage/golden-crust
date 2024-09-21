@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import './Intro.scss'
 
@@ -8,7 +9,7 @@ export const Intro = ({ menuRef }) => {
 
     const handleExploreMenu = () => {
         if (menuRef) {
-            const menuTop = menuRef.current.getBoundingClientRect().top - 130
+            const menuTop = menuRef.current.getBoundingClientRect().top - 140
             window.scrollBy({ top: menuTop, behavior: 'smooth' })
         }
     }

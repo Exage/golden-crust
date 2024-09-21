@@ -10,6 +10,10 @@
     @include defaultHeadingFont;
     font-size: 3.6rem;
 
+    @include bp($bp-header-1) {
+        flex-direction: column;
+    }
+
     &__white &__text {
         color: var(--secondary-color);
     }
@@ -34,7 +38,7 @@
             position: absolute;
             top: 1px;
             left: -1px;
-            
+
             color: transparent;
             opacity: 0.8;
 
@@ -50,5 +54,22 @@
 
     &__decoration {
         fill: var(--primary-color);
+
+        &-left,
+        &-right {
+            @include bp($bp-header-1) {
+                display: none;
+            }
+        }
+
+        &-top,
+        &-bottom {
+
+            display: none;
+
+            @include bp($bp-header-1) {
+                display: block;
+            }
+        }
     }
 }

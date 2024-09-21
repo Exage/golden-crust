@@ -16,12 +16,12 @@
 
     @include defaultBoxShadow();
 
-    @if $paddingX != 0 {
+    @if $paddingX !=0 {
         padding-left: $paddingX;
         padding-right: $paddingX;
     }
 
-    @if $paddingY != 0 {
+    @if $paddingY !=0 {
         padding-top: $paddingY;
         padding-bottom: $paddingY;
     }
@@ -31,5 +31,35 @@
 @mixin bp($bp) {
     @media (max-width: $bp) {
         @content
+    }
+}
+
+@mixin hover($hover-selector: null, $active-selector: null)  {
+    @media (hover: hover) {
+        &:hover {
+            @if $hover-selector {
+                #{$hover-selector} {
+                    @content;
+                }
+            }
+
+            @else {
+                @content;
+            }
+        }
+    }
+
+    @media (hover: none) {
+        &:active {
+            @if $active-selector {
+                #{$active-selector} {
+                    @content;
+                }
+            }
+
+            @else {
+                @content;
+            }
+        }
     }
 }

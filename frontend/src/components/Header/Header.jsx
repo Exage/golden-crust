@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { ReactSVG } from 'react-svg'
 
 import { useAuthContext } from '../../hooks/useAuthContext'
@@ -18,7 +18,13 @@ export const Header = ({ setShowSignInModal, setShowSignUpModal }) => {
     const { user } = useAuthContext()
     const { categories, loading } = useCategoriesContext()
 
+    const location = useLocation()
+
     const [burgerOpen, setBurgerOpen] = useState(false)
+
+    useEffect(() => {
+        setBurgerOpen(false)
+    }, [location])
 
     useEffect(() => {
         if (burgerOpen) {
@@ -73,16 +79,13 @@ export const Header = ({ setShowSignInModal, setShowSignUpModal }) => {
                                                 {categories && categories.map(item => (
                                                     <li key={item._id}>
                                                         <NavLink
-                                                            to={`/menu/${item.name}`}
+                                                            to={`/category/${item.name}`}
                                                             className="header__nav-link__dropdown-menu__link"
                                                         >
                                                             {item.title}
                                                         </NavLink>
                                                     </li>
                                                 ))}
-                                                <li>
-                                                    <NavLink to='/menu' className="header__nav-link__dropdown-menu__link">Explore All</NavLink>
-                                                </li>
                                             </ul>
                                         </div>
                                     </div>

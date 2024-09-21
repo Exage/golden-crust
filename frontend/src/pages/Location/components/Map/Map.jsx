@@ -5,8 +5,16 @@ import 'leaflet/dist/leaflet.css'
 
 import './Map.scss'
 import location from '../../../../assets/icons/location.svg'
+import mapIcon from '../../../../assets/icons/marker.png'
 
 import { addresses } from '../../../../config/addresses'
+
+const customIcon = new L.Icon({
+    iconUrl: mapIcon,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -38]
+})
 
 export const Map = () => {
     const [activeMarker, setActiveMarker] = useState(addresses[0].position)
@@ -38,8 +46,10 @@ export const Map = () => {
                     <ChangeMapView center={activeMarker} zoom={zoomLevel} />
 
                     {addresses.map(marker => (
-                        <Marker key={marker.id} position={marker.position}>
-                            <Popup>{marker.name}</Popup>
+                        <Marker key={marker.id} position={marker.position} icon={customIcon}>
+                            <Popup>
+                                these are not real addresses, do not look for these addresses
+                            </Popup>
                         </Marker>
                     ))}
                 </MapContainer>
@@ -68,10 +78,10 @@ export const Map = () => {
                                     </div>
                                     <div className="location__map-tab__bottom">
                                         {activeTab.links.map((item, index) => (
-                                            <a 
+                                            <a
                                                 key={index}
                                                 href={item.link}
-                                                target='_blank' 
+                                                target='_blank'
                                                 className={`location__map-tab__bottom-btn ${item.type}`}
                                             >
                                                 <ReactSVG src={item.icon} className='icon' />

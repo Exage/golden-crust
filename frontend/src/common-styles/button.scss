@@ -36,7 +36,7 @@ button {
     &:disabled {
         opacity: 0.5;
 
-        &:hover {
+        @include hover {
             border-color: var(--primary-color);
             background: none;
             color: inherit;
@@ -47,7 +47,7 @@ button {
         }
     }
 
-    &:hover {
+    @include hover {
         color: var(--secondary-color);
         background-color: var(--primary-color);
 
@@ -66,7 +66,7 @@ button {
             --c: no-repeat linear-gradient(var(--secondary-color) 0 0)
         }
 
-        &:hover {
+        @include hover {
             color: #000;
             background-color: var(--secondary-color);
 
@@ -78,7 +78,7 @@ button {
         &:disabled {
             opacity: 0.5;
 
-            &:hover {
+            @include hover {
                 border-color: var(--secondary-color);
                 background: none;
                 color: var(--secondary-color);
@@ -98,8 +98,8 @@ button {
         .loader {
             --c: no-repeat linear-gradient(var(--secondary-color) 0 0)
         }
-
-        &:hover {
+        
+        @include hover {
             background-color: var(--primary-color-dark);
             border-color: var(--primary-color-dark);
 
@@ -110,8 +110,8 @@ button {
 
         &:disabled {
             opacity: 0.5;
-
-            &:hover {
+        
+            @include hover {
                 color: var(--secondary-color);
                 background-color: var(--primary-color);
                 border-color: var(--primary-color);
@@ -131,8 +131,8 @@ button {
         .loader {
             --c: no-repeat linear-gradient(var(--error-color) 0 0)
         }
-
-        &:hover {
+        
+        @include hover {
             background-color: var(--error-color);
             border-color: var(--error-color);
 
@@ -143,8 +143,8 @@ button {
 
         &:disabled {
             opacity: 0.5;
-
-            &:hover {
+        
+            @include hover {
                 border-color: var(--error-sec-color);
                 color: var(--error-sec-color);
 

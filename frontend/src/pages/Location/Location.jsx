@@ -10,7 +10,10 @@ export const Location = () => {
         <div className="page__padding">
             <div className="page location">
                 <div className="container">
-                    <Title>Location</Title>
+                    
+                    <Title>
+                        Our Location
+                    </Title>
 
                     <div className="location__wrapper">
 

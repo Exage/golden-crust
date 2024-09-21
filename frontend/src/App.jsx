@@ -8,7 +8,6 @@ import { Header } from './components/Header/Header'
 import { Footer } from './components/Footer/Footer'
 
 import { Home } from './pages/Home/Home'
-import { Menu } from './pages/Menu/Menu'
 import { Category } from './pages/Category/Category'
 import { Location } from './pages/Location/Location'
 import { AboutUs } from './pages/AboutUs/AboutUs'
@@ -42,8 +41,7 @@ function App() {
 			<Routes>
 				<Route index element={<Home />} />
 
-				<Route path='/menu' element={<Menu />} />
-				<Route path='/menu/:categoryName' element={<Category />} />
+				<Route path='/category/:categoryName' element={<Category />} />
 
 				<Route path='/location' element={<Location />} />
 				<Route path='/aboutus' element={<AboutUs />} />

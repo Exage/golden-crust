@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useCategoriesContext } from '../../hooks/useCategoriesContext'
@@ -18,6 +18,10 @@ export const Category = () => {
 
     const category = categories ? categories.find(item => item.name === categoryName) : null
     const products = allProducts ? allProducts.filter(item => item.category === categoryName) : null
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     return (
         <div className="category">

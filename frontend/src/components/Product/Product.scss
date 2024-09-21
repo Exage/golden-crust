@@ -79,11 +79,11 @@
         overflow: hidden;
         z-index: 1;
 
-        &:hover {
+        @include hover {
             color: var(--secondary-color) !important;
         }
 
-        &:hover &-bg {
+        @include hover('.product__btn-bg', '.product__btn-bg') {
             background-color: transparent;
         }
 
@@ -115,11 +115,7 @@
             width: 4.2rem;
             height: 4.2rem;
             font-size: 2.4rem;
-            padding: 0 !important; 
-        }
-
-        &:hover .loader {
-            --c: no-repeat linear-gradient(red 0 0);
+            padding: 0 !important;
         }
     }
 

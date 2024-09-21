@@ -19,7 +19,7 @@ export const Header = ({ category }) => {
                 <div className="category__header-path">
                     {category && (
                         <>
-                            <Link to='/'>home</Link> &nbsp;/&nbsp;<Link to='/menu'>menu</Link>&nbsp;/&nbsp;{category.name}
+                            <Link to='/'>home</Link> &nbsp;/&nbsp;<Link to={`/?section=${category.name}`}>category</Link>&nbsp;/&nbsp;{category.name}
                         </>
                     )}
                 </div>

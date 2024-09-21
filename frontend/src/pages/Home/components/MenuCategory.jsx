@@ -52,7 +52,7 @@ export const MenuCategory = ({ category }) => {
     }, [calculateWrapperWidth])
 
     return (
-        <div className="home__menu-category" style={{ backgroundColor: secondaryColor }}>
+        <div className="home__menu-category" style={{ backgroundColor: secondaryColor }} data-section={name}>
             <div className="container">
                 <div className="home__menu-category__header">
                     <div className="home__menu-category__header-title__wrapper">

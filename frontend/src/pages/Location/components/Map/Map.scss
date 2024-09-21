@@ -59,6 +59,10 @@
             display: flex;
             align-items: center;
 
+            @include bp($bp-header-1) {
+                font-size: 1.6rem;
+            }
+
             .icon {
                 width: 2rem;
                 display: flex;
